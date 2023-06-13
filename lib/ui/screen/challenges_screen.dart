@@ -4,7 +4,7 @@ class ChallengesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Achievements'),
+      child: Text('Challenges'),
     );
   }
 }
