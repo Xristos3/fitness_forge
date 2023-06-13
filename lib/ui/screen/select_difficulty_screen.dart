@@ -1,4 +1,4 @@
-import 'package:fitness_forge/ui/screen/workout_screen.dart';
+import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class SelectDifficultyScreen extends StatelessWidget {
@@ -14,16 +14,34 @@ class SelectDifficultyScreen extends StatelessWidget {
             title: 'Easy',
             description: 'Composed of basic callisthenic exercises to help you start your fitness journey ',
             image: 'images/custom.jpeg',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BadgesScreen()),
+              );
+            },
           ),
           CustomRightAlignedContainer(
             title: 'Medium',
             description: 'Composed of more advanced versions of basic callisthenic exercises ',
             image: 'images/custom.jpeg',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BadgesScreen()),
+              );
+            },
           ),
           CustomRightAlignedContainer(
             title: 'Hard',
             description: 'Test your limits with exercises that will push your muscles to new levels',
             image: 'images/custom.jpeg',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BadgesScreen()),
+              );
+            },
           ),
         ],
       ),
@@ -35,11 +53,13 @@ class CustomRightAlignedContainer extends StatelessWidget {
   final String title;
   final String description;
   final String image;
+  final VoidCallback onPressed;
 
   const CustomRightAlignedContainer({
     required this.title,
     required this.description,
     required this.image,
+    required this.onPressed,
   });
 
   @override
@@ -67,12 +87,7 @@ class CustomRightAlignedContainer extends StatelessWidget {
                 ),
                 SizedBox(height: 8.0),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WorkoutScreen()), // Replace NewScreen with the desired screen to navigate to
-                    );
-                  },
+                  onPressed: onPressed,
                   child: Text('Select'),
                 ),
               ],

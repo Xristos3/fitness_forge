@@ -1,4 +1,6 @@
+import 'package:fitness_forge/ui/screen/achievements_screen.dart';
 import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
+import 'package:fitness_forge/ui/screen/challenges_screen.dart';
 import 'package:flutter/material.dart';
 
 class ExtraScreen extends StatelessWidget {
@@ -13,14 +15,32 @@ class ExtraScreen extends StatelessWidget {
           CustomRightAlignedContainer(
             title: 'Achievements',
             image: 'images/achievements.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
           ),
           CustomRightAlignedContainer(
             title: 'Challenges',
             image: 'images/challenges.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChallengesScreen()),
+              );
+            },
           ),
           CustomRightAlignedContainer(
             title: 'Badges',
             image: 'images/badges.jpeg',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BadgesScreen()),
+              );
+            },
           ),
         ],
       ),
@@ -31,10 +51,12 @@ class ExtraScreen extends StatelessWidget {
 class CustomRightAlignedContainer extends StatelessWidget {
   final String title;
   final String image;
+  final VoidCallback onPressed;
 
   const CustomRightAlignedContainer({
     required this.title,
     required this.image,
+    required this.onPressed,
   });
 
   @override
@@ -57,12 +79,7 @@ class CustomRightAlignedContainer extends StatelessWidget {
                 ),
                 SizedBox(height: 8.0),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BadgesScreen()), // Replace NewScreen with the desired screen to navigate to
-                    );
-                  },
+                  onPressed: onPressed,
                   child: Text('Select'),
                 ),
               ],
