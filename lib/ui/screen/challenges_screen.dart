@@ -1,6 +1,4 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
-import 'package:fitness_forge/ui/screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChallengesScreen extends StatelessWidget {
@@ -28,7 +26,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ChatScreen()),
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
               );
             },
           ),
@@ -38,7 +36,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BadgesScreen()),
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
               );
             },
           ),
