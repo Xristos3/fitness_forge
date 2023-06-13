@@ -1,4 +1,4 @@
-import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class ExtraScreen extends StatelessWidget {
@@ -60,7 +60,7 @@ class CustomRightAlignedContainer extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BottomNavigationScreen()), // Replace NewScreen with the desired screen to navigate to
+                      MaterialPageRoute(builder: (context) => BadgesScreen()), // Replace NewScreen with the desired screen to navigate to
                     );
                   },
                   child: Text('Select'),
