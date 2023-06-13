@@ -9,7 +9,10 @@ class FitnessForgeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fitness Forge app',
-      home: const HomeScreen(),
+      theme: ThemeData(
+        primarySwatch:Colors.blue,
+      ),
+      home: BottomNavigationScreen(),
     );
   }
 }
