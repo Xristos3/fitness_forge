@@ -67,6 +67,16 @@ flutter:
   - images/lowerbody.jpeg
   - images/upperbody.jpeg
   - images/profile.jpeg
+  - images/rank.png
+  - images/badge1.PNG
+  - images/badge2.PNG
+  - images/badge3.PNG
+  - images/badge4.PNG
+  - images/achievements.png
+  - images/home.png
+  - images/season.jpeg
+  - images/challenges.png
+  - images/badges.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

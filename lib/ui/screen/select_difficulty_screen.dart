@@ -1,3 +1,4 @@
+import 'package:fitness_forge/ui/screen/workout_screen.dart';
 import 'package:flutter/material.dart';
 
 class SelectDifficultyScreen extends StatelessWidget {
@@ -63,6 +64,16 @@ class CustomRightAlignedContainer extends StatelessWidget {
                 Text(
                   description,
                   style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 8.0),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WorkoutScreen()), // Replace NewScreen with the desired screen to navigate to
+                    );
+                  },
+                  child: Text('Select'),
                 ),
               ],
             ),
