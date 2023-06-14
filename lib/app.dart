@@ -1,4 +1,5 @@
 import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:fitness_forge/ui/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class FitnessForgeApp extends StatelessWidget {
@@ -12,7 +13,7 @@ class FitnessForgeApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch:Colors.blue,
       ),
-      home: BottomNavigationScreen(),
+      home: LoginScreen(),
     );
   }
 }

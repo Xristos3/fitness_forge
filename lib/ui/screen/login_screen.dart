@@ -1,3 +1,6 @@
+import 'package:fitness_forge/ui/screen/changepassword_screen.dart';
+import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:fitness_forge/ui/screen/signin_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -48,15 +51,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton(
                   onPressed: () {
                     // Add logic for "Forgot Password" functionality
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PasswordChangeScreen()),
+                    );
                   },
                   child: Text('Forgot Password?'),
                 ),
               ],
             ),
             SizedBox(height: 16.0),
+            TextButton(
+              onPressed: () {
+                // Add logic for navigating to the new screen here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                );
+              },
+              child: Text('Create a New Account'),
+            ),
+            SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 // Add login validation logic here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+                );
               },
               child: Text('Login'),
             ),

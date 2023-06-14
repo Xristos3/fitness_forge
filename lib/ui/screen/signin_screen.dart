@@ -1,3 +1,4 @@
+import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -6,98 +7,51 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      // Process the sign-up data
-      String username = _usernameController.text;
-      String email = _emailController.text;
-      String password = _passwordController.text;
-
-      // Perform the sign-up logic here...
-
-      // Show a success message
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Success'),
-            content: Text('Sign up successful!'),
-            actions: [
-              ElevatedButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  // Optionally navigate to another screen after sign-up
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Form(
-        key: _formKey,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign In'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextFormField(
+            TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a username';
-                }
-                return null;
-              },
+              decoration: InputDecoration(
+                labelText: 'Username',
+              ),
             ),
             SizedBox(height: 16.0),
-            TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter an email';
-                }
-                // You can add more email validation logic here if needed
-                return null;
-              },
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
+            TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
               obscureText: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a password';
-                }
-                // You can add more password validation logic here if needed
-                return null;
-              },
+              decoration: InputDecoration(
+                labelText: 'Password',
+              ),
             ),
             SizedBox(height: 24.0),
             ElevatedButton(
-              child: Text('Sign Up'),
-              onPressed: _submitForm,
+              onPressed: () {
+                String username = _usernameController.text;
+                String password = _passwordController.text;
+
+                // Validate username and password here (e.g., call an API)
+
+                // If validation succeeds, navigate to the next screen
+                // You can replace `NextScreen()` with the screen you want to navigate to
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+                );
+
+              },
+              child: Text('Sign In'),
             ),
           ],
         ),

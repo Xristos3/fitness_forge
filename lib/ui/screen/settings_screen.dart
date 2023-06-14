@@ -1,3 +1,5 @@
+import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:fitness_forge/ui/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -65,6 +67,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ElevatedButton(
           onPressed: () {
             // Apply button logic
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+            );
           },
           child: Text('Apply'),
         ),
@@ -75,6 +81,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: ElevatedButton(
             onPressed: () {
               // Logout button logic
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
             },
             child: Text('Logout'),
           ),
