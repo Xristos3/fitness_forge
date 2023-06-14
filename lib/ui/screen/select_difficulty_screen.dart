@@ -1,4 +1,6 @@
-import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/workout_screen_easy.dart';
+import 'package:fitness_forge/ui/screen/workout_screen_hard.dart';
+import 'package:fitness_forge/ui/screen/workout_screen_medium.dart';
 import 'package:flutter/material.dart';
 
 class SelectDifficultyScreen extends StatelessWidget {
@@ -17,7 +19,7 @@ class SelectDifficultyScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => WorkoutScreenEasy()),
               );
             },
           ),
@@ -28,7 +30,7 @@ class SelectDifficultyScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => WorkoutScreenMedium()),
               );
             },
           ),
@@ -39,7 +41,7 @@ class SelectDifficultyScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => WorkoutScreenHard()),
               );
             },
           ),
