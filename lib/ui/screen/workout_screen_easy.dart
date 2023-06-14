@@ -12,6 +12,16 @@ class WorkoutScreenEasy extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Difficulty: Easy',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           CustomContainer(
             title: 'HIIT Workout',
             description: 'Exercises: Expected duration:',
