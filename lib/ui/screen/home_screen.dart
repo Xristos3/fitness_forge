@@ -3,7 +3,7 @@ import 'package:fitness_forge/ui/screen/chat_screen.dart';
 import 'package:fitness_forge/ui/screen/extra_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
 import 'package:fitness_forge/ui/screen/settings_screen.dart';
-import 'package:fitness_forge/ui/screen/workout_screen.dart';
+import 'package:fitness_forge/ui/screen/workout_screen_easy.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
@@ -15,7 +15,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    WorkoutScreen(),
+    WorkoutScreenEasy(),
     ProfileScreen(),
     CalendarScreen(),
     ChatScreen(),

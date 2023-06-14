@@ -1,5 +1,4 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class SelectDifficultyScreen extends StatelessWidget {
