@@ -1,5 +1,6 @@
 import 'package:fitness_forge/ui/screen/calendar_screen.dart';
 import 'package:fitness_forge/ui/screen/chat_screen.dart';
+import 'package:fitness_forge/ui/screen/claim_screen.dart';
 import 'package:fitness_forge/ui/screen/extra_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
 import 'package:fitness_forge/ui/screen/settings_screen.dart';
@@ -40,6 +41,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ClaimScreen()),
+              );
               // Add your notification button logic here
             },
           ),
