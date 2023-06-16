@@ -34,17 +34,6 @@ class WorkoutScreenStandard extends StatelessWidget {
             },
           ),
           CustomContainer(
-            title: 'Full Body Workout',
-            description: 'Exercises: Expected duration:',
-            image: 'images/fullbody.jpeg',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
-              );
-            },
-          ),
-          CustomContainer(
             title: 'Upper Body Workout',
             description: 'Exercises: Expected duration:',
             image: 'images/upperbody.jpeg',

@@ -1,19 +1,18 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/seasonal_activities_screen.dart';
 import 'package:flutter/material.dart';
 
-class ChallengesScreen extends StatelessWidget {
+class SeasonsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Challenge'),
+        title: Text('Select a season'),
       ),
       body: ListView(
         children: [
           CustomRightAlignedContainer(
-            title: 'Outside Activities',
-            image: 'images/walk.png',
+            title: 'Spring',
+            image: 'images/spring1.jpeg',
             onPressed: () {
               Navigator.push(
                 context,
@@ -22,8 +21,8 @@ class ChallengesScreen extends StatelessWidget {
             },
           ),
           CustomRightAlignedContainer(
-            title: 'Homebased Activities',
-            image: 'images/home.png',
+            title: 'Summer',
+            image: 'images/summer1.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -32,12 +31,22 @@ class ChallengesScreen extends StatelessWidget {
             },
           ),
           CustomRightAlignedContainer(
-            title: 'Seasonal Activities',
-            image: 'images/season.jpeg',
+            title: 'Fall',
+            image: 'images/fall.jpeg',
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SeasonsScreen()),
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Winter',
+            image: 'images/winter.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
               );
             },
           ),

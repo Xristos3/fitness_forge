@@ -80,6 +80,12 @@ flutter:
   - images/badges.jpeg
   - images/walk.png
   - images/ccc.jpeg
+  - images/fall.jpeg
+  - images/spring.png
+  - images/spring1.jpeg
+  - images/summer.jpeg
+  - images/summer1.png
+  - images/winter.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
