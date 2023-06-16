@@ -15,7 +15,7 @@ class WorkoutScreenStandard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Difficulty: Easy',
+              'Difficulty: Standard',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
