@@ -1,6 +1,5 @@
-import 'package:fitness_forge/ui/screen/workout_screen_easy.dart';
+import 'package:fitness_forge/ui/screen/workout_screen_standard.dart';
 import 'package:fitness_forge/ui/screen/workout_screen_hard.dart';
-import 'package:fitness_forge/ui/screen/workout_screen_medium.dart';
 import 'package:flutter/material.dart';
 
 class SelectDifficultyScreen extends StatelessWidget {
@@ -13,35 +12,24 @@ class SelectDifficultyScreen extends StatelessWidget {
       body: ListView(
         children: [
           CustomRightAlignedContainer(
-            title: 'Easy',
+            title: 'Standard',
             description: 'Composed of basic callisthenic exercises to help you start your fitness journey ',
             image: 'images/custom.jpeg',
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WorkoutScreenEasy()),
+                MaterialPageRoute(builder: (context) => WorkoutScreenStandard()),
               );
             },
           ),
           CustomRightAlignedContainer(
-            title: 'Medium',
-            description: 'Composed of more advanced versions of basic callisthenic exercises ',
-            image: 'images/custom.jpeg',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WorkoutScreenMedium()),
-              );
-            },
-          ),
-          CustomRightAlignedContainer(
-            title: 'Hard',
+            title: 'Advanced',
             description: 'Test your limits with exercises that will push your muscles to new levels',
             image: 'images/custom.jpeg',
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WorkoutScreenHard()),
+                MaterialPageRoute(builder: (context) => WorkoutScreenAdvanced()),
               );
             },
           ),

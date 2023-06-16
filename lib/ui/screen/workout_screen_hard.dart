@@ -3,7 +3,7 @@ import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
 import 'package:flutter/material.dart';
 
 
-class WorkoutScreenHard extends StatelessWidget {
+class WorkoutScreenAdvanced extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
