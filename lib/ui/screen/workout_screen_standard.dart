@@ -1,4 +1,5 @@
 import 'package:fitness_forge/ui/screen/exercise_screen.dart';
+import 'package:fitness_forge/ui/screen/hiitworkout_standard.dart';
 import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class WorkoutScreenStandard extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
+                MaterialPageRoute(builder: (context) => HiitStandardScreen()),
               );
             },
           ),
@@ -48,17 +49,6 @@ class WorkoutScreenStandard extends StatelessWidget {
             title: 'Lower Body Workout',
             description: 'Exercises: Expected duration:',
             image: 'images/lowerbody.jpeg',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
-              );
-            },
-          ),
-          CustomContainer(
-            title: 'Custom Workout',
-            description: 'Exercises: Expected duration:',
-            image: 'images/custom.jpeg',
             onPressed: () {
               Navigator.push(
                 context,

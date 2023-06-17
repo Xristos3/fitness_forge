@@ -1,5 +1,4 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/seasonal_activities_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChallengesScreen extends StatelessWidget {
@@ -7,7 +6,7 @@ class ChallengesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Challenge'),
+        title: Text('Outside Activities'),
       ),
       body: ListView(
         children: [
@@ -18,26 +17,6 @@ class ChallengesScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AchievementsScreen()),
-              );
-            },
-          ),
-          CustomRightAlignedContainer(
-            title: 'Homebased Activities',
-            image: 'images/home.png',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
-              );
-            },
-          ),
-          CustomRightAlignedContainer(
-            title: 'Seasonal Activities',
-            image: 'images/season.jpeg',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SeasonsScreen()),
               );
             },
           ),

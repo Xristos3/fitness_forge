@@ -34,17 +34,6 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             },
           ),
           CustomContainer(
-            title: 'Full Body Workout',
-            description: 'Exercises: Expected duration:',
-            image: 'images/fullbody.jpeg',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
-              );
-            },
-          ),
-          CustomContainer(
             title: 'Upper Body Workout',
             description: 'Exercises: Expected duration:',
             image: 'images/upperbody.jpeg',
@@ -59,17 +48,6 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             title: 'Lower Body Workout',
             description: 'Exercises: Expected duration:',
             image: 'images/lowerbody.jpeg',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
-              );
-            },
-          ),
-          CustomContainer(
-            title: 'Custom Workout',
-            description: 'Exercises: Expected duration:',
-            image: 'images/custom.jpeg',
             onPressed: () {
               Navigator.push(
                 context,
