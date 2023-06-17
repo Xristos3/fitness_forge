@@ -1,5 +1,7 @@
-import 'package:fitness_forge/ui/screen/exercise_screen.dart';
+import 'package:fitness_forge/ui/screen/hiitworkout_advanced.dart';
+import 'package:fitness_forge/ui/screen/lowerworkout_advanced.dart';
 import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
+import 'package:fitness_forge/ui/screen/upperworkout_advanced.dart';
 import 'package:flutter/material.dart';
 
 
@@ -29,7 +31,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
+                MaterialPageRoute(builder: (context) => HiitAdvancedScreen()),
               );
             },
           ),
@@ -40,7 +42,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
+                MaterialPageRoute(builder: (context) => UpperAdvancedScreen()),
               );
             },
           ),
@@ -51,7 +53,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ExerciseScreen('Exercise 1')),
+                MaterialPageRoute(builder: (context) => LowerAdvancedScreen()),
               );
             },
           ),

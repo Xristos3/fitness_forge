@@ -1,74 +1,36 @@
-import 'package:fitness_forge/ui/screen/achievements_screen.dart';
 import 'package:flutter/material.dart';
 
-class HiitStandardScreen extends StatelessWidget {
+class LowerStandardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hiit Workout Standard'),
+        title: Text('Lower Workout Standard'),
       ),
       body: ListView(
         children: [
-          Container(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Each exercise lasts for 40 seconds,'
-                  'after that you have 15 seconds of rest '
-                  'and then you proceed to the next one',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          CustomRightAlignedContainer(
-            title: 'Jumping Jacks',
-            image: 'images/walk.png',
-
-          ),
-          CustomRightAlignedContainer(
-            title: 'Butt kick (slow)',
-            image: 'images/walk.png',
-
-          ),
-          CustomRightAlignedContainer(
-            title: 'Side to side skiers (slow)',
-            image: 'images/walk.png',
-
-          ),
           CustomRightAlignedContainer(
             title: 'Squats',
             image: 'images/walk.png',
 
           ),
           CustomRightAlignedContainer(
-            title: 'Run in place',
+            title: 'Side lunges',
             image: 'images/walk.png',
 
           ),
           CustomRightAlignedContainer(
-            title: 'Standard Pushups',
+            title: 'Split squats',
             image: 'images/walk.png',
 
           ),
           CustomRightAlignedContainer(
-            title: 'Half Burpees',
+            title: '6x6x6 Circuit',
             image: 'images/walk.png',
 
           ),
           CustomRightAlignedContainer(
-            title: 'Leg raises (bended knees)',
-            image: 'images/walk.png',
-
-          ),
-          CustomRightAlignedContainer(
-            title: 'Standard mountain climbers',
-            image: 'images/walk.png',
-
-          ),
-          CustomRightAlignedContainer(
-            title: 'Plank Standard',
+            title: 'Calf raises',
             image: 'images/walk.png',
 
           ),

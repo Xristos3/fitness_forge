@@ -11,7 +11,97 @@ class ChallengesScreen extends StatelessWidget {
       body: ListView(
         children: [
           CustomRightAlignedContainer(
-            title: 'Outside Activities',
+            title: 'Hiking',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Cycling',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Walking',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Running',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Yoga',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Sports',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Fly a kite',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Swimming',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Skating',
+            image: 'images/walk.png',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+              );
+            },
+          ),
+          CustomRightAlignedContainer(
+            title: 'Rock Climbing',
             image: 'images/walk.png',
             onPressed: () {
               Navigator.push(
