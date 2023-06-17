@@ -11,52 +11,52 @@ class UpperStandardScreen extends StatelessWidget {
         children: [
           CustomRightAlignedContainer(
             title: 'Pushups',
-            image: 'images/walk.png',
+            image: 'images/pushup.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Bird dog hold',
-            image: 'images/walk.png',
+            image: 'images/bdh.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Bodyweight triceps extension ',
-            image: 'images/walk.png',
+            image: 'images/tes.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Dragon walk',
-            image: 'images/walk.png',
+            image: 'images/dw.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Overhead pushups',
-            image: 'images/walk.png',
+            image: 'images/spus.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Plank Standard',
-            image: 'images/walk.png',
+            image: 'images/plank.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Sit ups',
-            image: 'images/walk.png',
+            image: 'images/situps.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Side planks',
-            image: 'images/walk.png',
+            image: 'images/sideplank.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Reverse snow angels',
-            image: 'images/walk.png',
+            image: 'images/rsas.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Nose and Toes Against the Wall',
-            image: 'images/walk.png',
+            image: 'images/naratw.jpeg',
 
           ),
           SizedBox(height: 16.0), // Added spacing

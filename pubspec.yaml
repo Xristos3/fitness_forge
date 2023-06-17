@@ -96,6 +96,18 @@ flutter:
   - images/lrbks.jpeg
   - images/mcs.png
   - images/plank.jpeg
+  - images/bdh.png
+  - images/dw.jpeg
+  - images/naratw.jpeg
+  - images/rsas.png
+  - images/sideplank.png
+  - images/situps.png
+  - images/spus.jpeg
+  - images/tes.jpeg
+  - images/sidelunges.png
+  - images/sidesquats.png
+  - images/circuit.png
+  - images/calf.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -11,27 +11,27 @@ class LowerStandardScreen extends StatelessWidget {
         children: [
           CustomRightAlignedContainer(
             title: 'Squats',
-            image: 'images/walk.png',
+            image: 'images/squats.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Side lunges',
-            image: 'images/walk.png',
+            image: 'images/sidelunges.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Split squats',
-            image: 'images/walk.png',
+            image: 'images/sidesquats.png',
 
           ),
           CustomRightAlignedContainer(
             title: '6x6x6 Circuit',
-            image: 'images/walk.png',
+            image: 'images/circuit.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Calf raises',
-            image: 'images/walk.png',
+            image: 'images/calf.jpeg',
 
           ),
           SizedBox(height: 16.0), // Added spacing
