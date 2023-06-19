@@ -108,6 +108,12 @@ flutter:
   - images/sidesquats.png
   - images/circuit.png
   - images/calf.jpeg
+  - images/burpees.png
+  - images/cross.png
+  - images/crossclimbers.png
+  - images/high.jpeg
+  - images/legraises.png
+  - images/plankex.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

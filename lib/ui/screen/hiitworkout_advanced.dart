@@ -23,52 +23,52 @@ class HiitAdvancedScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Cross Jacks',
-            image: 'images/walk.png',
+            image: 'images/cross.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Butt kick (fast)',
-            image: 'images/walk.png',
+            image: 'images/bks.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Side to side skiers (explosive)',
-            image: 'images/walk.png',
+            image: 'images/sss.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Squats (explosive)',
-            image: 'images/walk.png',
+            image: 'images/squats.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'High knees',
-            image: 'images/walk.png',
+            image: 'images/high.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Explosive push ups',
-            image: 'images/walk.png',
+            image: 'images/pushup.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Full Burpees',
-            image: 'images/walk.png',
+            image: 'images/burpees.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Leg raises (stretched knees)',
-            image: 'images/walk.png',
+            image: 'images/legraises.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Cross climbers',
-            image: 'images/walk.png',
+            image: 'images/crossclimbers.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Plank with extended and stretched arms',
-            image: 'images/walk.png',
+            image: 'images/plankex.jpeg',
 
           ),
           SizedBox(height: 16.0), // Added spacing
