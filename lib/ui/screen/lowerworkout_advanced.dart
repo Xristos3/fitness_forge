@@ -11,27 +11,27 @@ class LowerAdvancedScreen extends StatelessWidget {
         children: [
           CustomRightAlignedContainer(
             title: 'Explosive Squats',
-            image: 'images/walk.png',
+            image: 'images/squats.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'One Leg Squats',
-            image: 'images/walk.png',
+            image: 'images/oneleg.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Explosive Split squats',
-            image: 'images/walk.png',
+            image: 'images/sidesquats.png',
 
           ),
           CustomRightAlignedContainer(
             title: '15x15x15 Circuit',
-            image: 'images/walk.png',
+            image: 'images/circuit.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Explosive Calf raises',
-            image: 'images/walk.png',
+            image: 'images/calf.jpeg',
 
           ),
           SizedBox(height: 16.0), // Added spacing

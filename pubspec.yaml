@@ -120,6 +120,7 @@ flutter:
   - images/hand.jpeg
   - images/sideleg.png
   - images/superman.png
+  - images/oneleg.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
