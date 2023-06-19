@@ -11,52 +11,52 @@ class UpperAdvancedScreen extends StatelessWidget {
         children: [
           CustomRightAlignedContainer(
             title: 'Explosive Pushups',
-            image: 'images/walk.png',
+            image: 'images/pushup.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Diamond press up',
-            image: 'images/walk.png',
+            image: 'images/diamond.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Tricep dips',
-            image: 'images/walk.png',
+            image: 'images/dips.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Plank with extended and stretched arms',
-            image: 'images/walk.png',
+            image: 'images/plankex.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Leg raises',
-            image: 'images/walk.png',
+            image: 'images/legraises.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Side leg raises',
-            image: 'images/walk.png',
+            image: 'images/sideleg.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Dolphin kicks',
-            image: 'images/walk.png',
+            image: 'images/dolphin.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Superman',
-            image: 'images/walk.png',
+            image: 'images/superman.png',
 
           ),
           CustomRightAlignedContainer(
             title: 'Handstand pushups ',
-            image: 'images/walk.png',
+            image: 'images/hand.jpeg',
 
           ),
           CustomRightAlignedContainer(
             title: 'Nose and Toes Against the Wall',
-            image: 'images/walk.png',
+            image: 'images/naratw.jpeg',
 
           ),
           SizedBox(height: 16.0), // Added spacing

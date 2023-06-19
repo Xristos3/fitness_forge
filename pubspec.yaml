@@ -114,6 +114,12 @@ flutter:
   - images/high.jpeg
   - images/legraises.png
   - images/plankex.jpeg
+  - images/diamond.jpeg
+  - images/dips.png
+  - images/dolphin.jpeg
+  - images/hand.jpeg
+  - images/sideleg.png
+  - images/superman.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
