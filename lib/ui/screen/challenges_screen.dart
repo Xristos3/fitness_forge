@@ -22,7 +22,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Cycling',
-            image: 'images/walk.png',
+            image: 'images/cycling.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -32,7 +32,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Walking',
-            image: 'images/walk.png',
+            image: 'images/walking.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -42,7 +42,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Running',
-            image: 'images/walk.png',
+            image: 'images/run.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -52,7 +52,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Yoga',
-            image: 'images/walk.png',
+            image: 'images/yoga.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -62,7 +62,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Sports',
-            image: 'images/walk.png',
+            image: 'images/sports.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -72,7 +72,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Fly a kite',
-            image: 'images/walk.png',
+            image: 'images/kite.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -82,7 +82,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Swimming',
-            image: 'images/walk.png',
+            image: 'images/swim.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -92,7 +92,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Skating',
-            image: 'images/walk.png',
+            image: 'images/skate.png',
             onPressed: () {
               Navigator.push(
                 context,
@@ -102,7 +102,7 @@ class ChallengesScreen extends StatelessWidget {
           ),
           CustomRightAlignedContainer(
             title: 'Rock Climbing',
-            image: 'images/walk.png',
+            image: 'images/rock.png',
             onPressed: () {
               Navigator.push(
                 context,

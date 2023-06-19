@@ -121,7 +121,15 @@ flutter:
   - images/sideleg.png
   - images/superman.png
   - images/oneleg.jpeg
-
+  - images/cycling.png
+  - images/kite.png
+  - images/rock.png
+  - images/run.png
+  - images/skate.png
+  - images/sports.png
+  - images/swim.png
+  - images/walking.png
+  - images/yoga.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
