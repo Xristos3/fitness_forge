@@ -1,5 +1,7 @@
 import 'package:fitness_forge/ui/screen/calendar_screen.dart';
+import 'package:fitness_forge/ui/screen/calendar_screen2.dart';
 import 'package:fitness_forge/ui/screen/chat_screen.dart';
+import 'package:fitness_forge/ui/screen/chat_screen2.dart';
 import 'package:fitness_forge/ui/screen/claim_screen.dart';
 import 'package:fitness_forge/ui/screen/extra_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
@@ -18,8 +20,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   final List<Widget> _screens = [
     WorkoutScreenStandard(),
     ProfileScreen(),
-    CalendarScreen(),
-    ChatScreen(),
+    EventCalendarPage(),
+    ChatScreen2(),
     ExtraScreen(),
   ];
 
