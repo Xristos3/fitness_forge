@@ -1,7 +1,9 @@
 import 'package:fitness_forge/ui/screen/forgotpassword_screen.dart';
+import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:fitness_forge/ui/screen/signup_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen2 extends StatefulWidget {
   @override
@@ -10,24 +12,57 @@ class LoginScreen2 extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen2> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _identifierController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
 
-  void _loginWithCredentials() async {
+  void _loginWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: '${_usernameController.text.trim()}@example.com',
-          password: _passwordController.text,
-        );
+        String identifier = _identifierController.text.trim();
+        String password = _passwordController.text;
 
-        // Login successful, do something
-        print('User logged in: ${userCredential.user!.email}');
+        QuerySnapshot emailQuerySnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('email', isEqualTo: identifier)
+            .limit(1)
+            .get();
 
-        if (_rememberMe) {
-          // Save login credentials locally for future use
-          // You can use shared preferences or secure storage packages for this
+        QuerySnapshot usernameQuerySnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('username', isEqualTo: identifier)
+            .limit(1)
+            .get();
+
+        List<QueryDocumentSnapshot> documents = [
+          ...emailQuerySnapshot.docs,
+          ...usernameQuerySnapshot.docs,
+        ];
+
+        if (documents.isNotEmpty) {
+          QueryDocumentSnapshot docSnapshot = documents.first;
+          String? email = (docSnapshot.data() as Map<String, dynamic>)['email'] as String?;
+
+
+          if (email != null) {
+            UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: email,
+              password: password,
+            );
+
+            // Login successful, navigate to a new screen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+            );
+          } else {
+            // Email is null for the retrieved document
+            print('Email not found for the user');
+          }
+        } else {
+          // User not found with the provided email/username
+          print('User not found');
         }
       } catch (e) {
         // Login failed, handle the error
@@ -65,11 +100,11 @@ class _LoginScreenState extends State<LoginScreen2> {
           child: Column(
             children: [
               TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
+                controller: _identifierController,
+                decoration: InputDecoration(labelText: 'Email or Username'),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter your username';
+                    return 'Please enter your email or username';
                   }
                   return null;
                 },
@@ -100,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen2> {
                 ],
               ),
               ElevatedButton(
-                onPressed: _loginWithCredentials,
+                onPressed: _loginWithEmailAndPassword,
                 child: Text('Login'),
               ),
               TextButton(
@@ -118,5 +153,13 @@ class _LoginScreenState extends State<LoginScreen2> {
     );
   }
 }
+
+
+
+
+
+
+
+
 
 

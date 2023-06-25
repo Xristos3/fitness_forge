@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_forge/ui/screen/home_screen.dart';
 
 class SignupScreen2 extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class SignupScreen2 extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen2> {
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -16,14 +18,17 @@ class _SignupScreenState extends State<SignupScreen2> {
     try {
       final UserCredential userCredential =
       await _auth.createUserWithEmailAndPassword(
-        email: _usernameController.text.trim(),
+        email: _emailController.text.trim(),
         password: _passwordController.text,
       );
 
       if (userCredential.user != null) {
         // Signup successful
         print('Signup successful');
-        // You can navigate to another screen or perform other actions here
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+        );
       }
     } catch (e) {
       // Signup failed
@@ -43,6 +48,13 @@ class _SignupScreenState extends State<SignupScreen2> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
+            SizedBox(height: 16.0),
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
