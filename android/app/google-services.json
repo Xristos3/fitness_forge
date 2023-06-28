@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:448748502055:android:32a8d5a1bd554a70c2a202",
+        "mobilesdk_app_id": "1:448748502055:android:2355b7a7a1766cffc2a202",
         "android_client_info": {
-          "package_name": "com.android.application"
+          "package_name": "com.example.fitness_forge"
         }
       },
       "oauth_client": [
