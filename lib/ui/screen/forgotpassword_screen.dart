@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  final TextEditingController usernameController = TextEditingController();
+class ForgotPasswordScreen extends StatefulWidget {
+  @override
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final TextEditingController emailOrUsernameController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  bool showPassword = false; // Added variable to toggle password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +24,31 @@ class ForgotPasswordScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              controller: usernameController,
+              controller: emailOrUsernameController,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'Email or Username',
               ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: newPasswordController,
+              decoration: InputDecoration(
+                labelText: 'New Password (must contain 6 or more characters)',
+                suffixIcon: IconButton(
+                  icon: Icon(showPassword ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      showPassword = !showPassword;
+                    });
+                  },
+                ),
+              ),
+              obscureText: !showPassword, // Toggle password visibility
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                resetPassword(context, usernameController.text);
+                resetPassword(context, emailOrUsernameController.text, newPasswordController.text);
               },
               child: Text('Reset Password'),
             ),
@@ -35,10 +58,16 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 
-  Future<void> resetPassword(BuildContext context, String username) async {
+  Future<void> resetPassword(BuildContext context, String emailOrUsername, String newPassword) async {
     try {
       final userRef = FirebaseFirestore.instance.collection('users');
-      final querySnapshot = await userRef.where('username', isEqualTo: username).get();
+      QuerySnapshot querySnapshot;
+
+      if (emailOrUsername.contains('@')) {
+        querySnapshot = await userRef.where('email', isEqualTo: emailOrUsername).get();
+      } else {
+        querySnapshot = await userRef.where('username', isEqualTo: emailOrUsername).get();
+      }
 
       if (querySnapshot.docs.isNotEmpty) {
         final userDoc = querySnapshot.docs.first;
@@ -46,17 +75,19 @@ class ForgotPasswordScreen extends StatelessWidget {
 
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
+        await userRef.doc(userDoc.id).update({'password': newPassword});
+
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('Password Reset'),
-              content: Text('A password reset email has been sent to the email address associated with $username.'),
+              content: Text('An email was sent to $emailOrUsername. Please enter the new password again through the link before you log in again.'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.pop(context); // Pop ForgotPasswordScreen
+                    Navigator.pop(context);
                   },
                   child: Text('OK'),
                 ),
@@ -70,7 +101,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('User not found'),
-              content: Text('The provided username does not exist.'),
+              content: Text('The provided email or username does not exist.'),
               actions: [
                 TextButton(
                   onPressed: () {

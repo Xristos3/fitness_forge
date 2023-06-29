@@ -1,5 +1,6 @@
 import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:fitness_forge/ui/screen/login_screen.dart';
+import 'package:fitness_forge/ui/screen/login_screen2.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -83,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Logout button logic
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
+                MaterialPageRoute(builder: (context) => LoginScreen2()),
               );
             },
             child: Text('Logout'),

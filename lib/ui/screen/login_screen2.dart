@@ -12,7 +12,7 @@ class LoginScreen2 extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen2> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _identifierController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
   String _errorMessage = '';
@@ -21,36 +21,57 @@ class _LoginScreenState extends State<LoginScreen2> {
   void _loginWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       try {
-        String identifier = _identifierController.text.trim();
+        String email = _usernameController.text.trim();
         String password = _passwordController.text;
 
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .where('email', isEqualTo: identifier)
-            .where('password', isEqualTo: password)
-            .limit(1)
-            .get();
+        // Check if the input is an email or a username
+        bool isEmail = email.contains('@');
+
+        QuerySnapshot querySnapshot;
+        if (isEmail) {
+          querySnapshot = await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: email)
+              .limit(1)
+              .get();
+        } else {
+          querySnapshot = await FirebaseFirestore.instance
+              .collection('users')
+              .where('username', isEqualTo: email)
+              .limit(1)
+              .get();
+        }
 
         if (querySnapshot.size > 0) {
           QueryDocumentSnapshot docSnapshot = querySnapshot.docs.first;
-          String email = docSnapshot['email'];
-          String password = docSnapshot['password'];
+          String storedPassword = docSnapshot['password'];
 
-          UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: email,
-            password: password,
-          );
+          if (password == storedPassword) {
+            UserCredential userCredential;
+            if (isEmail) {
+              userCredential = await FirebaseAuth.instance
+                  .signInWithEmailAndPassword(email: email, password: password);
+            } else {
+              userCredential = await FirebaseAuth.instance
+                  .signInWithEmailAndPassword(
+                  email: docSnapshot['email'], password: password);
+            }
 
-          // Login successful, navigate to a new screen
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
-          );
+            // Login successful, navigate to a new screen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+            );
+          } else {
+            // Password doesn't match
+            setState(() {
+              _errorMessage = 'Invalid password';
+            });
+          }
         } else {
-          // User not found or credentials don't match
+          // User not found
           setState(() {
-            _errorMessage = 'Invalid credentials';
+            _errorMessage = 'User not found';
           });
         }
       } catch (e) {
@@ -89,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen2> {
           child: Column(
             children: [
               TextFormField(
-                controller: _identifierController,
+                controller: _usernameController,
                 decoration: InputDecoration(labelText: 'Email or Username'),
                 validator: (value) {
                   if (value!.isEmpty) {

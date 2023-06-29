@@ -73,22 +73,25 @@ class _SignupScreenState extends State<SignupScreen2> {
               ),
             ),
             SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: !_passwordVisible, // Toggle password visibility
-            ),
-            SizedBox(height: 16.0),
-            CheckboxListTile(
-              title: Text('Show Password'),
-              value: _passwordVisible,
-              onChanged: (value) {
-                setState(() {
-                  _passwordVisible = value!;
-                });
-              },
+            Stack(
+              alignment: Alignment.centerRight,
+              children: [
+                TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password (must contain 6 or more characters)',
+                  ),
+                  obscureText: !_passwordVisible, // Toggle password visibility
+                ),
+                IconButton(
+                  icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                ),
+              ],
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
