@@ -20,7 +20,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   final List<Widget> _screens = [
     WorkoutScreenStandard(),
     ProfileScreen(),
-    EventCalendarPage(),
+    CalendarScreen2(),
     ChatScreen2(),
     ExtraScreen(),
   ];

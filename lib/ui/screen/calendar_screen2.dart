@@ -1,98 +1,115 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
-class Event {
-  final String title;
-
-  Event(this.title);
-}
-
-class EventProvider extends ChangeNotifier {
-  Map<DateTime, List<Event>> events = {};
-
-  void addEvent(DateTime date, Event event) {
-    events[date] ??= [];
-    events[date]!.add(event);
-    notifyListeners();
-  }
-
-  void deleteEvent(DateTime date, Event event) {
-    events[date]?.remove(event);
-    notifyListeners();
-  }
-}
-
-class EventCalendarPage extends StatefulWidget {
+class CalendarScreen2 extends StatefulWidget {
   @override
-  _EventCalendarPageState createState() => _EventCalendarPageState();
+  _CalendarScreenState createState() => _CalendarScreenState();
 }
 
-class _EventCalendarPageState extends State<EventCalendarPage> {
+class _CalendarScreenState extends State<CalendarScreen2> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  Map<DateTime, List<String>> _events = {};
+
+  TextEditingController _eventController = TextEditingController();
+
+  @override
+  void dispose() {
+    _eventController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var eventProvider = Provider.of<EventProvider>(context);
-    var events = eventProvider.events;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Calendar'),
+        title: Text('Calendar'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: _showAddEventDialog,
+              child: Text('Add Event'),
+            ),
+          ),
           TableCalendar(
-            calendarFormat: _calendarFormat,
+            firstDay: DateTime.utc(2023, 1, 1),
+            lastDay: DateTime.utc(2023, 12, 31),
             focusedDay: _focusedDay,
-            firstDay: DateTime(2021),
-            lastDay: DateTime(2022),
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-              });
-            },
+            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            calendarFormat: _calendarFormat,
             onFormatChanged: (format) {
               setState(() {
                 _calendarFormat = format;
               });
             },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay; // update the focused day as well
+              });
+            },
             eventLoader: (day) {
-              return events[day] ?? [];
+              return _events[day] ?? [];
             },
           ),
-          SizedBox(height: 16),
-          Text('Selected Day: ${_selectedDay != null ? DateFormat('yyyy-MM-dd').format(_selectedDay!) : 'None'}'),
-          SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              var event = Event('New Event');
-              eventProvider.addEvent(_selectedDay!, event);
-            },
-            child: Text('Add Event'),
+          SizedBox(height: 16.0),
+          Text(
+            'Selected Day Events:',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
-          if (_selectedDay != null && events[_selectedDay!] != null)
-            Column(
-              children: events[_selectedDay!]!
-                  .map((event) => ListTile(
-                title: Text(event.title),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    eventProvider.deleteEvent(_selectedDay!, event);
-                  },
-                ),
-              ))
-                  .toList(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _events[_selectedDay]?.length ?? 0,
+              itemBuilder: (context, index) {
+                final event = _events[_selectedDay]![index];
+                return ListTile(
+                  title: Text(event),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      setState(() {
+                        _events[_selectedDay]!.remove(event);
+                      });
+                    },
+                  ),
+                );
+              },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showAddEventDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Add Event'),
+        content: TextField(
+          controller: _eventController,
+          decoration: InputDecoration(labelText: 'Event'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                final event = _eventController.text;
+                if (event.isNotEmpty) {
+                  _events[_selectedDay] ??= [];
+                  _events[_selectedDay]!.add(event);
+                }
+                _eventController.clear();
+              });
+            },
+            child: Text('Save'),
+          ),
         ],
       ),
     );
