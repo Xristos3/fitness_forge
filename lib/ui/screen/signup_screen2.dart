@@ -1,6 +1,7 @@
+import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 
 class SignupScreen2 extends StatefulWidget {
   @override
@@ -11,8 +12,10 @@ class _SignupScreenState extends State<SignupScreen2> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  bool _passwordVisible = false; // Add a boolean variable to track password visibility
 
   FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance; // Firestore instance
 
   void _signUp() async {
     try {
@@ -25,6 +28,14 @@ class _SignupScreenState extends State<SignupScreen2> {
       if (userCredential.user != null) {
         // Signup successful
         print('Signup successful');
+
+        // Store user data in Firestore
+        await _firestore.collection('users').doc(userCredential.user!.uid).set({
+          'email': _emailController.text.trim(),
+          'username': _usernameController.text.trim(),
+          'password': _passwordController.text,
+        });
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
@@ -67,7 +78,17 @@ class _SignupScreenState extends State<SignupScreen2> {
               decoration: InputDecoration(
                 labelText: 'Password',
               ),
-              obscureText: true,
+              obscureText: !_passwordVisible, // Toggle password visibility
+            ),
+            SizedBox(height: 16.0),
+            CheckboxListTile(
+              title: Text('Show Password'),
+              value: _passwordVisible,
+              onChanged: (value) {
+                setState(() {
+                  _passwordVisible = value!;
+                });
+              },
             ),
             SizedBox(height: 16.0),
             ElevatedButton(

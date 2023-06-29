@@ -1,9 +1,9 @@
-import 'package:fitness_forge/ui/screen/forgotpassword_screen.dart';
-import 'package:fitness_forge/ui/screen/home_screen.dart';
-import 'package:fitness_forge/ui/screen/signup_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitness_forge/ui/screen/forgotpassword_screen.dart';
+import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:fitness_forge/ui/screen/signup_screen2.dart';
 
 class LoginScreen2 extends StatefulWidget {
   @override
@@ -15,6 +15,8 @@ class _LoginScreenState extends State<LoginScreen2> {
   final TextEditingController _identifierController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
+  String _errorMessage = '';
+  bool _passwordVisible = false;
 
   void _loginWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
@@ -22,47 +24,34 @@ class _LoginScreenState extends State<LoginScreen2> {
         String identifier = _identifierController.text.trim();
         String password = _passwordController.text;
 
-        QuerySnapshot emailQuerySnapshot = await FirebaseFirestore.instance
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('users')
             .where('email', isEqualTo: identifier)
+            .where('password', isEqualTo: password)
             .limit(1)
             .get();
 
-        QuerySnapshot usernameQuerySnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .where('username', isEqualTo: identifier)
-            .limit(1)
-            .get();
+        if (querySnapshot.size > 0) {
+          QueryDocumentSnapshot docSnapshot = querySnapshot.docs.first;
+          String email = docSnapshot['email'];
+          String password = docSnapshot['password'];
 
-        List<QueryDocumentSnapshot> documents = [
-          ...emailQuerySnapshot.docs,
-          ...usernameQuerySnapshot.docs,
-        ];
+          UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          );
 
-        if (documents.isNotEmpty) {
-          QueryDocumentSnapshot docSnapshot = documents.first;
-          String? email = (docSnapshot.data() as Map<String, dynamic>)['email'] as String?;
-
-
-          if (email != null) {
-            UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: email,
-              password: password,
-            );
-
-            // Login successful, navigate to a new screen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
-            );
-          } else {
-            // Email is null for the retrieved document
-            print('Email not found for the user');
-          }
+          // Login successful, navigate to a new screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+          );
         } else {
-          // User not found with the provided email/username
-          print('User not found');
+          // User not found or credentials don't match
+          setState(() {
+            _errorMessage = 'Invalid credentials';
+          });
         }
       } catch (e) {
         // Login failed, handle the error
@@ -111,8 +100,20 @@ class _LoginScreenState extends State<LoginScreen2> {
               ),
               TextFormField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
+                  ),
+                ),
+                obscureText: !_passwordVisible,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter your password';
@@ -134,6 +135,10 @@ class _LoginScreenState extends State<LoginScreen2> {
                   Text('Remember Me'),
                 ],
               ),
+              Text(
+                _errorMessage,
+                style: TextStyle(color: Colors.red),
+              ),
               ElevatedButton(
                 onPressed: _loginWithEmailAndPassword,
                 child: Text('Login'),
@@ -153,13 +158,3 @@ class _LoginScreenState extends State<LoginScreen2> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
