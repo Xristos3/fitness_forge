@@ -31,8 +31,8 @@ class _SignupScreenState extends State<SignupScreen2> {
 
         // Store user data in Firestore
         await _firestore.collection('users').doc(userCredential.user!.uid).set({
-          'email': _emailController.text.trim(),
           'username': _usernameController.text.trim(),
+          'email': _emailController.text.trim(),
           'password': _passwordController.text,
         });
 

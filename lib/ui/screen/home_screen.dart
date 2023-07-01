@@ -4,6 +4,7 @@ import 'package:fitness_forge/ui/screen/chat_screen.dart';
 import 'package:fitness_forge/ui/screen/chat_screen2.dart';
 import 'package:fitness_forge/ui/screen/claim_screen.dart';
 import 'package:fitness_forge/ui/screen/extra_screen.dart';
+import 'package:fitness_forge/ui/screen/friendrequest_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
 import 'package:fitness_forge/ui/screen/settings_screen.dart';
 import 'package:fitness_forge/ui/screen/workout_screen_standard.dart';
@@ -21,7 +22,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     WorkoutScreenStandard(),
     ProfileScreen(),
     CalendarScreen2(),
-    ChatScreen2(),
+    FriendRequestScreen(),
     ExtraScreen(),
   ];
 
