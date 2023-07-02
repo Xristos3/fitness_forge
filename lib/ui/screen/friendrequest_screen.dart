@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_forge/ui/screen/friendslist_screen.dart';
+import 'package:flutter/material.dart';
 
 class FriendRequestScreen extends StatefulWidget {
   @override
@@ -10,6 +11,9 @@ class FriendRequestScreen extends StatefulWidget {
 class _FriendRequestScreenState extends State<FriendRequestScreen> {
   CollectionReference friendRequests =
   FirebaseFirestore.instance.collection('friendRequests');
+  CollectionReference friends =
+  FirebaseFirestore.instance.collection('friends');
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   late User currentUser;
 
@@ -34,7 +38,8 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     });
   }
 
-  Future<void> sendFriendRequest(String recipientUsername, String message) async {
+  Future<void> sendFriendRequest(
+      String recipientUsername, String message) async {
     String senderId = currentUser.uid;
     String status = 'pending';
 
@@ -79,6 +84,39 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     }
   }
 
+  Future<void> acceptRequest(
+      String requestId, String senderId, String senderUsername) async {
+    // Update the status of the friend request to accepted
+    await friendRequests.doc(requestId).update({'status': 'accepted'});
+
+    // Add the sender to the friends collection
+    await friends
+        .doc(currentUser.uid)
+        .collection('userFriends')
+        .doc(senderId)
+        .set({
+      'friendId': senderId,
+      'friendUsername': senderUsername,
+    });
+
+    // Perform any other necessary actions after accepting the friend request
+    // ...
+
+    // Remove the friend request from the friendRequests collection
+    friendRequests.doc(requestId).delete();
+  }
+
+  Future<void> rejectRequest(String requestId) async {
+    // Update the status of the friend request to rejected
+    await friendRequests.doc(requestId).update({'status': 'rejected'});
+
+    // Perform any other necessary actions after rejecting the friend request
+    // ...
+
+    // Remove the friend request from the friendRequests collection
+    friendRequests.doc(requestId).delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,53 +126,41 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: friendRequests
             .where('recipientId', isEqualTo: currentUser.uid)
+            .where('status', isEqualTo: 'pending')
             .snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-
-          if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
-            return Text('No friend requests found.');
+          if (snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text('No friend requests.'),
+            );
           }
 
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               DocumentSnapshot request = snapshot.data!.docs[index];
+              String requestId = request.id;
               String senderId = request['senderId'];
-              String recipientId = request['recipientId'];
               String message = request['message'];
 
               return FutureBuilder<DocumentSnapshot>(
-                future: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(senderId)
-                    .get(),
+                future: users.doc(senderId).get(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return ListTile(
-                      title: Text('Loading...'),
-                      subtitle: Text(message),
-                    );
-                  }
-
-                  if (!snapshot.hasData || !snapshot.data!.exists) {
-                    return ListTile(
-                      title: Text('Unknown User'),
-                      subtitle: Text(message),
-                    );
+                  if (!snapshot.hasData) {
+                    return SizedBox.shrink();
                   }
 
                   String senderUsername = snapshot.data!['username'];
 
                   return ListTile(
-                    title: Text(senderUsername),
-                    subtitle: Text(message),
+                    title: Text('From: $senderUsername'),
+                    subtitle: Text('Message: $message'),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -142,14 +168,14 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                           icon: Icon(Icons.check),
                           color: Colors.green,
                           onPressed: () {
-                            acceptRequest(request.id, recipientId);
+                            acceptRequest(requestId, senderId, senderUsername);
                           },
                         ),
                         IconButton(
                           icon: Icon(Icons.close),
                           color: Colors.red,
                           onPressed: () {
-                            rejectRequest(request.id);
+                            rejectRequest(requestId);
                           },
                         ),
                       ],
@@ -161,27 +187,30 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showSendFriendRequestDialog(context);
-        },
-        label: Text('Send Friend Request'),
-        icon: Icon(Icons.person_add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton.extended(
+            onPressed: () {
+              showSendFriendRequestDialog(context);
+            },
+            label: Text('Send Friend Request'),
+            icon: Icon(Icons.person_add),
+          ),
+          SizedBox(width: 16),
+          FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FriendsListScreen()),
+              );
+            },
+            label: Text('Friends List'),
+            icon: Icon(Icons.arrow_forward),
+          ),
+        ],
       ),
     );
-  }
-
-  Future<void> acceptRequest(String requestId, String recipientId) async {
-    // Update the status of the friend request to accepted
-    await friendRequests.doc(requestId).update({'status': 'accepted'});
-
-    // Perform any other necessary actions after accepting the friend request
-    // ...
-  }
-
-  Future<void> rejectRequest(String requestId) async {
-    // Delete the document from the 'friendRequests' collection
-    friendRequests.doc(requestId).delete();
   }
 
   Future<void> showSendFriendRequestDialog(BuildContext context) async {
@@ -232,3 +261,4 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     );
   }
 }
+
