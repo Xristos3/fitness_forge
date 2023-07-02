@@ -1,4 +1,5 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/jumpingjacks_standard.dart';
 import 'package:flutter/material.dart';
 
 class HiitStandardScreen extends StatelessWidget {
@@ -76,7 +77,12 @@ class HiitStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CountdownScreen(),
+                ),
+              );
             },
           ),
         ],
