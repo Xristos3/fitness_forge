@@ -80,7 +80,7 @@ class HiitStandardScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CountdownScreen(),
+                  builder: (context) => jumpingjacksstandardScreen(),
                 ),
               );
             },

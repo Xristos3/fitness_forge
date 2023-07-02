@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,19 +12,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => jumpingjacksstandardScreen(),
-        '/buttkickstandardScreen': (context) => ButtkickStandardScreen(),
+        '/': (context) => ButtkickStandardScreen(),
+        '/buttkickstandardScreen': (context) => AchievementsScreen(),
       },
     );
   }
 }
 
-class jumpingjacksstandardScreen extends StatefulWidget {
+class ButtkickStandardScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
+class _CountdownScreenState extends State<ButtkickStandardScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -96,7 +95,7 @@ class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
                   ),
                   SizedBox(height: 8),
                   Image.asset(
-                    'images/jjs.jpeg', // Replace with your actual image filename
+                    'images/bks.jpeg', // Replace with your actual image filename
                     height: 200,
                     width: 200,
                   ),
@@ -145,7 +144,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ButtkickStandardScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AchievementsScreen()));
         }
       });
     });
