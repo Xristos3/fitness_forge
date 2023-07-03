@@ -1,3 +1,4 @@
+import 'package:fitness_forge/ui/screen/lowersquats_standard.dart';
 import 'package:flutter/material.dart';
 
 class LowerStandardScreen extends StatelessWidget {
@@ -38,7 +39,12 @@ class LowerStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LowerSquatsScreenStandard(),
+                ),
+              );
             },
           ),
         ],
