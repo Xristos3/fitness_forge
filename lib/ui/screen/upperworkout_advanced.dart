@@ -1,3 +1,4 @@
+import 'package:fitness_forge/ui/screen/explosivepushups_advanced.dart';
 import 'package:flutter/material.dart';
 
 class UpperAdvancedScreen extends StatelessWidget {
@@ -9,6 +10,17 @@ class UpperAdvancedScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'After you press start complete the number of each set and reps'
+                  ' before proceeding to the next exercise.',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           CustomRightAlignedContainer(
             title: 'Explosive Pushups',
             image: 'images/pushup.jpeg',
@@ -50,7 +62,7 @@ class UpperAdvancedScreen extends StatelessWidget {
 
           ),
           CustomRightAlignedContainer(
-            title: 'Handstand pushups ',
+            title: 'Handstand pushups',
             image: 'images/hand.jpeg',
 
           ),
@@ -63,7 +75,12 @@ class UpperAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExplosivePushUpScreenAdvanced(),
+                ),
+              );
             },
           ),
         ],
