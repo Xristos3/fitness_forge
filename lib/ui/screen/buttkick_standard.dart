@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/sidetoside_standard.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => ButtkickStandardScreen(),
-        '/buttkickstandardScreen': (context) => AchievementsScreen(),
+        '/buttkickstandardScreen': (context) => SidetoSideStandardScreen(),
       },
     );
   }
@@ -85,12 +86,14 @@ class _CountdownScreenState extends State<ButtkickStandardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Title',
+                    'Butt kick (slow)',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Description',
+                    'kicking your shins back behind you to touch your buttocks with the bottom of your foot. '
+                        'The movement utilizes the hamstrings while stretching the flexors and quadriceps. '
+                        'Butt kickers are an effective glute-building move and they are suitable for all fitness levels.',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
@@ -144,7 +147,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AchievementsScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SidetoSideStandardScreen()));
         }
       });
     });

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
+import 'package:fitness_forge/ui/screen/squats_standard.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,19 +13,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => jumpingjacksstandardScreen(),
-        '/buttkickstandardScreen': (context) => ButtkickStandardScreen(),
+        '/': (context) => SidetoSideStandardScreen(),
+        '/buttkickstandardScreen': (context) => SquatsStandardScreen(),
       },
     );
   }
 }
 
-class jumpingjacksstandardScreen extends StatefulWidget {
+class SidetoSideStandardScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
+class _CountdownScreenState extends State<SidetoSideStandardScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -86,19 +86,19 @@ class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Jumping Jacks',
+                    'Side to side skiers (slow)',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Begin by standing with your legs straight and your arms to your sides. '
-                        'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
-                        ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.',
+                    'Stand with your feet hip-width apart and knees slightly bent (an athletic stance). '
+                        'Shift your weight so you are balancing on one leg. Jump to the side, landing on the other leg, '
+                        'landing softly. Then jump to the other side, landing on the other leg.',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Image.asset(
-                    'images/jjs.jpeg', // Replace with your actual image filename
+                    'images/sss.jpeg', // Replace with your actual image filename
                     height: 200,
                     width: 200,
                   ),
@@ -147,7 +147,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ButtkickStandardScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SquatsStandardScreen()));
         }
       });
     });

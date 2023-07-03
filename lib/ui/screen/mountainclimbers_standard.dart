@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
+import 'package:fitness_forge/ui/screen/plank_standard.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,19 +13,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => jumpingjacksstandardScreen(),
-        '/buttkickstandardScreen': (context) => ButtkickStandardScreen(),
+        '/': (context) => MountainClimbersStandardScreen(),
+        '/buttkickstandardScreen': (context) => PlankStandardScreen(),
       },
     );
   }
 }
 
-class jumpingjacksstandardScreen extends StatefulWidget {
+class MountainClimbersStandardScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
+class _CountdownScreenState extends State<MountainClimbersStandardScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -86,19 +86,20 @@ class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Jumping Jacks',
+                    'Standard mountain climbers',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Begin by standing with your legs straight and your arms to your sides. '
-                        'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
-                        ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.',
+                    'Performed from a plank position, you will alternate bringing one knee to your chest, '
+                        'then back out again, speeding up each time until you are running against the floor. '
+                        'While the move sounds simple, mountain climbers exercise almost the entire body '
+                        'and raise your heart rate.',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Image.asset(
-                    'images/jjs.jpeg', // Replace with your actual image filename
+                    'images/mcs.png', // Replace with your actual image filename
                     height: 200,
                     width: 200,
                   ),
@@ -147,7 +148,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ButtkickStandardScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PlankStandardScreen()));
         }
       });
     });

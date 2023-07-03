@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
-import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
+import 'package:fitness_forge/ui/screen/runinplace_standard.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,19 +13,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => jumpingjacksstandardScreen(),
-        '/buttkickstandardScreen': (context) => ButtkickStandardScreen(),
+        '/': (context) => SquatsStandardScreen(),
+        '/buttkickstandardScreen': (context) => RuninPlaceStandardScreen(),
       },
     );
   }
 }
 
-class jumpingjacksstandardScreen extends StatefulWidget {
+class SquatsStandardScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
+class _CountdownScreenState extends State<SquatsStandardScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -86,19 +86,19 @@ class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Jumping Jacks',
+                    'Squats',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Begin by standing with your legs straight and your arms to your sides. '
-                        'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
-                        ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.',
+                    'A squat is a strength exercise in which the trainee lowers their hips from a standing position '
+                        'and then stands back up. During the descent, the hip and knee joints flex while the ankle joint dorsiflexes; '
+                        'conversely the hip and knee joints extend and the ankle joint plantarflexes when standing up.',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Image.asset(
-                    'images/jjs.jpeg', // Replace with your actual image filename
+                    'images/squats.jpeg', // Replace with your actual image filename
                     height: 200,
                     width: 200,
                   ),
@@ -147,7 +147,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ButtkickStandardScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RuninPlaceStandardScreen()));
         }
       });
     });
