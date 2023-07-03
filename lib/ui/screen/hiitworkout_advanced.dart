@@ -1,3 +1,4 @@
+import 'package:fitness_forge/ui/screen/crossjacks_advanced.dart';
 import 'package:flutter/material.dart';
 
 class HiitAdvancedScreen extends StatelessWidget {
@@ -5,7 +6,7 @@ class HiitAdvancedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Upper Workout Advanced'),
+        title: Text('Hiit Workout Advanced'),
       ),
       body: ListView(
         children: [
@@ -75,7 +76,12 @@ class HiitAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CrossJacksAdvancedScreen(),
+                ),
+              );
             },
           ),
         ],
