@@ -1,3 +1,4 @@
+import 'package:fitness_forge/ui/screen/lowerexsquats_advanced.dart';
 import 'package:flutter/material.dart';
 
 class LowerAdvancedScreen extends StatelessWidget {
@@ -38,7 +39,12 @@ class LowerAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LowerExplosiveSquatsScreenAdvanced(),
+                ),
+              );
             },
           ),
         ],
