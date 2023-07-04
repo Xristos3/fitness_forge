@@ -1,5 +1,7 @@
-import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 
 class BadgesScreen extends StatefulWidget {
   @override
@@ -26,6 +28,8 @@ class _BadgesScreenState extends State<BadgesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Badges Screen'),
@@ -51,11 +55,32 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Username:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              username = value;
-                            });
+                        FutureBuilder<DocumentSnapshot>(
+                          future: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(userId)
+                              .get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            } else if (snapshot.hasData) {
+                              String username = snapshot.data!['username'];
+
+                              return TextField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    username = value;
+                                  });
+                                },
+                                controller:
+                                TextEditingController(text: username),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return Text('No data available');
+                            }
                           },
                         ),
                         SizedBox(height: 16.0),
@@ -240,3 +265,4 @@ class _BadgesScreenState extends State<BadgesScreen> {
     );
   }
 }
+
