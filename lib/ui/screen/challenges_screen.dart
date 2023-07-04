@@ -1,4 +1,13 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/challenges_cycling.dart';
+import 'package:fitness_forge/ui/screen/challenges_hiking.dart';
+import 'package:fitness_forge/ui/screen/challenges_rockclimbing.dart';
+import 'package:fitness_forge/ui/screen/challenges_running.dart';
+import 'package:fitness_forge/ui/screen/challenges_skating.dart';
+import 'package:fitness_forge/ui/screen/challenges_sports.dart';
+import 'package:fitness_forge/ui/screen/challenges_swimming.dart';
+import 'package:fitness_forge/ui/screen/challenges_walking.dart';
+import 'package:fitness_forge/ui/screen/challenges_yoga.dart';
 import 'package:flutter/material.dart';
 
 class ChallengesScreen extends StatelessWidget {
@@ -16,7 +25,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Hiking()),
               );
             },
           ),
@@ -26,7 +35,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Cycling()),
               );
             },
           ),
@@ -36,7 +45,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Walking()),
               );
             },
           ),
@@ -46,7 +55,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Running()),
               );
             },
           ),
@@ -56,7 +65,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Yoga()),
               );
             },
           ),
@@ -66,7 +75,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Sports()),
               );
             },
           ),
@@ -86,7 +95,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Swimming()),
               );
             },
           ),
@@ -96,7 +105,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => Skating()),
               );
             },
           ),
@@ -106,7 +115,7 @@ class ChallengesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AchievementsScreen()),
+                MaterialPageRoute(builder: (context) => RockClimbing()),
               );
             },
           ),
