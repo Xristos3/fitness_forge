@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +25,29 @@ class _BadgesScreenState extends State<BadgesScreen> {
     'images/badge3.PNG',
     'images/badge1.PNG',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveUsername();
+  }
+
+  Future<void> retrieveUsername() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      // Replace 'users' with the actual collection name in Firestore
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .get();
+
+      if (userSnapshot.exists) {
+        setState(() {
+          username = userSnapshot.get('username') as String;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +76,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Username:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              username = value;
-                            });
-                          },
-                        ),
+                        Text(username),
                         SizedBox(height: 16.0),
                         Text(
                           'Number of Points:',
