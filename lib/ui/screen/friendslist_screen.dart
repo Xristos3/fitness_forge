@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_forge/ui/screen/friendsbadges_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class FriendsListScreen extends StatefulWidget {
@@ -19,18 +20,11 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
   void initState() {
     super.initState();
     currentUserUid = FirebaseAuth.instance.currentUser!.uid;
-    friendsStream = friends
-        .doc(currentUserUid)
-        .collection('userFriends')
-        .snapshots();
+    friendsStream = friends.doc(currentUserUid).collection('userFriends').snapshots();
   }
 
   Future<void> removeFriend(String friendId) async {
-    await friends
-        .doc(currentUserUid)
-        .collection('userFriends')
-        .doc(friendId)
-        .delete();
+    await friends.doc(currentUserUid).collection('userFriends').doc(friendId).delete();
 
     // Perform any other necessary actions after removing the friend
     // ...
@@ -105,6 +99,14 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                         );
                       },
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FriendsBadgesScreen(friendId: friendId),
+                        ),
+                      );
+                    },
                   );
                 },
               );

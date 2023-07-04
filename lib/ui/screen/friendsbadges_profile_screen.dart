@@ -1,12 +1,18 @@
-import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 
-class BadgesScreen extends StatefulWidget {
+class FriendsBadgesScreen extends StatefulWidget {
+  final String friendId;
+
+  const   FriendsBadgesScreen({required this.friendId});
+
   @override
   _BadgesScreenState createState() => _BadgesScreenState();
 }
 
-class _BadgesScreenState extends State<BadgesScreen> {
+class _BadgesScreenState extends State<FriendsBadgesScreen> {
   String username = '';
   int numberOfPoints = 0;
   int totalBadges = 0;
@@ -26,6 +32,8 @@ class _BadgesScreenState extends State<BadgesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Badges Screen'),
@@ -51,11 +59,29 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Username:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              username = value;
-                            });
+                        FutureBuilder<DocumentSnapshot>(
+                          future: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(widget.friendId)
+                              .get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            } else if (snapshot.hasData) {
+                              String username = snapshot.data!['username'];
+
+                              return Text(
+                                username,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return Text('No data available');
+                            }
                           },
                         ),
                         SizedBox(height: 16.0),
@@ -135,93 +161,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                 ],
               ),
               SizedBox(height: 16.0),
-              Text(
-                'Lists of each badge:',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-              ),
-              SizedBox(height: 8.0),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Engagement',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Image.asset('images/badge1.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge1.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge1.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge1.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge4.PNG'),
-                        Text('Name'),
-                        // Add more images and names here
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 8.0),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Activity',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Image.asset('images/badge2.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge2.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge2.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge2.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge4.PNG'),
-                        Text('Name'),
-                        // Add more images and names here
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 8.0),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Achievements',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Image.asset('images/badge3.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge3.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge3.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge3.PNG'),
-                        Text('Name'),
-                        SizedBox(height: 8.0),
-                        Image.asset('images/badge4.PNG'),
-                        Text('Name'),
-                        // Add more images and names here
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -231,7 +170,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                     ),
                   );
                 },
-                child: Text('View Badges requirements'),
+                child: Text('View Badges Requirements'),
               ),
             ],
           ),
