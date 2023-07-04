@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fitness_forge/ui/screen/login_screen2.dart';
+import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -11,15 +11,15 @@ class SettingsScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 16),
+            // Add your settings content here
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
+      persistentFooterButtons: [
+        Container(
+          width: double.infinity, // Set width to occupy the whole screen
           child: ElevatedButton(
             onPressed: () {
               // Logout button logic
@@ -31,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
             child: Text('Logout'),
           ),
         ),
-      ),
+      ],
     );
   }
 }
