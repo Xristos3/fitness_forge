@@ -17,7 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int height = 0;
   int totalWorkouts = 0;
   int totalChallengesCompleted = 0;
-  String nextfitnessgoal = '';
+  String nextFitnessGoal = '';
 
   TextEditingController weightController = TextEditingController();
   TextEditingController heightController = TextEditingController();
@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     fetchUserProfile();
-    syncTotalWorkouts();
+    syncUserData();
   }
 
   Future<String> getUserId() async {
@@ -50,19 +50,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           weight = userData['weight'] ?? 0;
           height = userData['height'] ?? 0;
-          totalChallengesCompleted = userData['totalChallengesCompleted'] ?? 0;
-          nextfitnessgoal = userData['nextFitnessGoal'] ?? '';
+          totalChallengesCompleted =
+              userData['totalChallengesCompleted'] ?? 0;
+          nextFitnessGoal = userData['nextFitnessGoal'] ?? '';
 
           weightController.text = weight.toString();
           heightController.text = height.toString();
-          totalChallengesController.text = totalChallengesCompleted.toString();
-          fitnessGoalController.text = nextfitnessgoal;
+          totalChallengesController.text =
+              totalChallengesCompleted.toString();
+          fitnessGoalController.text = nextFitnessGoal;
         });
       }
     }
   }
 
-  void syncTotalWorkouts() async {
+  void syncUserData() async {
     userId = await getUserId();
 
     FirebaseFirestore.instance
@@ -73,6 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (snapshot.exists) {
         setState(() {
           totalWorkouts = snapshot.data()?['count'] ?? 0;
+          totalChallengesCompleted = snapshot.data()?['challengeCount'] ?? 0;
         });
       }
     });
@@ -85,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       'weight': weight,
       'height': height,
       'totalChallengesCompleted': totalChallengesCompleted,
-      'nextFitnessGoal': nextfitnessgoal,
+      'nextFitnessGoal': nextFitnessGoal,
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Profile updated successfully')),
@@ -153,15 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 'Total Challenges Completed:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextField(
-                controller: totalChallengesController,
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    totalChallengesCompleted = int.parse(value);
-                  });
-                },
-              ),
+              Text(totalChallengesCompleted.toString()),
               SizedBox(height: 16.0),
               Text(
                 'Next Fitness Goal:',
@@ -172,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 maxLines: 3,
                 onChanged: (value) {
                   setState(() {
-                    nextfitnessgoal = value;
+                    nextFitnessGoal = value;
                   });
                 },
               ),
@@ -197,4 +192,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
