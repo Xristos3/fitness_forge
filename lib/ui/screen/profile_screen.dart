@@ -21,7 +21,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   TextEditingController weightController = TextEditingController();
   TextEditingController heightController = TextEditingController();
-  TextEditingController totalWorkoutsController = TextEditingController();
   TextEditingController totalChallengesController = TextEditingController();
   TextEditingController fitnessGoalController = TextEditingController();
 
@@ -29,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     fetchUserProfile();
+    syncTotalWorkouts();
   }
 
   Future<String> getUserId() async {
@@ -50,18 +50,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           weight = userData['weight'] ?? 0;
           height = userData['height'] ?? 0;
-          totalWorkouts = userData['totalWorkouts'] ?? 0;
           totalChallengesCompleted = userData['totalChallengesCompleted'] ?? 0;
           nextfitnessgoal = userData['nextFitnessGoal'] ?? '';
 
           weightController.text = weight.toString();
           heightController.text = height.toString();
-          totalWorkoutsController.text = totalWorkouts.toString();
           totalChallengesController.text = totalChallengesCompleted.toString();
           fitnessGoalController.text = nextfitnessgoal;
         });
       }
     }
+  }
+
+  void syncTotalWorkouts() async {
+    userId = await getUserId();
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          totalWorkouts = snapshot.data()?['count'] ?? 0;
+        });
+      }
+    });
   }
 
   void updateProfile() async {
@@ -70,7 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _firestore.collection('users').doc(userId).update({
       'weight': weight,
       'height': height,
-      'totalWorkouts': totalWorkouts,
       'totalChallengesCompleted': totalChallengesCompleted,
       'nextFitnessGoal': nextfitnessgoal,
     }).then((value) {
@@ -134,15 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 'Total Workouts:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextField(
-                controller: totalWorkoutsController,
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    totalWorkouts = int.parse(value);
-                  });
-                },
-              ),
+              Text(totalWorkouts.toString()),
               SizedBox(height: 16.0),
               Text(
                 'Total Challenges Completed:',
