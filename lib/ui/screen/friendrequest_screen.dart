@@ -13,7 +13,8 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
   FirebaseFirestore.instance.collection('friendRequests');
   CollectionReference friends =
   FirebaseFirestore.instance.collection('friends');
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  CollectionReference users =
+  FirebaseFirestore.instance.collection('users');
 
   late User currentUser;
 
@@ -123,71 +124,81 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
       appBar: AppBar(
         title: Text('Friend Requests'),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: friendRequests
-            .where('recipientId', isEqualTo: currentUser.uid)
-            .where('status', isEqualTo: 'pending')
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (snapshot.data!.docs.isEmpty) {
-            return Center(
-              child: Text('No friend requests.'),
-            );
-          }
-
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              DocumentSnapshot request = snapshot.data!.docs[index];
-              String requestId = request.id;
-              String senderId = request['senderId'];
-              String message = request['message'];
-
-              return FutureBuilder<DocumentSnapshot>(
-                future: users.doc(senderId).get(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return SizedBox.shrink();
-                  }
-
-                  String senderUsername = snapshot.data!['username'];
-
-                  return ListTile(
-                    title: Text('From: $senderUsername'),
-                    subtitle: Text('Message: $message'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.check),
-                          color: Colors.green,
-                          onPressed: () {
-                            acceptRequest(requestId, senderId, senderUsername);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          color: Colors.red,
-                          onPressed: () {
-                            rejectRequest(requestId);
-                          },
-                        ),
-                      ],
-                    ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+              stream: friendRequests
+                  .where('recipientId', isEqualTo: currentUser.uid)
+                  .where('status', isEqualTo: 'pending')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              );
-            },
-          );
-        },
+                }
+
+                if (snapshot.data!.docs.isEmpty) {
+                  return Center(
+                    child: Text('No friend requests.'),
+                  );
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot request = snapshot.data!.docs[index];
+                    String requestId = request.id;
+                    String senderId = request['senderId'];
+                    String message = request['message'];
+
+                    return FutureBuilder<DocumentSnapshot>(
+                      future: users.doc(senderId).get(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return SizedBox.shrink();
+                        }
+
+                        String senderUsername = snapshot.data!['username'];
+
+                        return ListTile(
+                          title: Text('From: $senderUsername'),
+                          subtitle: Text('Message: $message'),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.check),
+                                color: Colors.green,
+                                onPressed: () {
+                                  acceptRequest(
+                                      requestId, senderId, senderUsername);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.close),
+                                color: Colors.red,
+                                onPressed: () {
+                                  rejectRequest(requestId);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            ),
+            SizedBox(height: 16),
+          ],
+        ),
       ),
-      floatingActionButton: Row(
+      floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton.extended(
@@ -197,7 +208,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
             label: Text('Send Friend Request'),
             icon: Icon(Icons.person_add),
           ),
-          SizedBox(width: 16),
+          SizedBox(height: 16),
           FloatingActionButton.extended(
             onPressed: () {
               Navigator.push(
@@ -222,22 +233,24 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
       builder: (context) {
         return AlertDialog(
           title: Text('Send Friend Request'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Recipient Username',
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Recipient Username',
+                  ),
                 ),
-              ),
-              TextField(
-                controller: _messageController,
-                decoration: InputDecoration(
-                  labelText: 'Message',
+                TextField(
+                  controller: _messageController,
+                  decoration: InputDecoration(
+                    labelText: 'Message',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -261,4 +274,3 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     );
   }
 }
-

@@ -1,4 +1,5 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 import 'package:fitness_forge/ui/screen/challenges_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ class ExtraScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Difficulty'),
+        title: Text(''),
       ),
       body: ListView(
         children: [
@@ -38,7 +39,7 @@ class ExtraScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BadgesScreen()),
+                MaterialPageRoute(builder: (context) => BadgesDescriptionScreen()),
               );
             },
           ),

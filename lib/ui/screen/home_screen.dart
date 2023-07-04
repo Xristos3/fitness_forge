@@ -1,7 +1,4 @@
-import 'package:fitness_forge/ui/screen/calendar_screen.dart';
 import 'package:fitness_forge/ui/screen/calendar_screen2.dart';
-import 'package:fitness_forge/ui/screen/chat_screen.dart';
-import 'package:fitness_forge/ui/screen/chat_screen2.dart';
 import 'package:fitness_forge/ui/screen/claim_screen.dart';
 import 'package:fitness_forge/ui/screen/extra_screen.dart';
 import 'package:fitness_forge/ui/screen/friendrequest_screen.dart';
@@ -10,12 +7,12 @@ import 'package:fitness_forge/ui/screen/settings_screen.dart';
 import 'package:fitness_forge/ui/screen/workout_screen_standard.dart';
 import 'package:flutter/material.dart';
 
-class BottomNavigationScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
   _BottomNavigationScreenState createState() => _BottomNavigationScreenState();
 }
 
-class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
+class _BottomNavigationScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [

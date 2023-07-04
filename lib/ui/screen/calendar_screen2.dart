@@ -26,44 +26,45 @@ class _CalendarScreenState extends State<CalendarScreen2> {
       appBar: AppBar(
         title: Text('Calendar'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: _showAddEventDialog,
-              child: Text('Add Event'),
+      body: SingleChildScrollView( // Wrap with SingleChildScrollView
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: _showAddEventDialog,
+                child: Text('Add Event'),
+              ),
             ),
-          ),
-          TableCalendar(
-            firstDay: DateTime.utc(2023, 1, 1),
-            lastDay: DateTime.utc(2023, 12, 31),
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            calendarFormat: _calendarFormat,
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay; // update the focused day as well
-              });
-            },
-            eventLoader: (day) {
-              return _events[day] ?? [];
-            },
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'Selected Day Events:',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          Expanded(
-            child: ListView.builder(
+            TableCalendar(
+              firstDay: DateTime.utc(2023, 1, 1),
+              lastDay: DateTime.utc(2023, 12, 31),
+              focusedDay: _focusedDay,
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              calendarFormat: _calendarFormat,
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay; // update the focused day as well
+                });
+              },
+              eventLoader: (day) {
+                return _events[day] ?? [];
+              },
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Selected Day Events:',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            ListView.builder(
+              shrinkWrap: true, // Added shrinkWrap to enable scrolling within ListView
               itemCount: _events[_selectedDay]?.length ?? 0,
               itemBuilder: (context, index) {
                 final event = _events[_selectedDay]![index];
@@ -80,8 +81,8 @@ class _CalendarScreenState extends State<CalendarScreen2> {
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

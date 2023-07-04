@@ -64,24 +64,24 @@ class _CountdownScreenState extends State<LegRaisesAdvancedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Countdown Screen')),
-      body: Column(
-        children: [
-          if (!_countdownStarted)
-            ElevatedButton(
-              onPressed: startCountdown,
-              child: Text('Start'),
-            ),
-          if (_countdownStarted)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                '$_seconds seconds',
-                style: TextStyle(fontSize: 24),
+      appBar: AppBar(title: Text('Leg raises (stretched knees)')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            if (!_countdownStarted)
+              ElevatedButton(
+                onPressed: startCountdown,
+                child: Text('Start'),
               ),
-            ),
-          Expanded(
-            child: Container(
+            if (_countdownStarted)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  '$_seconds seconds',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ),
+            Container(
               padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,16 +108,16 @@ class _CountdownScreenState extends State<LegRaisesAdvancedScreen> {
                 ],
               ),
             ),
-          ),
-          if (_showNextButton)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: navigateToNextScreen,
-                child: Text('Next'),
+            if (_showNextButton)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: navigateToNextScreen,
+                  child: Text('Next'),
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -159,7 +159,7 @@ class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Second Screen')),
+      appBar: AppBar(title: Text('Take a break')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -181,4 +181,3 @@ class _SecondScreenState extends State<SecondScreen> {
     );
   }
 }
-

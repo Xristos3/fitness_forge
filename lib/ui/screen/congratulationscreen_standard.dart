@@ -22,7 +22,7 @@ class CongratulationsScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BottomNavigationScreen(),
+                    builder: (context) => HomeScreen(),
                   ),
                 );
               },

@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen2> {
             // Login successful, navigate to a new screen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           } else {
             // Password doesn't match
@@ -103,76 +103,78 @@ class _LoginScreenState extends State<LoginScreen2> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Email or Username'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your email or username';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _passwordVisible = !_passwordVisible;
-                      });
-                    },
-                  ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(labelText: 'Email or Username'),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your email or username';
+                    }
+                    return null;
+                  },
                 ),
-                obscureText: !_passwordVisible,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16.0),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _rememberMe,
-                    onChanged: (value) {
-                      setState(() {
-                        _rememberMe = value!;
-                      });
-                    },
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
                   ),
-                  Text('Remember Me'),
-                ],
-              ),
-              Text(
-                _errorMessage,
-                style: TextStyle(color: Colors.red),
-              ),
-              ElevatedButton(
-                onPressed: _loginWithEmailAndPassword,
-                child: Text('Login'),
-              ),
-              TextButton(
-                onPressed: _navigateToSignUp,
-                child: Text('Sign Up'),
-              ),
-              TextButton(
-                onPressed: _navigateToForgotPassword,
-                child: Text('Forgot Password'),
-              ),
-            ],
+                  obscureText: !_passwordVisible,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _rememberMe,
+                      onChanged: (value) {
+                        setState(() {
+                          _rememberMe = value!;
+                        });
+                      },
+                    ),
+                    Text('Remember Me'),
+                  ],
+                ),
+                Text(
+                  _errorMessage,
+                  style: TextStyle(color: Colors.red),
+                ),
+                ElevatedButton(
+                  onPressed: _loginWithEmailAndPassword,
+                  child: Text('Login'),
+                ),
+                TextButton(
+                  onPressed: _navigateToSignUp,
+                  child: Text('Sign Up'),
+                ),
+                TextButton(
+                  onPressed: _navigateToForgotPassword,
+                  child: Text('Forgot Password'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

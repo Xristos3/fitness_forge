@@ -38,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen2> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+          MaterialPageRoute(builder: (context) => HomeScreen()),
         );
       }
     } catch (e) {
@@ -54,51 +54,53 @@ class _SignupScreenState extends State<SignupScreen2> {
       appBar: AppBar(
         title: Text('Signup'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: 'Username',
+              SizedBox(height: 16.0),
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password (must contain 6 or more characters)',
+              SizedBox(height: 16.0),
+              Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  TextField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: 'Password (must contain 6 or more characters)',
+                    ),
+                    obscureText: !_passwordVisible, // Toggle password visibility
                   ),
-                  obscureText: !_passwordVisible, // Toggle password visibility
-                ),
-                IconButton(
-                  icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
-                  onPressed: () {
-                    setState(() {
-                      _passwordVisible = !_passwordVisible;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _signUp,
-              child: Text('Sign up'),
-            ),
-          ],
+                  IconButton(
+                    icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: _signUp,
+                child: Text('Sign up'),
+              ),
+            ],
+          ),
         ),
       ),
     );

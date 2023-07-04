@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:fitness_forge/ui/screen/achievements_screen.dart';
 import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
 import 'package:flutter/material.dart';
 
@@ -13,19 +12,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => jumpingjacksstandardScreen(),
+        '/': (context) => JumpingJacksStandardScreen(),
         '/buttkickstandardScreen': (context) => ButtkickStandardScreen(),
       },
     );
   }
 }
 
-class jumpingjacksstandardScreen extends StatefulWidget {
+class JumpingJacksStandardScreen extends StatefulWidget {
   @override
-  _CountdownScreenState createState() => _CountdownScreenState();
+  _JumpingJacksStandardScreenState createState() =>
+      _JumpingJacksStandardScreenState();
 }
 
-class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
+class _JumpingJacksStandardScreenState
+    extends State<JumpingJacksStandardScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -57,14 +58,17 @@ class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
   }
 
   void navigateToNextScreen() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SecondScreen()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SecondScreen()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Countdown Screen')),
-      body: Column(
+      appBar: AppBar(title: Text('Jumping Jacks')),
+      body: ListView(
         children: [
           if (!_countdownStarted)
             ElevatedButton(
@@ -79,31 +83,29 @@ class _CountdownScreenState extends State<jumpingjacksstandardScreen> {
                 style: TextStyle(fontSize: 24),
               ),
             ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Jumping Jacks',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Begin by standing with your legs straight and your arms to your sides. '
-                        'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
-                        ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 8),
-                  Image.asset(
-                    'images/jjs.jpeg', // Replace with your actual image filename
-                    height: 200,
-                    width: 200,
-                  ),
-                ],
-              ),
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Jumping Jacks',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Begin by standing with your legs straight and your arms to your sides. '
+                      'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
+                      ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.',
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 8),
+                Image.asset(
+                  'images/jjs.jpeg', // Replace with your actual image filename
+                  height: 200,
+                  width: 200,
+                ),
+              ],
             ),
           ),
           if (_showNextButton)
@@ -147,7 +149,10 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ButtkickStandardScreen()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ButtkickStandardScreen()),
+          );
         }
       });
     });
@@ -156,7 +161,7 @@ class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Second Screen')),
+      appBar: AppBar(title: Text('Take a break')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

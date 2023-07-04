@@ -1,5 +1,4 @@
 import 'package:fitness_forge/ui/screen/home_screen.dart';
-import 'package:fitness_forge/ui/screen/login_screen.dart';
 import 'package:fitness_forge/ui/screen/login_screen2.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // Apply button logic
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           },
           child: Text('Apply'),
