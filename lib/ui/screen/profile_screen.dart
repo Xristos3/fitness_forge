@@ -1,7 +1,7 @@
-import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -179,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     MaterialPageRoute(builder: (context) => BadgesScreen()),
                   );
                 },
-                child: Text('view badge profile'),
+                child: Text('View Badge Profile'),
               ),
             ],
           ),
@@ -192,5 +192,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
 

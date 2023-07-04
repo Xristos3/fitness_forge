@@ -65,23 +65,23 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Plank with extended and stretched arms')),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (!_countdownStarted)
-              ElevatedButton(
-                onPressed: startCountdown,
-                child: Text('Start'),
+      body: Column(
+        children: [
+          if (!_countdownStarted)
+            ElevatedButton(
+              onPressed: startCountdown,
+              child: Text('Start'),
+            ),
+          if (_countdownStarted)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                '$_seconds seconds',
+                style: TextStyle(fontSize: 24),
               ),
-            if (_countdownStarted)
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  '$_seconds seconds',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-            Container(
+            ),
+          Expanded(
+            child: Container(
               padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,16 +107,16 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
                 ],
               ),
             ),
-            if (_showNextButton)
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: navigateToNextScreen,
-                  child: Text('Next'),
-                ),
+          ),
+          if (_showNextButton)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: navigateToNextScreen,
+                child: Text('Next'),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
@@ -159,26 +159,25 @@ class _SecondScreenState extends State<SecondScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Take a break')),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (!_breakStarted)
-              ElevatedButton(
-                onPressed: startBreak,
-                child: Text('Start Break'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (!_breakStarted)
+            ElevatedButton(
+              onPressed: startBreak,
+              child: Text('Start Break'),
+            ),
+          if (_breakStarted)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                '$_seconds seconds',
+                style: TextStyle(fontSize: 24),
               ),
-            if (_breakStarted)
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  '$_seconds seconds',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
 }
+
