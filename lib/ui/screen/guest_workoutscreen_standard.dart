@@ -1,10 +1,12 @@
-import 'package:fitness_forge/ui/screen/hiitworkout_advanced.dart';
-import 'package:fitness_forge/ui/screen/lowerworkout_advanced.dart';
+import 'package:fitness_forge/ui/screen/guest_selectdifficulty_screen.dart';
+import 'package:fitness_forge/ui/screen/guesti_hiitworkout_standard.dart';
+import 'package:fitness_forge/ui/screen/hiitworkout_standard.dart';
+import 'package:fitness_forge/ui/screen/lowerworkout_standard.dart';
 import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
-import 'package:fitness_forge/ui/screen/upperworkout_advanced.dart';
+import 'package:fitness_forge/ui/screen/upperworkout_standard.dart';
 import 'package:flutter/material.dart';
 
-class WorkoutScreenAdvanced extends StatelessWidget {
+class GuestWorkoutScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +18,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Difficulty: Advanced',
+              'Difficulty: Standard',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -30,7 +32,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HiitAdvancedScreen()),
+                MaterialPageRoute(builder: (context) => GuestHiitStandardScreen()),
               );
             },
           ),
@@ -41,7 +43,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UpperAdvancedScreen()),
+                MaterialPageRoute(builder: (context) => UpperStandardScreen()),
               );
             },
           ),
@@ -52,7 +54,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LowerAdvancedScreen()),
+                MaterialPageRoute(builder: (context) => LowerStandardScreen()),
               );
             },
           ),
@@ -62,7 +64,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SelectDifficultyScreen()),
+                MaterialPageRoute(builder: (context) => GuestSelectDifficultyScreen()),
               );
             },
           ),

@@ -1,9 +1,11 @@
+import 'package:fitness_forge/ui/screen/guest_homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_forge/ui/screen/forgotpassword_screen.dart';
 import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:fitness_forge/ui/screen/signup_screen2.dart';
+
 
 class LoginScreen2 extends StatefulWidget {
   @override
@@ -97,6 +99,14 @@ class _LoginScreenState extends State<LoginScreen2> {
     );
   }
 
+  void _navigateToGuestScreen() {
+    // Navigate to the guest screen
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => GuestHomeScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -172,6 +182,10 @@ class _LoginScreenState extends State<LoginScreen2> {
                 TextButton(
                   onPressed: _navigateToForgotPassword,
                   child: Text('Forgot Password'),
+                ),
+                TextButton(
+                  onPressed: _navigateToGuestScreen,
+                  child: Text('Guest'),
                 ),
               ],
             ),

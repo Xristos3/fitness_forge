@@ -1,10 +1,11 @@
+import 'package:fitness_forge/ui/screen/guest_selectdifficulty_screen.dart';
 import 'package:fitness_forge/ui/screen/hiitworkout_advanced.dart';
 import 'package:fitness_forge/ui/screen/lowerworkout_advanced.dart';
 import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
 import 'package:fitness_forge/ui/screen/upperworkout_advanced.dart';
 import 'package:flutter/material.dart';
 
-class WorkoutScreenAdvanced extends StatelessWidget {
+class GuestWorkoutScreenAdvanced extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,7 @@ class WorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SelectDifficultyScreen()),
+                MaterialPageRoute(builder: (context) => GuestSelectDifficultyScreen()),
               );
             },
           ),
