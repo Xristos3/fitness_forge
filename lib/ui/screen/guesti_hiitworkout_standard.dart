@@ -1,4 +1,5 @@
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/guest_jumoingjacjs_standard.dart';
 import 'package:fitness_forge/ui/screen/jumpingjacks_standard.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +81,7 @@ class GuestHiitStandardScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => JumpingJacksStandardScreen(),
+                  builder: (context) => GuestJumpingJacksStandardScreen(),
                 ),
               );
             },

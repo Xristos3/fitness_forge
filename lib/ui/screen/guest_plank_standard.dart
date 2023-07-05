@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/achievements_screen.dart';
 import 'package:fitness_forge/ui/screen/congratulationscreen_standard.dart';
-import 'package:fitness_forge/ui/screen/guest%20congratulationsstandard.dart';
+import 'package:fitness_forge/ui/screen/guest_congratulationsstandard.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
