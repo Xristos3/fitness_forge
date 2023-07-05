@@ -1,4 +1,6 @@
+import 'package:fitness_forge/ui/screen/guest_lowerworkout_standard.dart';
 import 'package:fitness_forge/ui/screen/guest_selectdifficulty_screen.dart';
+import 'package:fitness_forge/ui/screen/guest_upperworkout_standard.dart';
 import 'package:fitness_forge/ui/screen/guesti_hiitworkout_standard.dart';
 import 'package:fitness_forge/ui/screen/hiitworkout_standard.dart';
 import 'package:fitness_forge/ui/screen/lowerworkout_standard.dart';
@@ -43,7 +45,7 @@ class GuestWorkoutScreenStandard extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UpperStandardScreen()),
+                MaterialPageRoute(builder: (context) => GuestUpperStandardScreen()),
               );
             },
           ),
@@ -54,7 +56,7 @@ class GuestWorkoutScreenStandard extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LowerStandardScreen()),
+                MaterialPageRoute(builder: (context) => GuestLowerStandardScreen()),
               );
             },
           ),
