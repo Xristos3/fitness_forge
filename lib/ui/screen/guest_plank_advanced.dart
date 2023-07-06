@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/congratulationscreen_standard.dart';
+import 'package:fitness_forge/ui/screen/guest_congratulationsstandard.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,18 +13,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => PlankAdvancedScreen(),
+        '/': (context) => GuestPlankAdvancedScreen(),
       },
     );
   }
 }
 
-class PlankAdvancedScreen extends StatefulWidget {
+class GuestPlankAdvancedScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<PlankAdvancedScreen> {
+class _CountdownScreenState extends State<GuestPlankAdvancedScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -146,7 +147,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CongratulationsScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => GuestCongratulationsScreen()));
         }
       });
     });

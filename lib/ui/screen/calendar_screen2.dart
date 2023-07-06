@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CalendarScreen2 extends StatefulWidget {
   @override
@@ -15,6 +17,66 @@ class _CalendarScreenState extends State<CalendarScreen2> {
   TextEditingController _eventController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    fetchEvents();
+    _fetchEventsForSelectedDay(_selectedDay);
+  }
+
+  Future<void> fetchEvents() async {
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      final eventsCollection = FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('events');
+
+      final querySnapshot = await eventsCollection.get();
+
+      final Map<DateTime, List<String>> eventsData = {};
+      querySnapshot.docs.forEach((doc) {
+        final eventDate = (doc['date'] as Timestamp).toDate();
+        final event = doc['event'] as String;
+
+        eventsData[eventDate] = eventsData[eventDate] ?? [];
+        eventsData[eventDate]!.add(event);
+      });
+
+      setState(() {
+        _events = Map.from(eventsData);
+      });
+    } catch (e) {
+      print('Failed to fetch events from Firestore: $e');
+    }
+  }
+
+  Future<void> _fetchEventsForSelectedDay(DateTime selectedDay) async {
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      final eventsCollection = FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('events');
+
+      final querySnapshot = await eventsCollection
+          .where('date', isEqualTo: selectedDay)
+          .get();
+
+      final List<String> eventsData = [];
+      querySnapshot.docs.forEach((doc) {
+        final event = doc['event'] as String;
+        eventsData.add(event);
+      });
+
+      setState(() {
+        _events[selectedDay] = eventsData;
+      });
+    } catch (e) {
+      print('Failed to fetch events for selected day: $e');
+    }
+  }
+
+  @override
   void dispose() {
     _eventController.dispose();
     super.dispose();
@@ -26,7 +88,7 @@ class _CalendarScreenState extends State<CalendarScreen2> {
       appBar: AppBar(
         title: Text('Calendar'),
       ),
-      body: SingleChildScrollView( // Wrap with SingleChildScrollView
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -51,8 +113,9 @@ class _CalendarScreenState extends State<CalendarScreen2> {
               onDaySelected: (selectedDay, focusedDay) {
                 setState(() {
                   _selectedDay = selectedDay;
-                  _focusedDay = focusedDay; // update the focused day as well
+                  _focusedDay = focusedDay;
                 });
+                _fetchEventsForSelectedDay(selectedDay);
               },
               eventLoader: (day) {
                 return _events[day] ?? [];
@@ -64,7 +127,7 @@ class _CalendarScreenState extends State<CalendarScreen2> {
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             ListView.builder(
-              shrinkWrap: true, // Added shrinkWrap to enable scrolling within ListView
+              shrinkWrap: true,
               itemCount: _events[_selectedDay]?.length ?? 0,
               itemBuilder: (context, index) {
                 final event = _events[_selectedDay]![index];
@@ -72,10 +135,31 @@ class _CalendarScreenState extends State<CalendarScreen2> {
                   title: Text(event),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
-                        _events[_selectedDay]!.remove(event);
+                        _events[_selectedDay]!.removeAt(index);
                       });
+
+                      try {
+                        final currentUser = FirebaseAuth.instance.currentUser;
+                        final eventsCollection = FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(currentUser!.uid)
+                            .collection('events');
+
+                        final querySnapshot = await eventsCollection
+                            .where('date', isEqualTo: _selectedDay)
+                            .where('event', isEqualTo: event)
+                            .limit(1)
+                            .get();
+
+                        if (querySnapshot.docs.isNotEmpty) {
+                          final eventDoc = querySnapshot.docs.first;
+                          await eventDoc.reference.delete();
+                        }
+                      } catch (e) {
+                        print('Failed to delete event from Firestore: $e');
+                      }
                     },
                   ),
                 );
@@ -98,16 +182,34 @@ class _CalendarScreenState extends State<CalendarScreen2> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              setState(() {
-                final event = _eventController.text;
-                if (event.isNotEmpty) {
-                  _events[_selectedDay] ??= [];
-                  _events[_selectedDay]!.add(event);
+              final currentUser = FirebaseAuth.instance.currentUser;
+              final event = _eventController.text;
+
+              if (event.isNotEmpty) {
+                _events[_selectedDay] ??= [];
+                _events[_selectedDay]!.add(event);
+                setState(() {
+                  _eventController.clear();
+                });
+
+                try {
+                  final eventsCollection = FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(currentUser!.uid)
+                      .collection('events');
+
+                  await eventsCollection.add({
+                    'date': _selectedDay,
+                    'event': event,
+                  });
+
+                  setState(() {});
+                } catch (e) {
+                  print('Failed to add event to Firestore: $e');
                 }
-                _eventController.clear();
-              });
+              }
             },
             child: Text('Save'),
           ),

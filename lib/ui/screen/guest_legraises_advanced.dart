@@ -1,5 +1,8 @@
 import 'dart:async';
-import 'package:fitness_forge/ui/screen/congratulationscreen_standard.dart';
+import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
+import 'package:fitness_forge/ui/screen/crossclimbers_advanced.dart';
+import 'package:fitness_forge/ui/screen/guest_crossclimbers_advanced.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,18 +15,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => PlankAdvancedScreen(),
+        '/': (context) => GuestLegRaisesAdvancedScreen(),
+        '/buttkickstandardScreen': (context) => GuestCrossClimbersAdvancedScreen(),
       },
     );
   }
 }
 
-class PlankAdvancedScreen extends StatefulWidget {
+class GuestLegRaisesAdvancedScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<PlankAdvancedScreen> {
+class _CountdownScreenState extends State<GuestLegRaisesAdvancedScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -61,7 +65,7 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Plank with extended and stretched arms')),
+      appBar: AppBar(title: Text('Leg raises (stretched knees)')),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -84,20 +88,21 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Plank with extended and stretched arms',
+                    'Leg raises (stretched knees)',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Get in a press-up position but with your arms as far in front of your head as you can reach. '
-                        'Hold yourself there with your arms fully extended.'
-                        ' Make sure your back is straight and hold for the alloted time. '
-                        'Expert tips: Keep your abs and glutes locked to avoid sagging or rising from your hips.',
+                    'Grasp one leg with your hands, holding behind your thigh.'
+                        ' Raise your leg in the air with your foot flexed. '
+                        'Straighten the leg as much as possible without locking the knee. Hold the stretch, '
+                        'return to the starting position, then repeat with the other leg.'
+                        'If you feel comfortable you can raise both leg at the same time',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Image.asset(
-                    'images/plankex.jpeg', // Replace with your actual image filename
+                    'images/legraises.png', // Replace with your actual image filename
                     height: 200,
                     width: 200,
                   ),
@@ -146,7 +151,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CongratulationsScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => GuestCrossClimbersAdvancedScreen()));
         }
       });
     });

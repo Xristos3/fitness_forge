@@ -1,5 +1,8 @@
 import 'dart:async';
-import 'package:fitness_forge/ui/screen/congratulationscreen_standard.dart';
+import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
+import 'package:fitness_forge/ui/screen/guest_sidetoside_advanced.dart';
+import 'package:fitness_forge/ui/screen/sidetoside_advanced.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,18 +15,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => PlankAdvancedScreen(),
+        '/': (context) => GuestButtKickAdvancedScreen(),
+        '/buttkickstandardScreen': (context) => GuestSidetoSideAdvancedScreen(),
       },
     );
   }
 }
 
-class PlankAdvancedScreen extends StatefulWidget {
+class GuestButtKickAdvancedScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<PlankAdvancedScreen> {
+class _CountdownScreenState extends State<GuestButtKickAdvancedScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -61,8 +65,8 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Plank with extended and stretched arms')),
-      body: SingleChildScrollView(
+      appBar: AppBar(title: Text('Butt kick (fast)')),
+      body: SingleChildScrollView( // Added SingleChildScrollView here
         child: Column(
           children: [
             if (!_countdownStarted)
@@ -84,20 +88,19 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Plank with extended and stretched arms',
+                    'Butt kick (fast)',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Get in a press-up position but with your arms as far in front of your head as you can reach. '
-                        'Hold yourself there with your arms fully extended.'
-                        ' Make sure your back is straight and hold for the alloted time. '
-                        'Expert tips: Keep your abs and glutes locked to avoid sagging or rising from your hips.',
+                    'kicking your shins back behind you to touch your buttocks with the bottom of your foot. '
+                        'The movement utilizes the hamstrings while stretching the flexors and quadriceps. '
+                        'Butt kickers are an effective glute-building move and they are suitable for all fitness levels.',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Image.asset(
-                    'images/plankex.jpeg', // Replace with your actual image filename
+                    'images/bks.jpeg', // Replace with your actual image filename
                     height: 200,
                     width: 200,
                   ),
@@ -146,7 +149,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CongratulationsScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => GuestSidetoSideAdvancedScreen()));
         }
       });
     });

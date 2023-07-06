@@ -1,4 +1,7 @@
+import 'package:fitness_forge/ui/screen/guest_hiitworkout_advanced.dart';
+import 'package:fitness_forge/ui/screen/guest_lowerworkout_advanced.dart';
 import 'package:fitness_forge/ui/screen/guest_selectdifficulty_screen.dart';
+import 'package:fitness_forge/ui/screen/guest_upperworkout_advanced.dart';
 import 'package:fitness_forge/ui/screen/hiitworkout_advanced.dart';
 import 'package:fitness_forge/ui/screen/lowerworkout_advanced.dart';
 import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
@@ -31,7 +34,7 @@ class GuestWorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HiitAdvancedScreen()),
+                MaterialPageRoute(builder: (context) => GuestHiitAdvancedScreen()),
               );
             },
           ),
@@ -42,7 +45,7 @@ class GuestWorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UpperAdvancedScreen()),
+                MaterialPageRoute(builder: (context) => GuestUpperAdvancedScreen()),
               );
             },
           ),
@@ -53,7 +56,7 @@ class GuestWorkoutScreenAdvanced extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LowerAdvancedScreen()),
+                MaterialPageRoute(builder: (context) => GuestLowerAdvancedScreen()),
               );
             },
           ),

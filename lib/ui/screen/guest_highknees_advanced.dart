@@ -1,5 +1,8 @@
 import 'dart:async';
-import 'package:fitness_forge/ui/screen/congratulationscreen_standard.dart';
+import 'package:fitness_forge/ui/screen/achievements_screen.dart';
+import 'package:fitness_forge/ui/screen/buttkick_standard.dart';
+import 'package:fitness_forge/ui/screen/guest_pushup_advanced.dart';
+import 'package:fitness_forge/ui/screen/pushup_advanced.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,18 +15,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/',
       routes: {
-        '/': (context) => PlankAdvancedScreen(),
+        '/': (context) => GuestHighKneesAdvancedScreen(),
+        '/buttkickstandardScreen': (context) => GuestPushupAdvancedScreen(),
       },
     );
   }
 }
 
-class PlankAdvancedScreen extends StatefulWidget {
+class GuestHighKneesAdvancedScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<PlankAdvancedScreen> {
+class _CountdownScreenState extends State<GuestHighKneesAdvancedScreen> {
   int _seconds = 40;
   Timer? _timer;
   bool _countdownStarted = false;
@@ -61,7 +65,7 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Plank with extended and stretched arms')),
+      appBar: AppBar(title: Text('High knees')),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -84,20 +88,19 @@ class _CountdownScreenState extends State<PlankAdvancedScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Plank with extended and stretched arms',
+                    'High knees',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Get in a press-up position but with your arms as far in front of your head as you can reach. '
-                        'Hold yourself there with your arms fully extended.'
-                        ' Make sure your back is straight and hold for the alloted time. '
-                        'Expert tips: Keep your abs and glutes locked to avoid sagging or rising from your hips.',
+                    'Stand with your feet hip-width apart. Lift up your left knee to your chest.'
+                        'Switch to lift your right knee to your chest. Continue the movement, '
+                        'alternating legs and moving at a sprinting or running pace.',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Image.asset(
-                    'images/plankex.jpeg', // Replace with your actual image filename
+                    'images/high.jpeg', // Replace with your actual image filename
                     height: 200,
                     width: 200,
                   ),
@@ -146,7 +149,7 @@ class _SecondScreenState extends State<SecondScreen> {
           _seconds--;
         } else {
           _timer!.cancel();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CongratulationsScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => GuestPushupAdvancedScreen()));
         }
       });
     });
