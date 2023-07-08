@@ -1,14 +1,13 @@
-import 'package:fitness_forge/ui/screen/guest_lowerworkout_standard.dart';
-import 'package:fitness_forge/ui/screen/guest_selectdifficulty_screen.dart';
-import 'package:fitness_forge/ui/screen/guest_upperworkout_standard.dart';
-import 'package:fitness_forge/ui/screen/guest_hiitworkout_standard.dart';
-import 'package:fitness_forge/ui/screen/hiitworkout_standard.dart';
-import 'package:fitness_forge/ui/screen/lowerworkout_standard.dart';
-import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
-import 'package:fitness_forge/ui/screen/upperworkout_standard.dart';
+import 'package:fitness_forge/ui/screen/types_of_workouts.dart';
+import 'package:fitness_forge/ui/screen/difficulty.dart';
 import 'package:flutter/material.dart';
 
-class GuestWorkoutScreenStandard extends StatelessWidget {
+class WorkoutScreen extends StatelessWidget {
+  final bool? isStandard;
+  final bool? isGuest;
+
+  WorkoutScreen({required this.isStandard, required this.isGuest, required String difficulty});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +19,7 @@ class GuestWorkoutScreenStandard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Difficulty: Standard',
+              'Difficulty: ${isStandard == true ? 'Standard' : 'Advanced'}',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -32,10 +31,17 @@ class GuestWorkoutScreenStandard extends StatelessWidget {
             description: 'Exercises: Expected duration:',
             image: 'images/hiit.png',
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GuestHiitStandardScreen()),
-              );
+              if (isGuest == true) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => isStandard == true ? GuestHiitStandardScreen() : GuestHiitAdvancedScreen()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => isStandard == true ? HiitStandardScreen() : HiitAdvancedScreen()),
+                );
+              }
             },
           ),
           CustomContainer(
@@ -43,10 +49,17 @@ class GuestWorkoutScreenStandard extends StatelessWidget {
             description: 'Exercises: Expected duration:',
             image: 'images/upperbody.jpeg',
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GuestUpperStandardScreen()),
-              );
+              if (isGuest == true) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => isStandard == true ? GuestUpperStandardScreen() : GuestUpperAdvancedScreen()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => isStandard == true ? UpperStandardScreen() : UpperAdvancedScreen()),
+                );
+              }
             },
           ),
           CustomContainer(
@@ -54,10 +67,17 @@ class GuestWorkoutScreenStandard extends StatelessWidget {
             description: 'Exercises: Expected duration:',
             image: 'images/lowerbody.jpeg',
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GuestLowerStandardScreen()),
-              );
+              if (isGuest == true) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => isStandard == true ? GuestLowerStandardScreen() : GuestLowerAdvancedScreen()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => isStandard == true ? LowerStandardScreen() : LowerAdvancedScreen()),
+                );
+              }
             },
           ),
           SizedBox(height: 16.0), // Added spacing
@@ -66,7 +86,7 @@ class GuestWorkoutScreenStandard extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => GuestSelectDifficultyScreen()),
+                MaterialPageRoute(builder: (context) => isGuest == true ? GuestSelectDifficultyScreen() : SelectDifficultyScreen()),
               );
             },
           ),

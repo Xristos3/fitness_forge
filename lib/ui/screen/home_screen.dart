@@ -5,6 +5,7 @@ import 'package:fitness_forge/ui/screen/friendrequest_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
 import 'package:fitness_forge/ui/screen/settings_screen.dart';
 import 'package:fitness_forge/ui/screen/workout_screen_standard.dart';
+import 'package:fitness_forge/ui/screen/workouts.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _BottomNavigationScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    WorkoutScreenStandard(),
+    WorkoutScreen(isStandard: true, isGuest: false, difficulty: 'Standard',),
     ProfileScreen(),
     CalendarScreen2(),
     FriendRequestScreen(),

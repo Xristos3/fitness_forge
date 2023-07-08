@@ -4,7 +4,6 @@ import 'package:fitness_forge/ui/screen/select_difficulty_screen.dart';
 import 'package:fitness_forge/ui/screen/upperworkout_standard.dart';
 import 'package:flutter/material.dart';
 
-
 class WorkoutScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,6 @@ import 'package:fitness_forge/ui/screen/forgotpassword_screen.dart';
 import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:fitness_forge/ui/screen/signup_screen2.dart';
 
-
 class LoginScreen2 extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
