@@ -1,3 +1,4 @@
+import 'package:fitness_forge/ui/screen/exercises.dart';
 import 'package:flutter/material.dart';
 
 class TypesOfWorkouts extends StatelessWidget {
@@ -525,12 +526,12 @@ class HiitStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => JumpingJacksStandardScreen(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => JumpingJacksStandardScreen(screenNavigator: ScreenNavigator(context)),
+                ),
+              );
             },
           ),
         ],
@@ -614,12 +615,12 @@ class HiitAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => CrossJacksAdvancedScreen(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CrossJacksAdvancedScreen(screenNavigatorAdvanced: ScreenNavigatorAdvanced(context)),
+                ),
+              );
             },
           ),
         ],
@@ -703,12 +704,12 @@ class GuestHiitStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => GuestJumpingJacksStandardScreen(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GuestJumpingJacksStandardScreen(GuestscreenNavigator: GuestScreenNavigator(context)),
+                ),
+              );
             },
           ),
         ],
@@ -792,12 +793,12 @@ class GuestHiitAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => GuestCrossJacksAdvancedScreen(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GuestCrossJacksAdvancedScreen(GuestscreenNavigatorAdvanced: GuestScreenNavigatorAdvanced(context)),
+                ),
+              );
             },
           ),
         ],
@@ -974,12 +975,12 @@ class GuestUpperStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => GuestPushUpUpperScreenStandard(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GuestPushUpUpperScreenStandard(),
+                ),
+              );
             },
           ),
         ],
