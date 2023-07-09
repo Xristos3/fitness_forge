@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:fitness_forge/ui/screen/types_of_workouts.dart';
 import 'package:fitness_forge/ui/screen/difficulty.dart';
-import 'package:flutter/material.dart';
 
 class WorkoutScreen extends StatelessWidget {
   final bool? isStandard;
@@ -28,6 +28,7 @@ class WorkoutScreen extends StatelessWidget {
           ),
           CustomContainer(
             title: 'HIIT Workout',
+            type: 'HIIT',
             description: 'Exercises: Expected duration:',
             image: 'images/hiit.png',
             onPressed: () {
@@ -46,6 +47,7 @@ class WorkoutScreen extends StatelessWidget {
           ),
           CustomContainer(
             title: 'Upper Body Workout',
+            type: 'Upper Body',
             description: 'Exercises: Expected duration:',
             image: 'images/upperbody.jpeg',
             onPressed: () {
@@ -64,6 +66,7 @@ class WorkoutScreen extends StatelessWidget {
           ),
           CustomContainer(
             title: 'Lower Body Workout',
+            type: 'Lower Body',
             description: 'Exercises: Expected duration:',
             image: 'images/lowerbody.jpeg',
             onPressed: () {
@@ -98,12 +101,14 @@ class WorkoutScreen extends StatelessWidget {
 
 class CustomContainer extends StatelessWidget {
   final String title;
+  final String type;
   final String description;
   final String image;
   final VoidCallback onPressed;
 
   const CustomContainer({
     required this.title,
+    required this.type,
     required this.description,
     required this.image,
     required this.onPressed,
@@ -124,7 +129,7 @@ class CustomContainer extends StatelessWidget {
           ),
           SizedBox(height: 8.0),
           Text(
-            description,
+            'Type: $type\n$description',
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8.0),
