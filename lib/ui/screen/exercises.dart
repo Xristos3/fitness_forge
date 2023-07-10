@@ -49,9 +49,9 @@ class ExerciseScreen extends StatelessWidget {
     } else if (workoutType == 'Upper Body' && difficulty == 'Advanced') {
       exerciseWidget = isGuest ? GuestExplosivePushUpScreenAdvanced() : ExplosivePushUpScreenAdvanced();
     } else if (workoutType == 'Lower Body' && difficulty == 'Standard') {
-      exerciseWidget = isGuest ? GuestLowerStandardExercises() : LowerStandardExercises();
+      exerciseWidget = isGuest ? GuestLowerSquatsScreenStandard() : LowerSquatsScreenStandard();
     } else if (workoutType == 'Lower Body' && difficulty == 'Advanced') {
-      exerciseWidget = isGuest ? GuestLowerAdvancedExercises() : LowerAdvancedExercises();
+      exerciseWidget = isGuest ? GuestLowerExplosiveSquatsScreenAdvanced() : LowerExplosiveSquatsScreenAdvanced();
     } else {
       // Default case if no matching exercise class is found
       exerciseWidget = Container();
@@ -3747,6 +3747,172 @@ class _CountdownTimersState extends State<CountdownTimers> {
   }
 }
 
+class GuestLowerSquatsScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Squats',
+      description:
+      'A squat is a strength exercise in which the trainee lowers their hips from a standing position '
+          'and then stands back up. During the descent, the hip and knee joints flex while'
+          ' the ankle joint dorsiflexes; conversely the hip and knee joints extend '
+          'and the ankle joint plantarflexes when standing up.',
+      imagePath: 'images/squats.jpeg',
+      nextScreen: GuestLowerSideLungesScreenStandard(),
+    );
+  }
+}
+
+class GuestLowerSideLungesScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Side lunges',
+      description:
+      'Stand with your feet hip-width apart. Step to the side while keeping your other foot flat.'
+          ' Bend your “stepping” knee while keeping the other knee straight. '
+          'Your body will hinge forward slightly, '
+          'and your shoulders will be slightly ahead of your knee compared with forward and backward lunges.',
+      imagePath: 'images/sidelunges.png',
+      nextScreen: GuestLowerSplitsSquatsScreenStandard(),
+    );
+  }
+}
+
+class GuestLowerSplitsSquatsScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Split squats',
+      description:
+      'A split squat is a lower body exercise that works one leg at a time. '
+          'Your legs are split with one leg in front of you '
+          'and the other behind you on an elevated surface like a bench. '
+          'This exercise works the front leg muscles.',
+      imagePath: 'images/sidesquats.png',
+      nextScreen: GuestLowerCircuitScreenStandard(),
+    );
+  }
+}
+
+class GuestLowerCircuitScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Lower Circuit',
+      description:
+      'pulse squats:  In pulse squats, this pulse is performed at the bottom quarter of the squat,'
+          ' so you would squat down, push up a quarter of the way back up, and pulse up and down from there.'
+          ' One quarter up and down would be one rep.'
+          'jump squats: Jump squats are bodyweight exercises characterized by leaping directly upwards at the top of the movement.'
+          'high knees: Stand with your feet hip-width apart. Lift up your left knee to your chest.'
+          'Switch to lift your right knee to your chest. Continue the movement, alternating legs and moving at a sprinting or running pace.',
+      imagePath: 'images/circuit.png',
+      nextScreen: GuestLowerCalfRaisesScreenStandard(),
+    );
+  }
+}
+
+class GuestLowerCalfRaisesScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Calf raises',
+      description:
+      'The calf raise, also known as the standing calf raise, '
+          'is a bodyweight exercise that targets the muscle groups in your lower legs. '
+          'Perform calf raises by standing tall with your feet hip-width apart. '
+          'Lift your body by pushing into the fronts of your feet, '
+          'activating your calf muscles as you stand on your tiptoes.',
+      imagePath: 'images/calf.jpeg',
+      nextScreen: GuestCongratulationsScreen(),
+    );
+  }
+}
+
+class LowerSquatsScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Squats',
+      description:
+      'A squat is a strength exercise in which the trainee lowers their hips from a standing position '
+          'and then stands back up. During the descent, the hip and knee joints flex while'
+          ' the ankle joint dorsiflexes; conversely the hip and knee joints extend '
+          'and the ankle joint plantarflexes when standing up.',
+      imagePath: 'images/squats.jpeg',
+      nextScreen: LowerSideLungesScreenStandard(),
+    );
+  }
+}
+
+class LowerSideLungesScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Side lunges',
+      description:
+      'Stand with your feet hip-width apart. Step to the side while keeping your other foot flat.'
+          ' Bend your “stepping” knee while keeping the other knee straight. '
+          'Your body will hinge forward slightly, '
+          'and your shoulders will be slightly ahead of your knee compared with forward and backward lunges.',
+      imagePath: 'images/sidelunges.png',
+      nextScreen: LowerSplitsSquatsScreenStandard(),
+    );
+  }
+}
+
+class LowerSplitsSquatsScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Split squats',
+      description:
+      'A split squat is a lower body exercise that works one leg at a time. '
+          'Your legs are split with one leg in front of you '
+          'and the other behind you on an elevated surface like a bench. '
+          'This exercise works the front leg muscles.',
+      imagePath: 'images/sidesquats.png',
+      nextScreen: LowerCircuitScreenStandard(),
+    );
+  }
+}
+
+class LowerCircuitScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Lower Circuit',
+      description:
+      'pulse squats:  In pulse squats, this pulse is performed at the bottom quarter of the squat,'
+          ' so you would squat down, push up a quarter of the way back up, and pulse up and down from there.'
+          ' One quarter up and down would be one rep.'
+          'jump squats: Jump squats are bodyweight exercises characterized by leaping directly upwards at the top of the movement.'
+          'high knees: Stand with your feet hip-width apart. Lift up your left knee to your chest.'
+          'Switch to lift your right knee to your chest. Continue the movement, alternating legs and moving at a sprinting or running pace.',
+      imagePath: 'images/circuit.png',
+      nextScreen: LowerCalfRaisesScreenStandard(),
+    );
+  }
+}
+
+class LowerCalfRaisesScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Calf raises',
+      description:
+      'The calf raise, also known as the standing calf raise, '
+          'is a bodyweight exercise that targets the muscle groups in your lower legs. '
+          'Perform calf raises by standing tall with your feet hip-width apart. '
+          'Lift your body by pushing into the fronts of your feet, '
+          'activating your calf muscles as you stand on your tiptoes.',
+      imagePath: 'images/calf.jpeg',
+      nextScreen: CongratulationsScreen(),
+    );
+  }
+}
+
 class GuestPushUpUpperScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -4181,6 +4347,172 @@ class _CountdownTimersAdvancedState extends State<CountdownTimersAdvanced> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class LowerExplosiveSquatsScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Squats',
+      description:
+      'Stand with your feet shoulder-width apart, toes pointed forward. '
+          'Interlock fingers behind head with elbows flared out. '
+          'Descend into a full squat position with thighs parallel to ground for a few seconds. '
+          'Quickly drive through the heels, jumping off ground as high as possible, keeping hands behind the head',
+      imagePath: 'images/squats.jpeg',
+      nextScreen: LowerOneLegSquatsScreenAdvanced(),
+    );
+  }
+}
+
+class LowerOneLegSquatsScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'One Leg Squats',
+      description:
+      'Stand on one leg, with the other leg and your arms out in front of you. '
+          'Squat, bending at the knee and sitting your hips back. '
+          'Keep the other knee in line over your foot.'
+          'Once you feel the squat in your quad and glutes, extend your leg back up to standing.',
+      imagePath: 'images/oneleg.jpeg',
+      nextScreen: LowerExplosiveSplitSquadsScreenAdvanced(),
+    );
+  }
+}
+
+class LowerExplosiveSplitSquadsScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Split squats',
+      description:
+      'Your legs are split with one leg in front of you and the other behind you on an elevated surface '
+          'like a bench. This exercise works the front leg muscles.'
+          ' Split squats put emphasis on your quadriceps to support your body weight '
+          'and require core engagement to stay upright and balanced.',
+      imagePath: 'images/sidesquats.png',
+      nextScreen: LowerCircuitScreenAdvanced(),
+    );
+  }
+}
+
+class LowerCircuitScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Lower Circuit',
+      description:
+      'pulse squats:  In pulse squats, this pulse is performed at the bottom quarter of the squat,'
+          ' so you would squat down, push up a quarter of the way back up, and pulse up and down from there.'
+          ' One quarter up and down would be one rep.'
+          'jump squats: Jump squats are bodyweight exercises characterized by leaping directly upwards at the top of the movement.'
+          'high knees: Stand with your feet hip-width apart. Lift up your left knee to your chest.'
+          'Switch to lift your right knee to your chest. Continue the movement, alternating legs and moving at a sprinting or running pace.',
+      imagePath: 'images/circuit.png',
+      nextScreen: LowerExplosiveCalfRaisesScreenAdvanced(),
+    );
+  }
+}
+
+class LowerExplosiveCalfRaisesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Calf raises',
+      description:
+      'Stand with feet just wider than hip-width apart, '
+          'toes pointed slightly out, and clasp hands at chest for balance. '
+          'Send hips back and bend at knees to lower down as far as possible with chest lifted. '
+          'You can swing your arms back for momentum. Press through heels back up to explode up,'
+          'jumping vertically in the air.',
+      imagePath: 'images/calf.jpeg',
+      nextScreen: CongratulationsScreen(),
+    );
+  }
+}
+
+class GuestLowerExplosiveSquatsScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Squats',
+      description:
+      'Stand with your feet shoulder-width apart, toes pointed forward. '
+          'Interlock fingers behind head with elbows flared out. '
+          'Descend into a full squat position with thighs parallel to ground for a few seconds. '
+          'Quickly drive through the heels, jumping off ground as high as possible, keeping hands behind the head',
+      imagePath: 'images/squats.jpeg',
+      nextScreen: GuestLowerOneLegSquatsScreenAdvanced(),
+    );
+  }
+}
+
+class GuestLowerOneLegSquatsScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'One Leg Squats',
+      description:
+      'Stand on one leg, with the other leg and your arms out in front of you. '
+          'Squat, bending at the knee and sitting your hips back. '
+          'Keep the other knee in line over your foot.'
+          'Once you feel the squat in your quad and glutes, extend your leg back up to standing.',
+      imagePath: 'images/oneleg.jpeg',
+      nextScreen: GuestLowerExplosiveSplitSquadsScreenAdvanced(),
+    );
+  }
+}
+
+class GuestLowerExplosiveSplitSquadsScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Split squats',
+      description:
+      'Your legs are split with one leg in front of you and the other behind you on an elevated surface '
+          'like a bench. This exercise works the front leg muscles.'
+          ' Split squats put emphasis on your quadriceps to support your body weight '
+          'and require core engagement to stay upright and balanced.',
+      imagePath: 'images/sidesquats.png',
+      nextScreen: GuestLowerCircuitScreenAdvanced(),
+    );
+  }
+}
+
+class GuestLowerCircuitScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Lower Circuit',
+      description:
+      'pulse squats:  In pulse squats, this pulse is performed at the bottom quarter of the squat,'
+          ' so you would squat down, push up a quarter of the way back up, and pulse up and down from there.'
+          ' One quarter up and down would be one rep.'
+          'jump squats: Jump squats are bodyweight exercises characterized by leaping directly upwards at the top of the movement.'
+          'high knees: Stand with your feet hip-width apart. Lift up your left knee to your chest.'
+          'Switch to lift your right knee to your chest. Continue the movement, alternating legs and moving at a sprinting or running pace.',
+      imagePath: 'images/circuit.png',
+      nextScreen: GuestLowerExplosiveCalfRaisesScreenAdvanced(),
+    );
+  }
+}
+
+class GuestLowerExplosiveCalfRaisesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Calf raises',
+      description:
+      'Stand with feet just wider than hip-width apart, '
+          'toes pointed slightly out, and clasp hands at chest for balance. '
+          'Send hips back and bend at knees to lower down as far as possible with chest lifted. '
+          'You can swing your arms back for momentum. Press through heels back up to explode up,'
+          'jumping vertically in the air.',
+      imagePath: 'images/calf.jpeg',
+      nextScreen: GuestCongratulationsScreen(),
     );
   }
 }

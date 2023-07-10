@@ -384,12 +384,12 @@ class LowerStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => LowerSquatsScreenStandard(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LowerSquatsScreenStandard(),
+                ),
+              );
             },
           ),
         ],
@@ -437,12 +437,12 @@ class LowerAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => LowerExplosiveSquatsScreenAdvanced(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LowerExplosiveSquatsScreenAdvanced(),
+                ),
+              );
             },
           ),
         ],
@@ -845,12 +845,12 @@ class GuestLowerStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => GuestLowerSquatsScreenStandard(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GuestLowerSquatsScreenStandard(),
+                ),
+              );
             },
           ),
         ],
@@ -897,12 +897,12 @@ class GuestLowerAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => GuestLowerExplosiveSquatsScreenAdvanced(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GuestLowerExplosiveSquatsScreenAdvanced(),
+                ),
+              );
             },
           ),
         ],
