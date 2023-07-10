@@ -45,9 +45,9 @@ class ExerciseScreen extends StatelessWidget {
     } else if (workoutType == 'HIIT' && difficulty == 'Advanced') {
       exerciseWidget = isGuest ? GuestCrossJacksAdvancedScreen(GuestscreenNavigatorAdvanced: GuestScreenNavigatorAdvanced(context),) : CrossJacksAdvancedScreen(screenNavigatorAdvanced: ScreenNavigatorAdvanced(context));
     } else if (workoutType == 'Upper Body' && difficulty == 'Standard') {
-      exerciseWidget = isGuest ? GuestPushUpUpperScreenStandard() : UpperStandardExercises();
+      exerciseWidget = isGuest ? GuestPushUpUpperScreenStandard() : PushUpUpperScreenStandard();
     } else if (workoutType == 'Upper Body' && difficulty == 'Advanced') {
-      exerciseWidget = isGuest ? GuestUpperAdvancedExercises() : UpperAdvancedExercises();
+      exerciseWidget = isGuest ? GuestExplosivePushUpScreenAdvanced() : ExplosivePushUpScreenAdvanced();
     } else if (workoutType == 'Lower Body' && difficulty == 'Standard') {
       exerciseWidget = isGuest ? GuestLowerStandardExercises() : LowerStandardExercises();
     } else if (workoutType == 'Lower Body' && difficulty == 'Advanced') {
@@ -3902,4 +3902,602 @@ class GuestNoseAndToesScreenStandard extends StatelessWidget {
   }
 }
 
+class PushUpUpperScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Pushups',
+      description:
+      'From a prone position, the hands are placed under the shoulders with the elbows extended.'
+          'Keeping the back and legs straight with the toes touching the ground. '
+          'The body is lowered until the upper arm is parallel to the ground. '
+          'Then reverse the movement and raise the body until arm is extended.',
+      imagePath: 'images/pushup.jpeg',
+      nextScreen: BirdDogHoldScreenStandard(),
+    );
+  }
+}
+
+class BirdDogHoldScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Bird dog hold',
+      description:
+      'Draw your shoulder blades together. Raise your right arm and left leg, '
+          'keeping your shoulders and hips parallel to the floor. '
+          'Lengthen the back of your neck and tuck your chin into your chest to gaze down at the floor.'
+          'Hold this position for a few seconds, then lower back down to the starting position.',
+      imagePath: 'images/bdh.png',
+      nextScreen: TricepsExtensionScreenStandard(),
+    );
+  }
+}
+
+class TricepsExtensionScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Bodyweight triceps extension',
+      description:
+      'Set up by grabbing the bar with both hands in an overhand grip.'
+          'Extend your arms so that your elbows are locked, and maintain a tight standing plank position,'
+          'keeping you glutes and abs squeezed. '
+          'From here, bend your elbows and bring your torso forward, as your head dips under the bar.',
+      imagePath: 'images/tes.jpeg',
+      nextScreen: DragonWalkScreenStandard(),
+    );
+  }
+}
+
+class DragonWalkScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Dragon walk',
+      description:
+      'Start in a push-up position. Go down into a push-up, and on your way back up, '
+          'raise your left arm and right leg into the air, keeping your hips square to the floor. '
+          'As you move your left hand forward and position it onto the floor, '
+          'bring your right leg to your side at a 90-degree angle and complete a staggered push-up.',
+      imagePath: 'images/dw.jpeg',
+      nextScreen: OverheadPushupScreenStandard(),
+    );
+  }
+}
+
+class OverheadPushupScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Overhead pushups',
+      description:
+      'Start in a standard pushup position with your hands slightly wider than shoulder-width apart '
+          'and elbows completely locked out. '
+          'Shoot your hips towards the ceiling and plant your toes into the ground'
+          ' so your body looks like an upside-down V. Slowly lower the top of your head towards the ground.',
+      imagePath: 'images/spus.jpeg',
+      nextScreen: PlankUpperScreenStandard(),
+    );
+  }
+}
+
+class PlankUpperScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Plank Standard',
+      description:
+      'The plank exercise is an isometric core exercise that involves maintaining a position '
+          'similar to a push-up for the maximum possible time.',
+      imagePath: 'images/plank.jpeg',
+      nextScreen: SitupsScreenStandard(),
+    );
+  }
+}
+
+class SitupsScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Sit ups',
+      description:
+      'Situps are classic abdominal exercises done by lying on your back and lifting your torso. '
+          'They use your body weight to strengthen and tone the core-stabilizing abdominal muscles. '
+          'Situps work the rectus abdominis, transverse abdominis, and obliques in addition to your hip flexors, chest, and neck',
+      imagePath: 'images/situps.png',
+      nextScreen: SidePlankScreenStandard(),
+    );
+  }
+}
+
+class SidePlankScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Side planks',
+      description:
+      'Lie on your side with your knees bent, and prop your upper body up on your elbow. '
+          'Raise your hips off the floor.',
+      imagePath: 'images/sideplank.png',
+      nextScreen: ReverseSnowAngelsScreenStandard(),
+    );
+  }
+}
+
+class ReverseSnowAngelsScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Reverse snow angels',
+      description:
+      'Lie down on the floor on your chest and stomach. '
+          'Stretch your hands forward and your legs at the back. '
+          'The palms should face the floor and your toes should be pointed towards the floor. '
+          'Lift your arms and legs so that they hover across the floor.',
+      imagePath: 'images/rsas.png',
+      nextScreen: NoseAndToesScreenStandard(),
+    );
+  }
+}
+
+class NoseAndToesScreenStandard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimers(
+      title: 'Nose and Toes Against the Wall',
+      description:
+      'Setup Begin standing with feet about 6 inches away from a wall and your feet close together.'
+          ' Lean towards the wall as far as you can '
+          'keeping your body in a straight line and your heels on the ground.'
+          ' Return to the starting position and repeat.',
+      imagePath: 'images/naratw.jpeg',
+      nextScreen: CongratulationsScreen(),
+    );
+  }
+}
+
+class CountdownTimersAdvanced extends StatefulWidget {
+  final String title;
+  final String description;
+  final String imagePath;
+  final Widget nextScreen;
+  final int initialCountdown;
+
+  CountdownTimersAdvanced({
+    required this.title,
+    required this.description,
+    required this.imagePath,
+    required this.nextScreen,
+    this.initialCountdown = 30,
+  });
+
+  @override
+  _CountdownTimersAdvancedState createState() => _CountdownTimersAdvancedState();
+}
+
+class _CountdownTimersAdvancedState extends State<CountdownTimersAdvanced> {
+  int countdown = 30;
+  bool isCountdownActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+    countdown = widget.initialCountdown;
+  }
+
+  void startCountdown() {
+    if (!isCountdownActive) {
+      setState(() {
+        countdown = widget.initialCountdown;
+        isCountdownActive = true;
+      });
+
+      const oneSec = const Duration(seconds: 1);
+      Timer.periodic(oneSec, (Timer timer) {
+        if (countdown == 0) {
+          setState(() {
+            isCountdownActive = false;
+          });
+          timer.cancel();
+        } else {
+          setState(() {
+            countdown--;
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Screen'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.title,
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                widget.description,
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Image.asset(
+                widget.imagePath,
+                width: 200.0,
+                height: 200.0,
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                child: Text('Next'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => widget.nextScreen,
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Sets: 5 sets Reps for each set: 15, 12, 10, 8, 5'
+                    'Or if the exercise does not include reps, Sets: 5 sets Reps: Until Failure for each set.',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                child: Text(
+                  'Take a break from each set',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: isCountdownActive ? null : startCountdown,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Countdown: $countdown seconds',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class GuestExplosivePushUpScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Pushups',
+      description:
+      'Lay down on the floor, facing down, '
+          'with your hands at the width of your shoulders and your elbows bended.'
+          ' Try to maintain your trunk as a plank'
+          ' and extend your arms in an explosive way so that your hands lift off the floor. '
+          'If you are able to push yourself high enough in the air, you can clap your hands',
+      imagePath: 'images/pushup.jpeg',
+      nextScreen: GuestDiamondPressScreenAdvanced(),
+    );
+  }
+}
+
+class GuestDiamondPressScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Diamond press up',
+      description:
+      'In a diamond push-up, you touch your thumbs and index fingers together '
+          'to make a diamond shape directly in front of the center of your chest.'
+          ' This difference may seem subtle, but it changes the weight distribution of the press.'
+          ' Diamond push-ups recruit smaller muscles, generally making the movement more difficult.',
+      imagePath: 'images/diamond.jpeg',
+      nextScreen: GuestTricepDipScreenAdvanced(),
+    );
+  }
+}
+
+class GuestTricepDipScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Tricep dips',
+      description:
+      'Tricep dips can be performed on parallel bars at your gym or even on a playground. '
+          'You hold your entire body weight up with your arms extended and feet hovering over the floor,'
+          ' ankles crossed. Lower your body until your elbows reach a 90-degree angle'
+          ' before returning to your starting position.',
+      imagePath: 'images/dips.png',
+      nextScreen: GuestPlankExtendedScreenAdvanced(),
+    );
+  }
+}
+
+class GuestPlankExtendedScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Plank with extended and stretched arms',
+      description:
+      'Get in a press-up position but with your arms as far in front of your head as you can reach. '
+          'Hold yourself there with your arms fully extended. '
+          'Make sure your back is straight and hold for the alloted time. '
+          'Expert tips: Keep your abs and glutes locked to avoid sagging or rising from your hips.',
+      imagePath: 'images/plankex.jpeg',
+      nextScreen: GuestLegRaisesScreenAdvanced(),
+    );
+  }
+}
+
+class GuestLegRaisesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Leg raises',
+      description:
+      'Lie on your back, legs straight and together.'
+          'Keep your legs straight and lift them all the way up to the ceiling until your butt comes off the floor.'
+          'Slowly lower your legs back down till they are just above the floor. Hold for a moment.'
+          'Raise your legs back up. Repeat.',
+      imagePath: 'images/legraises.png',
+      nextScreen: GuestSideLegRaisesScreenAdvanced(),
+    );
+  }
+}
+
+class GuestSideLegRaisesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Side leg raises',
+      description:
+      'Side leg raises is a core and leg exercise that involves you lying on the floor on your side, '
+          'and abducting your leg (pushing them) away from the midline. '
+          'You can also perform this whilst standing up. This exercise is great to develop strength'
+          ' and endurance in the core, thighs, and hip abductors.',
+      imagePath: 'images/sideleg.png',
+      nextScreen: GuestDolphinKicksScreenAdvanced(),
+    );
+  }
+}
+
+class GuestDolphinKicksScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Dolphin kicks',
+      description:
+      'It is similar to a kick that you would do in butterfly, but a few feet underwater. '
+          'This is a very compact, and efficient kick, so make sure your legs are together, '
+          'your arms are squeezed against your ears, and you keep your core solid.',
+      imagePath: 'images/dolphin.jpeg',
+      nextScreen: GuestSupermanScreenAdvanced(),
+    );
+  }
+}
+
+class GuestSupermanScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Superman',
+      description:
+      'Lie on the floor in a prone (facedown) position, with your legs straight '
+          'and your arms extended in front of you. Keeping your head in a neutral position (avoid looking up),'
+          ' slowly lift your arms and legs around 6 inches (15.3 cm) off the floor,'
+          ' or until you feel your lower back muscles contracting.',
+      imagePath: 'images/superman.png',
+      nextScreen: GuestHandStandPushUpScreenAdvanced(),
+    );
+  }
+}
+
+class GuestHandStandPushUpScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Handstand pushups',
+      description:
+      'The handstand push-ups (sometimes abbreviated as HSPU) is an advanced push-up variation '
+          'that involves standing upside down on your hands and engaging your arms, shoulders, '
+          'and core muscles to lift your body',
+      imagePath: 'images/hand.jpeg',
+      nextScreen: GuestNoseAndtoesScreenAdvanced(),
+    );
+  }
+}
+
+class GuestNoseAndtoesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Nose and Toes Against the Wall',
+      description:
+      'Setup Begin standing with feet about 6 inches away from a wall and your feet close together. '
+          'Lean towards the wall as far as you can keeping your body in a straight line '
+          'and your heels on the ground. Return to the starting position and repeat.',
+      imagePath: 'images/naratw.jpeg',
+      nextScreen: GuestCongratulationsScreen(),
+    );
+  }
+}
+
+class ExplosivePushUpScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Explosive Pushups',
+      description:
+      'Lay down on the floor, facing down, '
+          'with your hands at the width of your shoulders and your elbows bended.'
+          ' Try to maintain your trunk as a plank'
+          ' and extend your arms in an explosive way so that your hands lift off the floor. '
+          'If you are able to push yourself high enough in the air, you can clap your hands',
+      imagePath: 'images/pushup.jpeg',
+      nextScreen: DiamondPressScreenAdvanced(),
+    );
+  }
+}
+
+class DiamondPressScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Diamond press up',
+      description:
+      'In a diamond push-up, you touch your thumbs and index fingers together '
+          'to make a diamond shape directly in front of the center of your chest.'
+          ' This difference may seem subtle, but it changes the weight distribution of the press.'
+          ' Diamond push-ups recruit smaller muscles, generally making the movement more difficult.',
+      imagePath: 'images/diamond.jpeg',
+      nextScreen: TricepDipScreenAdvanced(),
+    );
+  }
+}
+
+class TricepDipScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Tricep dips',
+      description:
+      'Tricep dips can be performed on parallel bars at your gym or even on a playground. '
+          'You hold your entire body weight up with your arms extended and feet hovering over the floor,'
+          ' ankles crossed. Lower your body until your elbows reach a 90-degree angle'
+          ' before returning to your starting position.',
+      imagePath: 'images/dips.png',
+      nextScreen: PlankExtendedScreenAdvanced(),
+    );
+  }
+}
+
+class PlankExtendedScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Plank with extended and stretched arms',
+      description:
+      'Get in a press-up position but with your arms as far in front of your head as you can reach. '
+          'Hold yourself there with your arms fully extended. '
+          'Make sure your back is straight and hold for the alloted time. '
+          'Expert tips: Keep your abs and glutes locked to avoid sagging or rising from your hips.',
+      imagePath: 'images/plankex.jpeg',
+      nextScreen: LegRaisesScreenAdvanced(),
+    );
+  }
+}
+
+class LegRaisesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Leg raises',
+      description:
+      'Lie on your back, legs straight and together.'
+          'Keep your legs straight and lift them all the way up to the ceiling until your butt comes off the floor.'
+          'Slowly lower your legs back down till they are just above the floor. Hold for a moment.'
+          'Raise your legs back up. Repeat.',
+      imagePath: 'images/legraises.png',
+      nextScreen: SideLegRaisesScreenAdvanced(),
+    );
+  }
+}
+
+class SideLegRaisesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Side leg raises',
+      description:
+      'Side leg raises is a core and leg exercise that involves you lying on the floor on your side, '
+          'and abducting your leg (pushing them) away from the midline. '
+          'You can also perform this whilst standing up. This exercise is great to develop strength'
+          ' and endurance in the core, thighs, and hip abductors.',
+      imagePath: 'images/sideleg.png',
+      nextScreen: DolphinKicksScreenAdvanced(),
+    );
+  }
+}
+
+class DolphinKicksScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Dolphin kicks',
+      description:
+      'It is similar to a kick that you would do in butterfly, but a few feet underwater. '
+          'This is a very compact, and efficient kick, so make sure your legs are together, '
+          'your arms are squeezed against your ears, and you keep your core solid.',
+      imagePath: 'images/dolphin.jpeg',
+      nextScreen: SupermanScreenAdvanced(),
+    );
+  }
+}
+
+class SupermanScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Superman',
+      description:
+      'Lie on the floor in a prone (facedown) position, with your legs straight '
+          'and your arms extended in front of you. Keeping your head in a neutral position (avoid looking up),'
+          ' slowly lift your arms and legs around 6 inches (15.3 cm) off the floor,'
+          ' or until you feel your lower back muscles contracting.',
+      imagePath: 'images/superman.png',
+      nextScreen: HandStandPushUpScreenAdvanced(),
+    );
+  }
+}
+
+class HandStandPushUpScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Handstand pushups',
+      description:
+      'The handstand push-ups (sometimes abbreviated as HSPU) is an advanced push-up variation '
+          'that involves standing upside down on your hands and engaging your arms, shoulders, '
+          'and core muscles to lift your body',
+      imagePath: 'images/hand.jpeg',
+      nextScreen: NoseAndtoesScreenAdvanced(),
+    );
+  }
+}
+
+class NoseAndtoesScreenAdvanced extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimersAdvanced(
+      title: 'Nose and Toes Against the Wall',
+      description:
+      'Setup Begin standing with feet about 6 inches away from a wall and your feet close together. '
+          'Lean towards the wall as far as you can keeping your body in a straight line '
+          'and your heels on the ground. Return to the starting position and repeat.',
+      imagePath: 'images/naratw.jpeg',
+      nextScreen: CongratulationsScreen(),
+    );
+  }
+}
 

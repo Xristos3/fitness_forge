@@ -245,12 +245,12 @@ class UpperStandardScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => PushUpUpperScreenStandard(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PushUpUpperScreenStandard(),
+                ),
+              );
             },
           ),
         ],
@@ -332,12 +332,12 @@ class UpperAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ExplosivePushUpScreenAdvanced(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExplosivePushUpScreenAdvanced(),
+                ),
+              );
             },
           ),
         ],
@@ -1063,12 +1063,12 @@ class GuestUpperAdvancedScreen extends StatelessWidget {
           ElevatedButton(
             child: Text('Start'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => GuestExplosivePushUpScreenAdvanced(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GuestExplosivePushUpScreenAdvanced(),
+                ),
+              );
             },
           ),
         ],
