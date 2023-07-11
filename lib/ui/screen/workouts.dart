@@ -18,12 +18,26 @@ class WorkoutScreen extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Difficulty: ${isStandard == true ? 'Standard' : 'Advanced'}',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              children: [
+                Text(
+                  'Difficulty: ${isStandard == true ? 'Standard' : 'Advanced'}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16.0), // Added spacing
+                ElevatedButton(
+                  child: Text('Change Difficulty'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => isGuest == true ? GuestSelectDifficultyScreen() : SelectDifficultyScreen()),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           CustomContainer(
@@ -81,16 +95,6 @@ class WorkoutScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => isStandard == true ? LowerStandardScreen() : LowerAdvancedScreen()),
                 );
               }
-            },
-          ),
-          SizedBox(height: 16.0), // Added spacing
-          ElevatedButton(
-            child: Text('Change Difficulty'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => isGuest == true ? GuestSelectDifficultyScreen() : SelectDifficultyScreen()),
-              );
             },
           ),
         ],

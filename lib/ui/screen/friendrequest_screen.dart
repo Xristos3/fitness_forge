@@ -121,9 +121,9 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Friend Requests'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Friend Requests'),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
