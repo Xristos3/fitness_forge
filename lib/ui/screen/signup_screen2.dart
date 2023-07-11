@@ -1,7 +1,7 @@
 import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupScreen2 extends StatefulWidget {
   @override
@@ -12,13 +12,52 @@ class _SignupScreenState extends State<SignupScreen2> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  bool _passwordVisible = false; // Add a boolean variable to track password visibility
+  bool _passwordVisible = false;
+  bool _isLoading = false; // Add a isLoading variable to track the loading state
 
   FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance; // Firestore instance
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String _emailError = '';
+  String _usernameError = '';
+
+  Future<bool> _checkIfUserExists(String field, String value) async {
+    final snapshot = await _firestore
+        .collection('users')
+        .where(field, isEqualTo: value)
+        .limit(1)
+        .get();
+
+    return snapshot.docs.isNotEmpty;
+  }
 
   void _signUp() async {
     try {
+      setState(() {
+        _emailError = '';
+        _usernameError = '';
+        _isLoading = true; // Show the loader when the request starts
+      });
+
+      bool emailExists = await _checkIfUserExists('email', _emailController.text.trim());
+      bool usernameExists = await _checkIfUserExists('username', _usernameController.text.trim());
+
+      if (emailExists) {
+        setState(() {
+          _emailError = 'Email already exists';
+          _isLoading = false; // Hide the loader if an error occurs
+        });
+        return;
+      }
+
+      if (usernameExists) {
+        setState(() {
+          _usernameError = 'Username already exists';
+          _isLoading = false; // Hide the loader if an error occurs
+        });
+        return;
+      }
+
       final UserCredential userCredential =
       await _auth.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
@@ -26,10 +65,7 @@ class _SignupScreenState extends State<SignupScreen2> {
       );
 
       if (userCredential.user != null) {
-        // Signup successful
         print('Signup successful');
-
-        // Store user data in Firestore
         await _firestore.collection('users').doc(userCredential.user!.uid).set({
           'username': _usernameController.text.trim(),
           'email': _emailController.text.trim(),
@@ -42,9 +78,12 @@ class _SignupScreenState extends State<SignupScreen2> {
         );
       }
     } catch (e) {
-      // Signup failed
       print('Signup failed: $e');
       // You can display an error message or perform other actions here
+    } finally {
+      setState(() {
+        _isLoading = false; // Hide the loader when the request is finished
+      });
     }
   }
 
@@ -64,6 +103,7 @@ class _SignupScreenState extends State<SignupScreen2> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
+                  errorText: _emailError.isNotEmpty ? _emailError : null,
                 ),
               ),
               SizedBox(height: 16.0),
@@ -71,6 +111,7 @@ class _SignupScreenState extends State<SignupScreen2> {
                 controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username',
+                  errorText: _usernameError.isNotEmpty ? _usernameError : null,
                 ),
               ),
               SizedBox(height: 16.0),
@@ -82,7 +123,7 @@ class _SignupScreenState extends State<SignupScreen2> {
                     decoration: InputDecoration(
                       labelText: 'Password (must contain 6 or more characters)',
                     ),
-                    obscureText: !_passwordVisible, // Toggle password visibility
+                    obscureText: !_passwordVisible,
                   ),
                   IconButton(
                     icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
@@ -96,8 +137,8 @@ class _SignupScreenState extends State<SignupScreen2> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: _signUp,
-                child: Text('Sign up'),
+                onPressed: _isLoading ? null : _signUp, // Disable the button when isLoading is true
+                child: _isLoading ? CircularProgressIndicator() : Text('Sign up'), // Show the loader if isLoading is true
               ),
             ],
           ),

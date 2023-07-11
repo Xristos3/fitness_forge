@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_forge/ui/screen/forgotpassword_screen.dart';
 import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:fitness_forge/ui/screen/signup_screen2.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoginScreen2 extends StatefulWidget {
   @override
@@ -18,9 +19,14 @@ class _LoginScreenState extends State<LoginScreen2> {
   bool _rememberMe = false;
   String _errorMessage = '';
   bool _passwordVisible = false;
+  bool _isLoading = false;
 
   void _loginWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
       try {
         String email = _usernameController.text.trim();
         String password = _passwordController.text;
@@ -78,6 +84,13 @@ class _LoginScreenState extends State<LoginScreen2> {
       } catch (e) {
         // Login failed, handle the error
         print('Login failed: $e');
+        setState(() {
+          _errorMessage = 'Error occurred during login';
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -112,7 +125,14 @@ class _LoginScreenState extends State<LoginScreen2> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: SingleChildScrollView(
+      body:  _isLoading
+          ? Center(
+        child: SpinKitDualRing(
+          color: Colors.blue,
+          size: 45.0,
+        ),
+      )
+          :  SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Form(
