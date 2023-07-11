@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 
 class GuestCycling extends StatefulWidget {
   @override
-  _HikingState createState() => _HikingState();
+  _CyclingState createState() => _CyclingState();
 }
 
-class _HikingState extends State<GuestCycling> {
+class _CyclingState extends State<GuestCycling> {
   TextEditingController hoursController = TextEditingController();
   TextEditingController minutesController = TextEditingController();
   TextEditingController secondsController = TextEditingController();

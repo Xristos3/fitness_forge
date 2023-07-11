@@ -4,7 +4,6 @@ import 'package:fitness_forge/ui/screen/extra_screen.dart';
 import 'package:fitness_forge/ui/screen/friendrequest_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
 import 'package:fitness_forge/ui/screen/settings_screen.dart';
-import 'package:fitness_forge/ui/screen/workout_screen_standard.dart';
 import 'package:fitness_forge/ui/screen/workouts.dart';
 import 'package:flutter/material.dart';
 
