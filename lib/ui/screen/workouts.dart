@@ -11,9 +11,9 @@ class WorkoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Workout Sessions'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Workout Sessions'),
+      // ),
       body: ListView(
         children: [
           Container(

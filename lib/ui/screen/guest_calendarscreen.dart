@@ -23,9 +23,9 @@ class _CalendarScreenState extends State<GuestCalendarScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Calendar'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Calendar'),
+      // ),
       body: SingleChildScrollView( // Wrap with SingleChildScrollView
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

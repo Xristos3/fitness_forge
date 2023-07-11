@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class GuestHomeScreen extends StatefulWidget {
   @override
-  _BottomNavigationScreenState createState() => _BottomNavigationScreenState();
+  _GuestHomeScreenState createState() => _GuestHomeScreenState();
 }
 
-class _BottomNavigationScreenState extends State<GuestHomeScreen> {
+class _GuestHomeScreenState extends State<GuestHomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
