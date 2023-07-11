@@ -84,6 +84,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void updateProfile() async {
     userId = await getUserId();
 
+    if (height == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Height cannot be zero')),
+      );
+      return;
+    }
+
+    if (weight == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Weight cannot be zero')),
+      );
+      return;
+    }
+
     _firestore.collection('users').doc(userId).update({
       'weight': weight,
       'height': height,
@@ -103,9 +117,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Profile Screen'),
-      // ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -122,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 'Weight:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextField(
+              TextFormField(
                 controller: weightController,
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
@@ -130,13 +141,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     weight = int.parse(value);
                   });
                 },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Weight is required';
+                  }
+                  if (value == '0') {
+                    return 'Weight cannot be zero';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Weight',
+                  errorText: weight == 0 ? 'Weight cannot be zero' : null,
+                ),
               ),
               SizedBox(height: 16.0),
               Text(
                 'Height:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextField(
+              TextFormField(
                 controller: heightController,
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
@@ -144,6 +168,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height = int.parse(value);
                   });
                 },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Height is required';
+                  }
+                  if (value == '0') {
+                    return 'Height cannot be zero';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Height',
+                  errorText: height == 0 ? 'Height cannot be zero' : null,
+                ),
               ),
               SizedBox(height: 16.0),
               Text(
@@ -162,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 'Next Fitness Goal:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextField(
+              TextFormField(
                 controller: fitnessGoalController,
                 maxLines: 3,
                 onChanged: (value) {
@@ -170,6 +207,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     nextFitnessGoal = value;
                   });
                 },
+                decoration: InputDecoration(
+                  labelText: 'Write your fitness goal',
+                ),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(

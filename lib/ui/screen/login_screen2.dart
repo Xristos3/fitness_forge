@@ -64,6 +64,14 @@ class _LoginScreenState extends State<LoginScreen2> {
                   email: docSnapshot['email'], password: password);
             }
 
+            // Update rememberMe field in Firestore if remember me is checked
+            if (_rememberMe) {
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(docSnapshot.id)
+                  .update({'rememberMe': true});
+            }
+
             // Login successful, navigate to a new screen
             Navigator.pushReplacement(
               context,
@@ -119,6 +127,31 @@ class _LoginScreenState extends State<LoginScreen2> {
     );
   }
 
+  void _loadRememberMeValue(String email) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.size > 0) {
+      QueryDocumentSnapshot docSnapshot = querySnapshot.docs.first;
+      bool rememberMe = docSnapshot['rememberMe'];
+
+      setState(() {
+        _rememberMe = rememberMe;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Retrieve the current user's email from Firebase Authentication
+    String currentUserEmail = FirebaseAuth.instance.currentUser?.email ?? '';
+    _loadRememberMeValue(currentUserEmail);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,14 +159,14 @@ class _LoginScreenState extends State<LoginScreen2> {
         title: Text('Login'),
         automaticallyImplyLeading: false,
       ),
-      body:  _isLoading
+      body: _isLoading
           ? Center(
         child: SpinKitDualRing(
           color: Colors.blue,
           size: 45.0,
         ),
       )
-          :  SingleChildScrollView(
+          : SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Form(
@@ -142,7 +175,8 @@ class _LoginScreenState extends State<LoginScreen2> {
               children: [
                 TextFormField(
                   controller: _usernameController,
-                  decoration: InputDecoration(labelText: 'Email or Username'),
+                  decoration:
+                  InputDecoration(labelText: 'Email or Username'),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your email or username';
@@ -156,7 +190,9 @@ class _LoginScreenState extends State<LoginScreen2> {
                     labelText: 'Password',
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                       ),
                       onPressed: () {
                         setState(() {
