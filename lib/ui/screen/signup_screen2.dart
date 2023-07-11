@@ -42,6 +42,14 @@ class _SignupScreenState extends State<SignupScreen2> {
       bool emailExists = await _checkIfUserExists('email', _emailController.text.trim());
       bool usernameExists = await _checkIfUserExists('username', _usernameController.text.trim());
 
+      if (_emailController.text.isEmpty) {
+        setState(() {
+          _emailError = 'Email is required';
+          _isLoading = false; // Hide the loader if an error occurs
+        });
+        return;
+      }
+
       if (emailExists) {
         setState(() {
           _emailError = 'Email already exists';
@@ -50,9 +58,24 @@ class _SignupScreenState extends State<SignupScreen2> {
         return;
       }
 
+      if (_usernameController.text.isEmpty) {
+        setState(() {
+          _usernameError = 'Username is required';
+          _isLoading = false; // Hide the loader if an error occurs
+        });
+        return;
+      }
+
       if (usernameExists) {
         setState(() {
           _usernameError = 'Username already exists';
+          _isLoading = false; // Hide the loader if an error occurs
+        });
+        return;
+      }
+
+      if (_passwordController.text.isEmpty) {
+        setState(() {
           _isLoading = false; // Hide the loader if an error occurs
         });
         return;
@@ -105,6 +128,12 @@ class _SignupScreenState extends State<SignupScreen2> {
                   labelText: 'Email',
                   errorText: _emailError.isNotEmpty ? _emailError : null,
                 ),
+                // Add required validator
+                onChanged: (value) {
+                  setState(() {
+                    _emailError = value.isEmpty ? 'Email is required' : '';
+                  });
+                },
               ),
               SizedBox(height: 16.0),
               TextField(
@@ -113,6 +142,12 @@ class _SignupScreenState extends State<SignupScreen2> {
                   labelText: 'Username',
                   errorText: _usernameError.isNotEmpty ? _usernameError : null,
                 ),
+                // Add required validator
+                onChanged: (value) {
+                  setState(() {
+                    _usernameError = value.isEmpty ? 'Username is required' : '';
+                  });
+                },
               ),
               SizedBox(height: 16.0),
               Stack(
@@ -124,6 +159,10 @@ class _SignupScreenState extends State<SignupScreen2> {
                       labelText: 'Password (must contain 6 or more characters)',
                     ),
                     obscureText: !_passwordVisible,
+                    // Add required validator
+                    onChanged: (value) {
+                      setState(() {});
+                    },
                   ),
                   IconButton(
                     icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),

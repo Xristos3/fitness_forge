@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen2> {
 
   void _navigateToGuestScreen() {
     // Navigate to the guest screen
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => GuestHomeScreen()),
     );
@@ -124,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen2> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
+        automaticallyImplyLeading: false,
       ),
       body:  _isLoading
           ? Center(

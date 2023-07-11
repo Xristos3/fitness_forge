@@ -185,7 +185,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => widget.nextScreen,
@@ -904,7 +904,7 @@ class _CountdownTimersState extends State<CountdownTimers> {
               ElevatedButton(
                 child: Text('Next'),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => widget.nextScreen,
@@ -1508,7 +1508,7 @@ class _CountdownTimersAdvancedState extends State<CountdownTimersAdvanced> {
               ElevatedButton(
                 child: Text('Next'),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => widget.nextScreen,
