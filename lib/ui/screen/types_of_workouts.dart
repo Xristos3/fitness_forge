@@ -529,7 +529,7 @@ class HiitStandardScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => JumpingJacksStandardScreen(screenNavigator: ScreenNavigator(context)),
+                  builder: (context) => JumpingJacksStandardScreen(),
                 ),
               );
             },
@@ -618,7 +618,7 @@ class HiitAdvancedScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CrossJacksAdvancedScreen(screenNavigatorAdvanced: ScreenNavigatorAdvanced(context)),
+                  builder: (context) => CrossJacksAdvancedScreen(),
                 ),
               );
             },
@@ -707,7 +707,7 @@ class GuestHiitStandardScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GuestJumpingJacksStandardScreen(GuestscreenNavigator: GuestScreenNavigator(context)),
+                  builder: (context) => GuestJumpingJacksStandardScreen(),
                 ),
               );
             },
@@ -796,7 +796,7 @@ class GuestHiitAdvancedScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GuestCrossJacksAdvancedScreen(GuestscreenNavigatorAdvanced: GuestScreenNavigatorAdvanced(context)),
+                  builder: (context) => GuestCrossJacksAdvancedScreen(),
                 ),
               );
             },

@@ -15,9 +15,7 @@ class FitnessForgeApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fitness Forge App',
       theme: themeNotifier.getTheme(), // Default light theme// Use system theme as default
-      home: CountdownTimer(title: 'Jumping Jacks', description: 'Begin by standing with your legs straight and your arms to your sides. '
-          'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
-          ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.', imagePath: 'images/jjs.jpeg', nextScreen: CongratulationsScreen(),),
+      home: SplashScreen(),
     );
   }
     );
