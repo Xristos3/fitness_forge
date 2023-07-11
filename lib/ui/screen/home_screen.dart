@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
-  _BottomNavigationScreenState createState() => _BottomNavigationScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _BottomNavigationScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
@@ -58,26 +58,29 @@ class _BottomNavigationScreenState extends State<HomeScreen> {
             _currentIndex = index;
           });
         },
+        backgroundColor: Colors.blue, // Set the background color to blue
+        selectedItemColor: Colors.black, // Set the selected item color to white
+        unselectedItemColor: Colors.black54, // Set the unselected item color to a lighter shade of white
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.sports_gymnastics, color: Colors.black,),
-            label: 'workout',
+            icon: Icon(Icons.sports_gymnastics),
+            label: 'Workout',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black,),
-            label: 'profile',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month, color: Colors.black,),
-            label: 'calendar',
+            icon: Icon(Icons.calendar_month),
+            label: 'Calendar',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat, color: Colors.black,),
-            label:'chat',
+            icon: Icon(Icons.chat),
+            label: 'Chat',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_events, color: Colors.black,),
-              label: 'extra'
+            icon: Icon(Icons.emoji_events),
+            label: 'Extra',
           ),
         ],
       ),
