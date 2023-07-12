@@ -17,16 +17,29 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
   FirebaseFirestore.instance.collection('users');
 
   late User currentUser;
+  late String currentUserId;
+  late String currentUserUsername;
 
   @override
   void initState() {
     super.initState();
     currentUser = FirebaseAuth.instance.currentUser!;
+    currentUserId = currentUser.uid;
+    fetchCurrentUser();
     createFriendRequestOnSignUp();
   }
 
+  Future<void> fetchCurrentUser() async {
+    DocumentSnapshot userSnapshot =
+    await users.doc(currentUserId).get();
+
+    if (userSnapshot.exists) {
+      currentUserUsername = userSnapshot['username'];
+    }
+  }
+
   Future<void> createFriendRequestOnSignUp() async {
-    String senderId = currentUser.uid;
+    String senderId = currentUserId;
     String recipientId = ''; // Empty initially, to be filled later
     String message = '';
     String status = 'pending';
@@ -41,8 +54,60 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
 
   Future<void> sendFriendRequest(
       String recipientUsername, String message) async {
-    String senderId = currentUser.uid;
+    String senderId = currentUserId;
     String status = 'pending';
+
+    // Check if recipient username already exists in the user's friends list
+    QuerySnapshot friendsSnapshot = await friends
+        .doc(currentUserId)
+        .collection('userFriends')
+        .where('friendUsername', isEqualTo: recipientUsername)
+        .get();
+
+    if (friendsSnapshot.docs.isNotEmpty) {
+      // Recipient username is already a friend, show error dialog
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('$recipientUsername is already your friend.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop further execution
+    }
+
+    // Check if recipient username is the same as the current user's username
+    if (recipientUsername == currentUserUsername) {
+      // Recipient username is the same as the current user, show error dialog
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('You cannot send a friend request to yourself.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop further execution
+    }
 
     // Get the recipient user document based on the entered username
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -92,7 +157,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
 
     // Add the sender to the friends collection
     await friends
-        .doc(currentUser.uid)
+        .doc(currentUserId)
         .collection('userFriends')
         .doc(senderId)
         .set({
@@ -129,7 +194,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
           children: [
             StreamBuilder<QuerySnapshot>(
               stream: friendRequests
-                  .where('recipientId', isEqualTo: currentUser.uid)
+                  .where('recipientId', isEqualTo: currentUserId)
                   .where('status', isEqualTo: 'pending')
                   .snapshots(),
               builder: (context, snapshot) {
@@ -263,8 +328,30 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
               onPressed: () {
                 String recipientUsername = _usernameController.text.trim();
                 String message = _messageController.text.trim();
-                sendFriendRequest(recipientUsername, message);
-                Navigator.of(context).pop();
+
+                // Check if the message field is empty
+                if (message.isEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Error'),
+                        content: Text('Please enter a message for the friend request.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  sendFriendRequest(recipientUsername, message);
+                  Navigator.of(context).pop();
+                }
               },
               child: Text('Send Friend Request'),
             ),
