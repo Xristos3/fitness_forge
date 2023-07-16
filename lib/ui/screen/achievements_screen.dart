@@ -18,7 +18,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
     Achievement(title: 'Complete 5 Challenge'),
     Achievement(title: 'Complete an Advanced Workout'),
     Achievement(title: 'Have a total of 3 friends'),
-    Achievement(title: '5 Advanced Workouts'),
+    Achievement(title: 'Complete 5 Advanced Workouts'),
     Achievement(title: 'Complete 3 Challenges'),
     Achievement(title: 'complete 10 Standard Workouts'),
     Achievement(title: 'Add an event'),
