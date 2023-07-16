@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'package:fitness_forge/ui/screen/home_screen.dart';
 
@@ -36,12 +35,11 @@ class CongratulationsScreen extends StatelessWidget {
               firstAchievement['status'] = 'Completed';
               firstAchievement['isCompleted'] = true;
 
-              achievementsCollection.doc(user.uid).update({
-                'achievements': achievementsList,
-              });
+              achievementsCollection.doc(user.uid).update({'achievements': achievementsList});
 
               // Give respective points to the user when the achievement is completed
               final achievementPoints = firstAchievement['points'];
+
               final userSnapshot = await transaction.get(userDoc);
               final currentPoints = userSnapshot.data()!['points'] ?? 0;
               final newPoints = currentPoints + achievementPoints;
@@ -50,9 +48,7 @@ class CongratulationsScreen extends StatelessWidget {
 
               // Update the points field in the users collection for the current user
               final usersCollection = FirebaseFirestore.instance.collection('users');
-              usersCollection.doc(user.uid).update({
-                'points': newPoints,
-              });
+              usersCollection.doc(user.uid).update({'points': newPoints});
             }
           }
         }

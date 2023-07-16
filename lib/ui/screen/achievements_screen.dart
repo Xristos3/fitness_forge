@@ -100,9 +100,12 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
     final userId = await getUserId();
     final achievementsData =
     achievements.map((achievement) => achievement.toMap()).toList();
+    final achievementsPoints = achievements.fold<int>(
+        0, (previousValue, achievement) => previousValue + achievement.points);
 
     await _achievementsCollection.doc(userId).set({
       'achievements': achievementsData,
+      'points': achievementsPoints,
     });
   }
 
