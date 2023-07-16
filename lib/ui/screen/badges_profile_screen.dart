@@ -19,8 +19,8 @@ class _BadgesScreenState extends State<BadgesScreen> {
     'images/badge1.PNG',
     'images/badge2.PNG',
     'images/badge3.PNG',
-    'images/badge4.PNG',
-    'images/badge4.PNG',
+    'images/badge2.PNG',
+    'images/badge1.PNG',
     'images/badge2.PNG',
     'images/badge3.PNG',
     'images/badge1.PNG',
@@ -180,7 +180,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         Image.asset('images/badge1.PNG'),
                         Text('Level 4'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge4.PNG'),
+                        Image.asset('images/badge1.PNG'),
                         Text('Level 5'),
                         // Add more images and names here
                       ],
@@ -206,7 +206,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         Image.asset('images/badge2.PNG'),
                         Text('Level 4'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge4.PNG'),
+                        Image.asset('images/badge2.PNG'),
                         Text('Level 5'),
                         // Add more images and names here
                       ],
@@ -232,7 +232,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         Image.asset('images/badge3.PNG'),
                         Text('Level 4'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge4.PNG'),
+                        Image.asset('images/badge3.PNG'),
                         Text('Level 5'),
                         // Add more images and names here
                       ],

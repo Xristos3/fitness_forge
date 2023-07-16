@@ -24,11 +24,11 @@ class BadgesDescriptionScreen extends StatelessWidget {
             description: 'They are unlocked by achieving a variety of milestones through this application',
             image: 'images/badge3.PNG',
           ),
-          CustomRightAlignedContainer(
-            title: 'Locked',
-            description: 'They are locked for the time being, they will be unlocked once you meet the appropriate requirements',
-            image: 'images/badge4.PNG',
-          ),
+          // CustomRightAlignedContainer(
+          //   title: 'Locked',
+          //   description: 'They are locked for the time being, they will be unlocked once you meet the appropriate requirements',
+          //   image: 'images/badge4.PNG',
+          // ),
         ],
       ),
     );
