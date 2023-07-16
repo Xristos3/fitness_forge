@@ -14,13 +14,13 @@ class AchievementsScreen extends StatefulWidget {
 
 class _AchievementsScreenState extends State<AchievementsScreen> {
   List<Achievement> achievements = [
-    Achievement(title: 'Complete a workout'),
-    Achievement(title: 'Complete a challenge'),
-    Achievement(title: 'Complete an advanced workout'),
+    Achievement(title: 'Complete 3 standard workout'),
+    Achievement(title: 'Complete 5 Challenge'),
+    Achievement(title: 'Complete an Advanced Workout'),
     Achievement(title: 'Have a total of 3 friends'),
     Achievement(title: '5 Advanced Workouts'),
-    Achievement(title: '3 Challenges'),
-    Achievement(title: '10 Standard Workouts'),
+    Achievement(title: 'Complete 3 Challenges'),
+    Achievement(title: 'complete 10 Standard Workouts'),
     Achievement(title: 'Add an event'),
     Achievement(title: 'View Friend Profile'),
     Achievement(title: 'Have a total of 5 friends'),
