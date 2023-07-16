@@ -30,12 +30,12 @@ class _BadgesScreenState extends State<BadgesScreen> {
   void initState() {
     super.initState();
     retrieveUsername();
+    retrievePoints();
   }
 
   Future<void> retrieveUsername() async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      // Replace 'users' with the actual collection name in Firestore
       DocumentSnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser.uid)
@@ -44,6 +44,22 @@ class _BadgesScreenState extends State<BadgesScreen> {
       if (userSnapshot.exists) {
         setState(() {
           username = userSnapshot.get('username') as String;
+        });
+      }
+    }
+  }
+
+  Future<void> retrievePoints() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .get();
+
+      if (userSnapshot.exists) {
+        setState(() {
+          numberOfPoints = userSnapshot.get('points') ?? 0;
         });
       }
     }
@@ -82,14 +98,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Number of Points:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            setState(() {
-                              numberOfPoints = int.parse(value);
-                            });
-                          },
-                        ),
+                        Text(numberOfPoints.toString()),
                         SizedBox(height: 16.0),
                         Text(
                           'Total Badges:',
