@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:fitness_forge/ui/screen/profile_screen.dart';
 
 class CongratulationsScreen extends StatelessWidget {
   Future<void> _updateFirstAchievement() async {
@@ -21,10 +22,29 @@ class CongratulationsScreen extends StatelessWidget {
       if (achievementsList.isNotEmpty) {
         final firstAchievement = achievementsList[0];
         if (firstAchievement['status'] != 'Completed') {
-          firstAchievement['status'] = 'Completed';
-          firstAchievement['isCompleted'] = true;
+          final int currentCount = firstAchievement['count'] ?? 0;
+          final int updatedCount = currentCount + 1;
+
+          if (updatedCount >= 3) {
+            firstAchievement['status'] = 'Completed';
+            firstAchievement['isCompleted'] = true;
+          }
+
+          firstAchievement['count'] = updatedCount;
 
           await achievementsCollection.doc(user.uid).update({'achievements': achievementsList});
+
+          // Increment count in the user's profile
+          final userCollection = FirebaseFirestore.instance.collection('users');
+          final userSnapshot = await userCollection.doc(user.uid).get();
+
+          if (userSnapshot.exists) {
+            final userData = userSnapshot.data()!;
+            final int currentWorkoutCount = userData['count'] ?? 0;
+            final int updatedWorkoutCount = currentWorkoutCount + 1;
+
+            await userCollection.doc(user.uid).update({'count': updatedWorkoutCount});
+          }
         }
       }
     }

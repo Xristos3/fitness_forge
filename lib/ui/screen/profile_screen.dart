@@ -39,25 +39,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void fetchUserProfile() async {
     userId = await getUserId();
 
-    DocumentSnapshot snapshot =
-    await _firestore.collection('users').doc(userId).get();
+    DocumentSnapshot snapshot = await _firestore.collection('users').doc(userId).get();
 
     if (snapshot.exists) {
-      Map<String, dynamic>? userData =
-      snapshot.data() as Map<String, dynamic>?;
+      Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
 
       if (userData != null) {
         setState(() {
           weight = userData['weight'] ?? 0;
           height = userData['height'] ?? 0;
-          totalChallengesCompleted =
-              userData['totalChallengesCompleted'] ?? 0;
+          totalChallengesCompleted = userData['totalChallengesCompleted'] ?? 0;
           nextFitnessGoal = userData['nextFitnessGoal'] ?? '';
 
           weightController.text = weight.toString();
           heightController.text = height.toString();
-          totalChallengesController.text =
-              totalChallengesCompleted.toString();
+          totalChallengesController.text = totalChallengesCompleted.toString();
           fitnessGoalController.text = nextFitnessGoal;
         });
       }
@@ -67,11 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void syncUserData() async {
     userId = await getUserId();
 
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .snapshots()
-        .listen((snapshot) {
+    FirebaseFirestore.instance.collection('users').doc(userId).snapshots().listen((snapshot) {
       if (snapshot.exists) {
         setState(() {
           totalWorkouts = snapshot.data()?['count'] ?? 0;
@@ -103,6 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       'height': height,
       'totalChallengesCompleted': totalChallengesCompleted,
       'nextFitnessGoal': nextFitnessGoal,
+      'count': totalWorkouts + 1, // Increment totalWorkouts count by 1
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Profile updated successfully')),
@@ -216,7 +209,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => BadgesScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => BadgesScreen(
+                        totalWorkouts: totalWorkouts,
+                        totalChallengesCompleted: totalChallengesCompleted,
+                      ),
+                    ),
                   );
                 },
                 child: Text('View Badge Profile'),

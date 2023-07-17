@@ -4,6 +4,14 @@ import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 import 'package:flutter/material.dart';
 
 class BadgesScreen extends StatefulWidget {
+  final int totalWorkouts;
+  final int totalChallengesCompleted;
+
+  BadgesScreen({
+    required this.totalWorkouts,
+    required this.totalChallengesCompleted,
+  });
+
   @override
   _BadgesScreenState createState() => _BadgesScreenState();
 }
@@ -11,9 +19,7 @@ class BadgesScreen extends StatefulWidget {
 class _BadgesScreenState extends State<BadgesScreen> {
   String username = '';
   int totalBadges = 0;
-  int totalActivitiesCompleted = 0;
   int achievementsCompleted = 0;
-
   List<String> recentBadges = [
     'images/badge1.PNG',
     'images/badge2.PNG',
@@ -35,7 +41,8 @@ class _BadgesScreenState extends State<BadgesScreen> {
   Future<void> retrieveUsername() async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      DocumentSnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+      await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser.uid)
           .get();
@@ -58,9 +65,12 @@ class _BadgesScreenState extends State<BadgesScreen> {
           .listen((DocumentSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.exists) {
           setState(() {
-            List<dynamic> achievementsData = snapshot.data()!['achievements'];
+            List<dynamic> achievementsData =
+            snapshot.data()!['achievements'];
             achievementsCompleted = achievementsData
-                .where((achievement) => achievement['status'] == 'Completed' && achievement['isCompleted'] == true)
+                .where((achievement) =>
+            achievement['status'] == 'Completed' &&
+                achievement['isCompleted'] == true)
                 .length;
           });
         }
@@ -70,6 +80,9 @@ class _BadgesScreenState extends State<BadgesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int totalActivitiesCompleted =
+        widget.totalWorkouts + widget.totalChallengesCompleted;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Badges Screen'),
@@ -101,27 +114,13 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Total Badges:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            setState(() {
-                              totalBadges = int.parse(value);
-                            });
-                          },
-                        ),
+                        Text(totalBadges.toString()),
                         SizedBox(height: 16.0),
                         Text(
                           'Total Activities Completed:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            setState(() {
-                              totalActivitiesCompleted = int.parse(value);
-                            });
-                          },
-                        ),
+                        Text(totalActivitiesCompleted.toString()),
                         SizedBox(height: 16.0),
                         Text(
                           'Achievements Completed:',
