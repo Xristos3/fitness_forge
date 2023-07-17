@@ -4,6 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
+  int? totalWorkouts;
+
+  ProfileScreen({this.totalWorkouts});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -15,7 +19,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   int weight = 0;
   int height = 0;
-  int totalWorkouts = 0;
   int totalChallengesCompleted = 0;
   String nextFitnessGoal = '';
 
@@ -27,8 +30,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    if (widget.totalWorkouts == null) {
+      fetchTotalWorkouts();
+    }
     fetchUserProfile();
-    syncUserData();
   }
 
   Future<String> getUserId() async {
@@ -60,17 +65,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void syncUserData() async {
+  void fetchTotalWorkouts() async {
     userId = await getUserId();
 
-    FirebaseFirestore.instance.collection('users').doc(userId).snapshots().listen((snapshot) {
-      if (snapshot.exists) {
+    DocumentSnapshot snapshot = await _firestore.collection('users').doc(userId).get();
+
+    if (snapshot.exists) {
+      Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+
+      if (userData != null) {
         setState(() {
-          totalWorkouts = snapshot.data()?['count'] ?? 0;
-          totalChallengesCompleted = snapshot.data()?['challengeCount'] ?? 0;
+          widget.totalWorkouts = userData['count'] ?? 0;
         });
       }
-    });
+    }
   }
 
   void updateProfile() async {
@@ -95,7 +103,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       'height': height,
       'totalChallengesCompleted': totalChallengesCompleted,
       'nextFitnessGoal': nextFitnessGoal,
-      'count': totalWorkouts + 1, // Increment totalWorkouts count by 1
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Profile updated successfully')),
@@ -180,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 'Total Workouts:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(totalWorkouts.toString()),
+              Text(widget.totalWorkouts!.toString()),
               SizedBox(height: 16.0),
               Text(
                 'Total Challenges Completed:',
@@ -211,7 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => BadgesScreen(
-                        totalWorkouts: totalWorkouts,
+                        totalWorkouts: widget.totalWorkouts!,
                         totalChallengesCompleted: totalChallengesCompleted,
                       ),
                     ),

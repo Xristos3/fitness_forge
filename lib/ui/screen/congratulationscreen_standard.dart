@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
 
 class CongratulationsScreen extends StatelessWidget {
-  Future<void> _updateFirstAchievement() async {
+  Future<void> _updateWorkoutCounter(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       // User is not authenticated or there is no current user.
@@ -13,41 +12,31 @@ class CongratulationsScreen extends StatelessWidget {
       return;
     }
 
-    final achievementsCollection = FirebaseFirestore.instance.collection('achievements');
-    final achievementSnapshot = await achievementsCollection.doc(user.uid).get();
+    final userCollection = FirebaseFirestore.instance.collection('users');
+    final userDoc = userCollection.doc(user.uid);
 
-    if (achievementSnapshot.exists) {
-      final achievementData = achievementSnapshot.data()!;
-      final List<dynamic> achievementsList = achievementData['achievements'];
-      if (achievementsList.isNotEmpty) {
-        final firstAchievement = achievementsList[0];
-        if (firstAchievement['status'] != 'Completed') {
-          final int currentCount = firstAchievement['count'] ?? 0;
-          final int updatedCount = currentCount + 1;
+    // Update the workout counter
+    userDoc.update({
+      'count': FieldValue.increment(1),
+    }).then((value) {
+      print('Workout counter updated successfully');
 
-          if (updatedCount >= 3) {
-            firstAchievement['status'] = 'Completed';
-            firstAchievement['isCompleted'] = true;
-          }
+      // Fetch the updated workout counter value
+      userDoc.get().then((docSnapshot) {
+        final userData = docSnapshot.data() as Map<String, dynamic>?;
+        final workoutCount = userData?['count'] ?? 0;
 
-          firstAchievement['count'] = updatedCount;
-
-          await achievementsCollection.doc(user.uid).update({'achievements': achievementsList});
-
-          // Increment count in the user's profile
-          final userCollection = FirebaseFirestore.instance.collection('users');
-          final userSnapshot = await userCollection.doc(user.uid).get();
-
-          if (userSnapshot.exists) {
-            final userData = userSnapshot.data()!;
-            final int currentWorkoutCount = userData['count'] ?? 0;
-            final int updatedWorkoutCount = currentWorkoutCount + 1;
-
-            await userCollection.doc(user.uid).update({'count': updatedWorkoutCount});
-          }
-        }
-      }
-    }
+        // Navigate back to the ProfileScreen with the updated workout counter value
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileScreen(totalWorkouts: workoutCount),
+          ),
+        );
+      });
+    }).catchError((error) {
+      print('Failed to update workout counter: $error');
+    });
   }
 
   @override
@@ -67,13 +56,7 @@ class CongratulationsScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await _updateFirstAchievement();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
-                  ),
-                );
+                await _updateWorkoutCounter(context);
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
