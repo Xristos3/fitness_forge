@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_forge/ui/screen/profile_screen.dart';
+import 'package:fitness_forge/ui/screen/home_screen.dart';
 
 class CongratulationsScreen extends StatelessWidget {
   Future<void> _updateWorkoutCounter(BuildContext context) async {
@@ -26,11 +26,11 @@ class CongratulationsScreen extends StatelessWidget {
         final userData = docSnapshot.data() as Map<String, dynamic>?;
         final workoutCount = userData?['count'] ?? 0;
 
-        // Navigate back to the ProfileScreen with the updated workout counter value
+        // Navigate to the HomeScreen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ProfileScreen(totalWorkouts: workoutCount),
+            builder: (context) => HomeScreen(),
           ),
         );
       });
