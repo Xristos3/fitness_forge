@@ -10,7 +10,6 @@ class BadgesScreen extends StatefulWidget {
 
 class _BadgesScreenState extends State<BadgesScreen> {
   String username = '';
-  int numberOfPoints = 0;
   int totalBadges = 0;
   int totalActivitiesCompleted = 0;
   int achievementsCompleted = 0;
@@ -30,7 +29,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
   void initState() {
     super.initState();
     retrieveUsername();
-    retrievePoints();
+    subscribeToAchievements();
   }
 
   Future<void> retrieveUsername() async {
@@ -49,19 +48,23 @@ class _BadgesScreenState extends State<BadgesScreen> {
     }
   }
 
-  Future<void> retrievePoints() async {
+  void subscribeToAchievements() {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      DocumentSnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
-          .collection('users')
+      FirebaseFirestore.instance
+          .collection('achievements')
           .doc(currentUser.uid)
-          .get();
-
-      if (userSnapshot.exists) {
-        setState(() {
-          numberOfPoints = userSnapshot.get('points') ?? 0;
-        });
-      }
+          .snapshots()
+          .listen((DocumentSnapshot<Map<String, dynamic>> snapshot) {
+        if (snapshot.exists) {
+          setState(() {
+            List<dynamic> achievementsData = snapshot.data()!['achievements'];
+            achievementsCompleted = achievementsData
+                .where((achievement) => achievement['status'] == 'Completed' && achievement['isCompleted'] == true)
+                .length;
+          });
+        }
+      });
     }
   }
 
@@ -95,12 +98,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         Text(username),
                         SizedBox(height: 16.0),
                         Text(
-                          'Number of Points:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(numberOfPoints.toString()),
-                        SizedBox(height: 16.0),
-                        Text(
                           'Total Badges:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -130,14 +127,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Achievements Completed:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            setState(() {
-                              achievementsCompleted = int.parse(value);
-                            });
-                          },
-                        ),
+                        Text(achievementsCompleted.toString()),
                         SizedBox(height: 16.0),
                         Text(
                           'Recent Badges Earned:',

@@ -1,16 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Achievement {
   String title;
-  int points;
   bool isCompleted;
   String status;
 
   Achievement({
     required this.title,
-    required this.points,
     this.isCompleted = false,
     required this.status,
   });
@@ -18,7 +16,6 @@ class Achievement {
   Map<String, dynamic> toMap() {
     return {
       'title': title,
-      'points': points,
       'isCompleted': isCompleted,
       'status': status,
     };
@@ -27,7 +24,6 @@ class Achievement {
   factory Achievement.fromMap(Map<String, dynamic> map) {
     return Achievement(
       title: map['title'],
-      points: map['points'],
       isCompleted: map['isCompleted'],
       status: map['status'],
     );
@@ -74,17 +70,14 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
       achievements = [
         Achievement(
           title: 'Complete 3 standard workouts',
-          points: 10,
           status: 'Not Started',
         ),
         Achievement(
           title: 'Complete 5 Challenges',
-          points: 20,
           status: 'Not Started',
         ),
         Achievement(
           title: 'Complete an Advanced Workout',
-          points: 15,
           status: 'Not Started',
         ),
         // Add more achievements here...
@@ -100,12 +93,9 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
     final userId = await getUserId();
     final achievementsData =
     achievements.map((achievement) => achievement.toMap()).toList();
-    final achievementsPoints = achievements.fold<int>(
-        0, (previousValue, achievement) => previousValue + achievement.points);
 
     await _achievementsCollection.doc(userId).set({
       'achievements': achievementsData,
-      'points': achievementsPoints,
     });
   }
 
@@ -119,33 +109,23 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
         itemCount: achievements.length,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: GestureDetector(
-              onTap: () {
-                setState(() {
-                  achievements[index].isCompleted =
-                  !achievements[index].isCompleted;
-                  saveAchievements();
-                });
-              },
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: achievements[index].isCompleted
-                      ? Colors.green
-                      : Colors.transparent,
-                  border: Border.all(color: Colors.black),
-                ),
-                child: achievements[index].isCompleted
-                    ? Icon(Icons.check, color: Colors.white, size: 16)
-                    : null,
+            leading: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: achievements[index].isCompleted
+                    ? Colors.green
+                    : Colors.transparent,
+                border: Border.all(color: Colors.black),
               ),
+              child: achievements[index].isCompleted
+                  ? Icon(Icons.check, color: Colors.white, size: 16)
+                  : null,
             ),
             title: Text(achievements[index].title),
-            subtitle: Text(
-              'Points: ${achievements[index].points} | Status: ${achievements[index].status}',
-            ),
+            subtitle: Text('Status: ${achievements[index].status}'),
+            onTap: null, // Disable tapping on ListTile
           );
         },
       ),
