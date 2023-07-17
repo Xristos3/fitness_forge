@@ -86,7 +86,9 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
       await saveAchievements();
     }
 
-    setState(() {});
+    setState(() {
+      checkAndUpdateAchievements();
+    });
   }
 
   Future<void> saveAchievements() async {
@@ -97,6 +99,27 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
     await _achievementsCollection.doc(userId).set({
       'achievements': achievementsData,
     });
+  }
+
+  Future<void> checkAndUpdateAchievements() async {
+    if (achievements.isNotEmpty) {
+      final firstAchievement = achievements.first;
+      if (firstAchievement.title == 'Complete 3 standard workouts') {
+        final userId = await getUserId();
+        final userDoc = await _firestore.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+          final userData = userDoc.data()!;
+          final count = userData['count'];
+
+          if (count >= 3) {
+            firstAchievement.isCompleted = true;
+            firstAchievement.status = 'Completed';
+            await saveAchievements(); // Update the achievements in Firestore
+          }
+        }
+      }
+    }
   }
 
   @override
