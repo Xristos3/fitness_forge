@@ -20,15 +20,18 @@ class _BadgesScreenState extends State<BadgesScreen> {
   String username = '';
   int totalBadges = 0;
   int achievementsCompleted = 0;
-  List<String> recentBadges = [
-    'images/badge1.PNG',
-    'images/badge2.PNG',
-    'images/badge3.PNG',
-    'images/badge2.PNG',
-    'images/badge1.PNG',
-    'images/badge2.PNG',
-    'images/badge3.PNG',
-    'images/badge1.PNG',
+  List<String> recentBadges = [];
+  List<Map<String, dynamic>> activeBadges = [
+    // List to store non-greyed out badges and their text
+    {
+      'image': 'images/badge1.PNG',
+      'text': 'Level 1',
+    },
+    {
+      'image': 'images/badge2.PNG',
+      'text': 'Level 2',
+    },
+    // Add more badges and text here as needed
   ];
 
   @override
@@ -65,8 +68,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
           .listen((DocumentSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.exists) {
           setState(() {
-            List<dynamic> achievementsData =
-            snapshot.data()!['achievements'];
+            List<dynamic> achievementsData = snapshot.data()!['achievements'];
             achievementsCompleted = achievementsData
                 .where((achievement) =>
             achievement['status'] == 'Completed' &&
@@ -129,19 +131,31 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         Text(achievementsCompleted.toString()),
                         SizedBox(height: 16.0),
                         Text(
-                          'Recent Badges Earned:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          'Active Badges:', // Display active badges
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                         ),
                         SizedBox(height: 8.0),
                         Container(
-                          height: 80.0,
+                          height: 120.0,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: recentBadges.length,
+                            itemCount: activeBadges.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
                                 padding: EdgeInsets.only(right: 8.0),
-                                child: Image.asset(recentBadges[index]),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 60.0,
+                                      width: 60.0,
+                                      child: Image.asset(
+                                        activeBadges[index]['image'],
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    Text(activeBadges[index]['text']),
+                                  ],
+                                ),
                               );
                             },
                           ),
@@ -166,21 +180,50 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Engagement',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Image.asset('images/badge1.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge1.PNG'),
+                        ),
                         Text('Level 1'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge1.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge1.PNG'),
+                        ),
                         Text('Level 2'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge1.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge1.PNG'),
+                        ),
                         Text('Level 3'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge1.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge1.PNG'),
+                        ),
                         Text('Level 4'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge1.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge1.PNG'),
+                        ),
                         Text('Level 5'),
-                        // Add more images and names here
                       ],
                     ),
                   ),
@@ -192,21 +235,50 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Activity',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Image.asset('images/badge2.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge2.PNG'),
+                        ),
                         Text('Level 1'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge2.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge2.PNG'),
+                        ),
                         Text('Level 2'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge2.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge2.PNG'),
+                        ),
                         Text('Level 3'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge2.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge2.PNG'),
+                        ),
                         Text('Level 4'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge2.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge2.PNG'),
+                        ),
                         Text('Level 5'),
-                        // Add more images and names here
                       ],
                     ),
                   ),
@@ -218,21 +290,50 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Achievements',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Image.asset('images/badge3.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge3.PNG'),
+                        ),
                         Text('Level 1'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge3.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge3.PNG'),
+                        ),
                         Text('Level 2'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge3.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge3.PNG'),
+                        ),
                         Text('Level 3'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge3.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge3.PNG'),
+                        ),
                         Text('Level 4'),
                         SizedBox(height: 8.0),
-                        Image.asset('images/badge3.PNG'),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset('images/badge3.PNG'),
+                        ),
                         Text('Level 5'),
-                        // Add more images and names here
                       ],
                     ),
                   ),
