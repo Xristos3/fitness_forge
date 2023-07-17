@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 class BadgesScreen extends StatefulWidget {
   final int totalWorkouts;
-  final int totalChallengesCompleted;
+  final int challengeCount;
 
   BadgesScreen({
     required this.totalWorkouts,
-    required this.totalChallengesCompleted,
+    required this.challengeCount,
   });
 
   @override
@@ -37,11 +37,11 @@ class _BadgesScreenState extends State<BadgesScreen> {
   @override
   void initState() {
     super.initState();
-    retrieveUsername();
+    retrieveUserData();
     subscribeToAchievements();
   }
 
-  Future<void> retrieveUsername() async {
+  Future<void> retrieveUserData() async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       DocumentSnapshot<Map<String, dynamic>> userSnapshot =
@@ -83,7 +83,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
   @override
   Widget build(BuildContext context) {
     int totalActivitiesCompleted =
-        widget.totalWorkouts + widget.totalChallengesCompleted;
+        widget.totalWorkouts + widget.challengeCount; // Sum of totalWorkouts and challengeCount
 
     return Scaffold(
       appBar: AppBar(
@@ -132,7 +132,10 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         SizedBox(height: 16.0),
                         Text(
                           'Active Badges:', // Display active badges
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                         ),
                         SizedBox(height: 8.0),
                         Container(

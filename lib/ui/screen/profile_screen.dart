@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  int? totalWorkouts;
-
-  ProfileScreen({this.totalWorkouts});
+  ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -19,20 +17,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   int weight = 0;
   int height = 0;
-  int totalChallengesCompleted = 0;
+  int challengeCount = 0; // Define the challengeCount variable
+  int totalWorkouts = 0; // Define the totalWorkouts variable
   String nextFitnessGoal = '';
 
   TextEditingController weightController = TextEditingController();
   TextEditingController heightController = TextEditingController();
-  TextEditingController totalChallengesController = TextEditingController();
   TextEditingController fitnessGoalController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    if (widget.totalWorkouts == null) {
-      fetchTotalWorkouts();
-    }
     fetchUserProfile();
   }
 
@@ -53,29 +48,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           weight = userData['weight'] ?? 0;
           height = userData['height'] ?? 0;
-          totalChallengesCompleted = userData['totalChallengesCompleted'] ?? 0;
+          challengeCount = userData['challengeCount'] ?? 0;
+          totalWorkouts = userData['count'] ?? 0;
           nextFitnessGoal = userData['nextFitnessGoal'] ?? '';
 
           weightController.text = weight.toString();
           heightController.text = height.toString();
-          totalChallengesController.text = totalChallengesCompleted.toString();
           fitnessGoalController.text = nextFitnessGoal;
-        });
-      }
-    }
-  }
-
-  void fetchTotalWorkouts() async {
-    userId = await getUserId();
-
-    DocumentSnapshot snapshot = await _firestore.collection('users').doc(userId).get();
-
-    if (snapshot.exists) {
-      Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
-
-      if (userData != null) {
-        setState(() {
-          widget.totalWorkouts = userData['count'] ?? 0;
         });
       }
     }
@@ -101,7 +80,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _firestore.collection('users').doc(userId).update({
       'weight': weight,
       'height': height,
-      'totalChallengesCompleted': totalChallengesCompleted,
+      'challengeCount': challengeCount,
+      'count': totalWorkouts,
       'nextFitnessGoal': nextFitnessGoal,
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -187,13 +167,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 'Total Workouts:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(widget.totalWorkouts!.toString()),
+              Text(totalWorkouts.toString()), // Display totalWorkouts
               SizedBox(height: 16.0),
               Text(
-                'Total Challenges Completed:',
+                'Challenges Completed:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(totalChallengesCompleted.toString()),
+              Text(challengeCount.toString()), // Display challengeCount
               SizedBox(height: 16.0),
               Text(
                 'Next Fitness Goal:',
@@ -218,8 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => BadgesScreen(
-                        totalWorkouts: widget.totalWorkouts!,
-                        totalChallengesCompleted: totalChallengesCompleted,
+                        challengeCount: challengeCount,
+                        totalWorkouts: totalWorkouts,
                       ),
                     ),
                   );
