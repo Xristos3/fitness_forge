@@ -138,6 +138,8 @@ flutter:
   - images/walking.png
   - images/yoga.png
   - images/leaderboard.png
+  - images/badge5.png
+  - images/badge51.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
