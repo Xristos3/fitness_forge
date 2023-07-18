@@ -1,16 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:file_picker/file_picker.dart';
 
 class Achievement {
   String title;
   bool isCompleted;
   String status;
+  String imageUrl;
 
   Achievement({
     required this.title,
     this.isCompleted = false,
     required this.status,
+    required this.imageUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,6 +23,7 @@ class Achievement {
       'title': title,
       'isCompleted': isCompleted,
       'status': status,
+      'imageUrl': imageUrl,
     };
   }
 
@@ -26,6 +32,7 @@ class Achievement {
       title: map['title'],
       isCompleted: map['isCompleted'],
       status: map['status'],
+      imageUrl: map['imageUrl'],
     );
   }
 }
@@ -39,33 +46,9 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   CollectionReference<Map<String, dynamic>> _achievementsCollection =
   FirebaseFirestore.instance.collection('achievements');
-
-  List<Achievement> achievements = [
-    // Achievement(
-    //   title: 'Complete a Workout',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 3 Workouts',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 5 Workouts',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete a Challenge',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 3 Challenges',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 5 Challenges',
-    //   status: 'Not Started',
-    // ),
-  ];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  List<Achievement> achievements = [];
 
   @override
   void initState() {
@@ -74,7 +57,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   }
 
   Future<String> getUserId() async {
-    final user = await FirebaseAuth.instance.currentUser;
+    final user = await _auth.currentUser;
     return user!.uid;
   }
 
@@ -94,26 +77,32 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
         Achievement(
           title: 'Complete a Workout',
           status: 'Not Started',
+          imageUrl: 'C:/Users/user/Desktop/final project/fitness_forge/images/badgeb1.png',
         ),
         Achievement(
           title: 'Complete 3 Workouts',
           status: 'Not Started',
+          imageUrl: 'C:/Users/user/Desktop/final project/fitness_forge/images/badges2.png',
         ),
         Achievement(
           title: 'Complete 5 Workouts',
           status: 'Not Started',
+          imageUrl: 'C:/Users/user/Desktop/final project/fitness_forge/images/badgeg3.png',
         ),
         Achievement(
           title: 'Complete a Challenge',
           status: 'Not Started',
+          imageUrl: 'C:/Users/user/Desktop/final project/fitness_forge/images/badgeb1.png',
         ),
         Achievement(
           title: 'Complete 3 Challenges',
           status: 'Not Started',
+          imageUrl: 'C:/Users/user/Desktop/final project/fitness_forge/images/badges2.png',
         ),
         Achievement(
           title: 'Complete 5 Challenges',
           status: 'Not Started',
+          imageUrl: 'C:/Users/user/Desktop/final project/fitness_forge/images/badgeg3.png',
         ),
       ];
 
@@ -232,16 +221,34 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
             await saveAchievements();
           }
         }
-      }
+      }      // Perform similar checks for other achievements
     }
   }
 
-  Future<void> updateFirestore() async {
-    await saveAchievements();
-    setState(() {});
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Achievements updated in Firestore.')),
-    );
+  Future<void> uploadImage(int index) async {
+    final Achievement achievement = achievements[index];
+    final FilePickerResult? pickedFile =
+    await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (pickedFile != null) {
+      final File imageFile = File(pickedFile.files.single.path!);
+      final String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
+      final Reference storageRef = _storage.ref().child(fileName);
+      final TaskSnapshot uploadTask = await storageRef.putFile(imageFile);
+      final String imageUrl = await uploadTask.ref.getDownloadURL();
+
+      setState(() {
+        achievement.imageUrl = imageUrl;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Image uploaded successfully.')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No image selected.')),
+      );
+    }
   }
 
   @override
@@ -253,31 +260,37 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
       body: ListView.builder(
         itemCount: achievements.length,
         itemBuilder: (context, index) {
+          final achievement = achievements[index];
           return ListTile(
             leading: Container(
               width: 24,
               height: 24,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: achievements[index].isCompleted
-                    ? Colors.green
-                    : Colors.transparent,
+                color: achievement.isCompleted ? Colors.green : Colors.transparent,
                 border: Border.all(color: Colors.black),
               ),
-              child: achievements[index].isCompleted
+              child: achievement.isCompleted
                   ? Icon(Icons.check, color: Colors.white, size: 16)
                   : null,
             ),
-            title: Text(achievements[index].title),
-            subtitle: Text('Status: ${achievements[index].status}'),
-            onTap: null,
+            title: Text(achievement.title),
+            subtitle: Text('Status: ${achievement.status}'),
+            trailing: SizedBox(
+              width: 48,
+              height: 48,
+              child: achievement.imageUrl.isNotEmpty
+                  ? Image.network(achievement.imageUrl)
+                  : null,
+            ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: updateFirestore,
-        child: Icon(Icons.update),
+        onPressed: () => uploadImage(0), // Replace 0 with the desired achievement index
+        child: Icon(Icons.image),
       ),
     );
   }
 }
+
