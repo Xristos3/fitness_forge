@@ -125,7 +125,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         Text(totalActivitiesCompleted.toString()),
                         SizedBox(height: 16.0),
                         Text(
-                          'Achievements Completed:',
+                          'Achievements/Badges Completed:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(achievementsCompleted.toString()),
