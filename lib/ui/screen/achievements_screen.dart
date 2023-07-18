@@ -69,15 +69,27 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
       // Create initial achievements if it doesn't exist for the user
       achievements = [
         Achievement(
-          title: 'Complete 3 standard workouts',
+          title: 'Complete a Workout',
+          status: 'Not Started',
+        ),
+        Achievement(
+          title: 'Complete 3 Workouts',
+          status: 'Not Started',
+        ),
+        Achievement(
+          title: 'Complete 5 Workouts',
+          status: 'Not Started',
+        ),
+        Achievement(
+          title: 'Complete a Challenge',
+          status: 'Not Started',
+        ),
+        Achievement(
+          title: 'Complete 3 Challenges',
           status: 'Not Started',
         ),
         Achievement(
           title: 'Complete 5 Challenges',
-          status: 'Not Started',
-        ),
-        Achievement(
-          title: 'Complete an Advanced Workout',
           status: 'Not Started',
         ),
         // Add more achievements here...
@@ -104,7 +116,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   Future<void> checkAndUpdateAchievements() async {
     if (achievements.isNotEmpty) {
       final firstAchievement = achievements.first;
-      if (firstAchievement.title == 'Complete 3 standard workouts') {
+      if (firstAchievement.title == 'Complete a Workout') {
         final userId = await getUserId();
         final userDoc = await _firestore.collection('users').doc(userId).get();
 
@@ -112,7 +124,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           final userData = userDoc.data()!;
           final count = userData['count'];
 
-          if (count >= 3) {
+          if (count >= 1) {
             firstAchievement.isCompleted = true;
             firstAchievement.status = 'Completed';
             await saveAchievements(); // Update the achievements in Firestore
