@@ -2,6 +2,8 @@ import 'package:fitness_forge/ui/screen/achievements_screen.dart';
 import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 import 'package:fitness_forge/ui/screen/badges_profile_screen.dart';
 import 'package:fitness_forge/ui/screen/challenges_screen.dart';
+import 'package:fitness_forge/ui/screen/leaderboardchallenges.dart';
+import 'package:fitness_forge/ui/screen/leaderboardworkout.dart';
 import 'package:flutter/material.dart';
 
 class ExtraScreen extends StatelessWidget {
@@ -34,12 +36,12 @@ class ExtraScreen extends StatelessWidget {
             },
           ),
           CustomRightAlignedContainer(
-            title: 'Badges',
-            image: 'images/badges.jpeg',
+            title: 'Leaderboard',
+            image: 'images/leaderboard.png',
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BadgesDescriptionScreen()),
+                MaterialPageRoute(builder: (context) => ChallengeLeaderboardScreen()),
               );
             },
           ),
