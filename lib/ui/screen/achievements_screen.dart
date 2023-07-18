@@ -6,11 +6,13 @@ class Achievement {
   String title;
   bool isCompleted;
   String status;
+  String imagePath; // New property for the image path
 
   Achievement({
     required this.title,
     this.isCompleted = false,
     required this.status,
+    required this.imagePath, // Initialize the image path
   });
 
   Map<String, dynamic> toMap() {
@@ -18,6 +20,7 @@ class Achievement {
       'title': title,
       'isCompleted': isCompleted,
       'status': status,
+      'imagePath': imagePath,
     };
   }
 
@@ -26,6 +29,7 @@ class Achievement {
       title: map['title'],
       isCompleted: map['isCompleted'],
       status: map['status'],
+      imagePath: map['imagePath'],
     );
   }
 }
@@ -40,32 +44,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   CollectionReference<Map<String, dynamic>> _achievementsCollection =
   FirebaseFirestore.instance.collection('achievements');
 
-  List<Achievement> achievements = [
-    // Achievement(
-    //   title: 'Complete a Workout',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 3 Workouts',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 5 Workouts',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete a Challenge',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 3 Challenges',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 5 Challenges',
-    //   status: 'Not Started',
-    // ),
-  ];
+  List<Achievement> achievements = [];
 
   @override
   void initState() {
@@ -94,26 +73,32 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
         Achievement(
           title: 'Complete a Workout',
           status: 'Not Started',
+          imagePath: 'images/badgeb1.png', // Set the image path for each achievement
         ),
         Achievement(
           title: 'Complete 3 Workouts',
           status: 'Not Started',
+          imagePath: 'images/badges2.png',
         ),
         Achievement(
           title: 'Complete 5 Workouts',
           status: 'Not Started',
+          imagePath: 'images/badgeg3.png',
         ),
         Achievement(
           title: 'Complete a Challenge',
           status: 'Not Started',
+          imagePath: 'images/badgeb1.png',
         ),
         Achievement(
           title: 'Complete 3 Challenges',
           status: 'Not Started',
+          imagePath: 'images/badges2.png',
         ),
         Achievement(
           title: 'Complete 5 Challenges',
           status: 'Not Started',
+          imagePath: 'images/badgeg3.png',
         ),
       ];
 
@@ -232,7 +217,8 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
             await saveAchievements();
           }
         }
-      }
+      }// ... Repeat the same logic for other achievements
+      setState(() {});
     }
   }
 
@@ -253,23 +239,30 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
       body: ListView.builder(
         itemCount: achievements.length,
         itemBuilder: (context, index) {
+          final achievement = achievements[index];
           return ListTile(
             leading: Container(
               width: 24,
               height: 24,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: achievements[index].isCompleted
+                color: achievement.isCompleted
                     ? Colors.green
                     : Colors.transparent,
                 border: Border.all(color: Colors.black),
               ),
-              child: achievements[index].isCompleted
+              child: achievement.isCompleted
                   ? Icon(Icons.check, color: Colors.white, size: 16)
                   : null,
             ),
-            title: Text(achievements[index].title),
-            subtitle: Text('Status: ${achievements[index].status}'),
+            title: Text(achievement.title),
+            subtitle: Text('Status: ${achievement.status}'),
+            trailing: Image.asset(
+              achievement.imagePath,
+              width: 50,
+              height: 50,
+              color: achievement.isCompleted ? null : Colors.grey,
+            ),
             onTap: null,
           );
         },
