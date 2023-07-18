@@ -40,7 +40,32 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   CollectionReference<Map<String, dynamic>> _achievementsCollection =
   FirebaseFirestore.instance.collection('achievements');
 
-  List<Achievement> achievements = [];
+  List<Achievement> achievements = [
+    // Achievement(
+    //   title: 'Complete a Workout',
+    //   status: 'Not Started',
+    // ),
+    // Achievement(
+    //   title: 'Complete 3 Workouts',
+    //   status: 'Not Started',
+    // ),
+    // Achievement(
+    //   title: 'Complete 5 Workouts',
+    //   status: 'Not Started',
+    // ),
+    // Achievement(
+    //   title: 'Complete a Challenge',
+    //   status: 'Not Started',
+    // ),
+    // Achievement(
+    //   title: 'Complete 3 Challenges',
+    //   status: 'Not Started',
+    // ),
+    // Achievement(
+    //   title: 'Complete 5 Challenges',
+    //   status: 'Not Started',
+    // ),
+  ];
 
   @override
   void initState() {
@@ -49,7 +74,6 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   }
 
   Future<String> getUserId() async {
-    // Replace with your method to obtain the user ID (e.g., Firebase Authentication)
     final user = await FirebaseAuth.instance.currentUser;
     return user!.uid;
   }
@@ -66,7 +90,6 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           .map((achievement) => Achievement.fromMap(achievement))
           .toList();
     } else {
-      // Create initial achievements if it doesn't exist for the user
       achievements = [
         Achievement(
           title: 'Complete a Workout',
@@ -92,7 +115,6 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           title: 'Complete 5 Challenges',
           status: 'Not Started',
         ),
-        // Add more achievements here...
       ];
 
       await saveAchievements();
@@ -127,11 +149,19 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           if (count >= 1) {
             firstAchievement.isCompleted = true;
             firstAchievement.status = 'Completed';
-            await saveAchievements(); // Update the achievements in Firestore
+            await saveAchievements();
           }
         }
       }
     }
+  }
+
+  Future<void> updateFirestore() async {
+    await saveAchievements();
+    setState(() {});
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Achievements updated in Firestore.')),
+    );
   }
 
   @override
@@ -160,9 +190,13 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
             ),
             title: Text(achievements[index].title),
             subtitle: Text('Status: ${achievements[index].status}'),
-            onTap: null, // Disable tapping on ListTile
+            onTap: null,
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: updateFirestore,
+        child: Icon(Icons.update),
       ),
     );
   }
