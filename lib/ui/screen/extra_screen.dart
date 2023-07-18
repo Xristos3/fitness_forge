@@ -41,7 +41,7 @@ class ExtraScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ChallengeLeaderboardScreen()),
+                MaterialPageRoute(builder: (context) => LeaderboardScreen()),
               );
             },
           ),
