@@ -153,6 +153,86 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           }
         }
       }
+      final secondAchievement = achievements[1]; // Get the second achievement
+      if (secondAchievement.title == 'Complete 3 Workouts') {
+        final userId = await getUserId();
+        final userDoc = await _firestore.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+          final userData = userDoc.data()!;
+          final count = userData['count'];
+
+          if (count >= 3) {
+            secondAchievement.isCompleted = true;
+            secondAchievement.status = 'Completed';
+            await saveAchievements();
+          }
+        }
+      }
+      final thirdAchievement = achievements[2]; // Get the second achievement
+      if (thirdAchievement.title == 'Complete 5 Workouts') {
+        final userId = await getUserId();
+        final userDoc = await _firestore.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+          final userData = userDoc.data()!;
+          final count = userData['count'];
+
+          if (count >= 5) {
+            thirdAchievement.isCompleted = true;
+            thirdAchievement.status = 'Completed';
+            await saveAchievements();
+          }
+        }
+      }
+      final fourthAchievement = achievements[3]; // Get the second achievement
+      if (fourthAchievement.title == 'Complete a Challenge') {
+        final userId = await getUserId();
+        final userDoc = await _firestore.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+          final userData = userDoc.data()!;
+          final challengecount = userData['challengeCount'];
+
+          if (challengecount >= 1) {
+            fourthAchievement.isCompleted = true;
+            fourthAchievement.status = 'Completed';
+            await saveAchievements();
+          }
+        }
+      }
+      final fifthAchievement = achievements[4]; // Get the second achievement
+      if (fifthAchievement.title == 'Complete 3 Challenges') {
+        final userId = await getUserId();
+        final userDoc = await _firestore.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+          final userData = userDoc.data()!;
+          final challengecount = userData['challengeCount'];
+
+          if (challengecount >= 3) {
+            fifthAchievement.isCompleted = true;
+            fifthAchievement.status = 'Completed';
+            await saveAchievements();
+          }
+        }
+      }
+      final sixthAchievement = achievements[5]; // Get the second achievement
+      if (sixthAchievement.title == 'Complete 5 Challenges') {
+        final userId = await getUserId();
+        final userDoc = await _firestore.collection('users').doc(userId).get();
+
+        if (userDoc.exists) {
+          final userData = userDoc.data()!;
+          final challengecount = userData['challengeCount'];
+
+          if (challengecount >= 5) {
+            sixthAchievement.isCompleted = true;
+            sixthAchievement.status = 'Completed';
+            await saveAchievements();
+          }
+        }
+      }
     }
   }
 
