@@ -11,22 +11,26 @@ class BadgesDescriptionScreen extends StatelessWidget {
         children: [
           CustomRightAlignedContainer(
             title: 'Bronze Medal',
-            description: 'This medal is unlocked when you complete the first achievement regarding the workouts and/or challenges',
+            description:
+            'This medal is unlocked when you complete the first achievement regarding the workouts and/or challenges',
             image: 'images/badgeb1.png',
           ),
           CustomRightAlignedContainer(
             title: 'Silver Medal',
-            description: 'This medal is unlocked when you complete the second achievement regarding the workouts and/or challenges',
+            description:
+            'This medal is unlocked when you complete the second achievement regarding the workouts and/or challenges',
             image: 'images/badges2.png',
           ),
           CustomRightAlignedContainer(
             title: 'Gold Medal',
-            description: 'This medal is unlocked when you complete the third achievement regarding the workouts and/or challenges',
+            description:
+            'This medal is unlocked when you complete the third achievement regarding the workouts and/or challenges',
             image: 'images/badgeg3.png',
           ),
           LockedCustomContainer(
             title: 'Locked',
-            description: 'They are locked for the time being, they will be unlocked once you meet the appropriate requirements',
+            description:
+            'They are locked for the time being, they will be unlocked once you meet the appropriate requirements',
             lockedImages: [
               'images/badgeb1.png',
               'images/badges2.png',
@@ -77,11 +81,10 @@ class CustomRightAlignedContainer extends StatelessWidget {
             ),
           ),
           SizedBox(width: 16.0),
-          Image.asset(
-            image,
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+          // Wrap the Image.asset with a CircleAvatar
+          CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage(image),
           ),
         ],
       ),
@@ -131,14 +134,9 @@ class LockedCustomContainer extends StatelessWidget {
           Column(
             children: [
               for (String lockedImage in lockedImages)
-                ColorFiltered(
-                  colorFilter: ColorFilter.mode(Colors.grey, BlendMode.saturation),
-                  child: Image.asset(
-                    lockedImage,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  ),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage(lockedImage),
                 ),
             ],
           ),

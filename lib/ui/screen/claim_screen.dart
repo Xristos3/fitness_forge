@@ -93,9 +93,7 @@ class ClaimScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => BadgesScreen(
-                      totalWorkouts: 0, challengeCount: 0,
-                    )),
+                    MaterialPageRoute(builder: (context) => BadgesScreen()),
                   );
                 },
                 child: Text('Claim'),

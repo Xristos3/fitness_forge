@@ -190,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BadgesScreen(totalWorkouts: 0, challengeCount: 0,),
+                      builder: (context) => BadgesScreen(),
                     ),
                   );  // Check if any of the required fields are empty or zero
                 },

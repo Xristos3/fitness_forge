@@ -36,13 +36,13 @@ class Achievement {
 }
 
 class BadgesScreen extends StatefulWidget {
-  final int totalWorkouts;
-  final int challengeCount;
+  // final int totalWorkouts;
+  // final int challengeCount;
 
-  BadgesScreen({
-    required this.totalWorkouts,
-    required this.challengeCount,
-  });
+  // BadgesScreen({
+  //   // required this.totalWorkouts,
+  //   // required this.challengeCount,
+  // });
 
   @override
   _BadgesScreenState createState() => _BadgesScreenState();
@@ -51,6 +51,8 @@ class BadgesScreen extends StatefulWidget {
 class _BadgesScreenState extends State<BadgesScreen> {
   String username = '';
   int achievementsCompleted = 0;
+  int totalWorkouts = 0;
+  int challengeCount = 0;
   List<Achievement> achievements = [
     Achievement(
       title: 'Complete a Workout',
@@ -95,14 +97,14 @@ class _BadgesScreenState extends State<BadgesScreen> {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
+      await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
 
       if (userSnapshot.exists) {
         setState(() {
           username = userSnapshot.get('username') as String;
+          totalWorkouts = userSnapshot.get('count') as int;
+          challengeCount = userSnapshot.get('challengeCount') as int;
+
         });
       }
     }
@@ -111,25 +113,16 @@ class _BadgesScreenState extends State<BadgesScreen> {
   void subscribeToAchievements() {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      FirebaseFirestore.instance
-          .collection('achievements')
-          .doc(currentUser.uid)
-          .snapshots()
-          .listen((DocumentSnapshot<Map<String, dynamic>> snapshot) {
+      FirebaseFirestore.instance.collection('achievements').doc(currentUser.uid).snapshots().listen((DocumentSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.exists) {
           setState(() {
             List<dynamic> achievementsData = snapshot.data()!['achievements'];
-            achievementsCompleted = achievementsData
-                .where((achievement) =>
-            achievement['status'] == 'Completed' &&
-                achievement['isCompleted'] == true)
-                .length;
+            achievementsCompleted = achievementsData.where((achievement) => achievement['status'] == 'Completed' && achievement['isCompleted'] == true).length;
 
             // Update the isCompleted property for each achievement in the list
             for (int i = 0; i < achievements.length; i++) {
               Achievement achievement = achievements[i];
-              achievement.isCompleted =
-                  achievementsData[i]['isCompleted'] == true;
+              achievement.isCompleted = achievementsData[i]['isCompleted'] == true;
             }
           });
         }
@@ -139,8 +132,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int totalActivitiesCompleted =
-        widget.totalWorkouts + widget.challengeCount; // Sum of totalWorkouts and challengeCount
+    int totalActivitiesCompleted = totalWorkouts + challengeCount; // Sum of totalWorkouts and challengeCount
 
     // Check if the first, second, and third achievements are completed and isCompleted is true
     bool isFirstAchievementCompleted = achievements[0].isCompleted;
@@ -210,34 +202,40 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Workout Medals',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isFirstAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isFirstAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[0].imagePath),
                           ),
-                          child: Image.asset(achievements[0].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isSecondAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isSecondAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[1].imagePath),
                           ),
-                          child: Image.asset(achievements[1].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isThirdAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isThirdAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[2].imagePath),
                           ),
-                          child: Image.asset(achievements[2].imagePath),
                         ),
                         SizedBox(height: 8.0),
                       ],
@@ -251,34 +249,40 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           'Challenge Medals',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isFourthAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isFourthAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[3].imagePath),
                           ),
-                          child: Image.asset(achievements[3].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isFifthAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isFifthAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[4].imagePath),
                           ),
-                          child: Image.asset(achievements[4].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isSixthAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isSixthAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[5].imagePath),
                           ),
-                          child: Image.asset(achievements[5].imagePath),
                         ),
                         SizedBox(height: 8.0),
                       ],
