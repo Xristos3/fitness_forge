@@ -22,16 +22,21 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workout Leaderboard'),
+        title: Text('Leaderboard'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_forward),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChallengeLeaderboardScreen()),
-              );
-            },
+          Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.leaderboard),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChallengeLeaderboardScreen()),
+                  );
+                },
+              ),
+              Text('2nd board'), // Text added next to the IconButton
+            ],
           ),
         ],
       ),
