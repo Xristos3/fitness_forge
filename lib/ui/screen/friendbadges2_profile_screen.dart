@@ -210,34 +210,40 @@ class _FriendsBadgesScreen2State extends State<FriendsBadgesScreen2> {
                           'Workout Medals',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isFirstAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isFirstAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[0].imagePath),
                           ),
-                          child: Image.asset(achievements[0].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isSecondAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isSecondAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[1].imagePath),
                           ),
-                          child: Image.asset(achievements[1].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isThirdAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isThirdAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[2].imagePath),
                           ),
-                          child: Image.asset(achievements[2].imagePath),
                         ),
                         SizedBox(height: 8.0),
                       ],
@@ -251,34 +257,40 @@ class _FriendsBadgesScreen2State extends State<FriendsBadgesScreen2> {
                           'Challenge Medals',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isFourthAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isFourthAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[3].imagePath),
                           ),
-                          child: Image.asset(achievements[3].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isFifthAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isFifthAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[4].imagePath),
                           ),
-                          child: Image.asset(achievements[4].imagePath),
                         ),
                         SizedBox(height: 8.0),
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            isSixthAchievementCompleted
-                                ? Colors.transparent
-                                : Colors.grey,
-                            BlendMode.saturation,
+                        ClipOval(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              isSixthAchievementCompleted
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                              BlendMode.saturation,
+                            ),
+                            child: Image.asset(achievements[5].imagePath),
                           ),
-                          child: Image.asset(achievements[5].imagePath),
                         ),
                         SizedBox(height: 8.0),
                       ],
