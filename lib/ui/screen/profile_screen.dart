@@ -97,10 +97,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                'images/profile.jpeg',
-                width: double.infinity,
-                fit: BoxFit.cover,
+              CircleAvatar(
+                radius: 50, // Adjust the radius as per your preference
+                backgroundImage: AssetImage('images/profile.jpeg'),
               ),
               SizedBox(height: 16.0),
               Text(
