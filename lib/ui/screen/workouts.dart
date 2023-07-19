@@ -40,10 +40,10 @@ class WorkoutScreen extends StatelessWidget {
               ],
             ),
           ),
-          CustomContainer(
+          _buildWorkoutItem(
             title: 'HIIT Workout',
             type: 'HIIT',
-            description: 'Exercises: Expected duration:',
+            // description: 'Exercises: Expected duration:',
             image: 'images/hiit.png',
             onPressed: () {
               if (isGuest == true) {
@@ -59,10 +59,10 @@ class WorkoutScreen extends StatelessWidget {
               }
             },
           ),
-          CustomContainer(
+          _buildWorkoutItem(
             title: 'Upper Body Workout',
             type: 'Upper Body',
-            description: 'Exercises: Expected duration:',
+            // description: 'Exercises: Expected duration:',
             image: 'images/upperbody.jpeg',
             onPressed: () {
               if (isGuest == true) {
@@ -78,10 +78,10 @@ class WorkoutScreen extends StatelessWidget {
               }
             },
           ),
-          CustomContainer(
+          _buildWorkoutItem(
             title: 'Lower Body Workout',
             type: 'Lower Body',
-            description: 'Exercises: Expected duration:',
+            // description: 'Exercises: Expected duration:',
             image: 'images/lowerbody.jpeg',
             onPressed: () {
               if (isGuest == true) {
@@ -101,47 +101,48 @@ class WorkoutScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class CustomContainer extends StatelessWidget {
-  final String title;
-  final String type;
-  final String description;
-  final String image;
-  final VoidCallback onPressed;
-
-  const CustomContainer({
-    required this.title,
-    required this.type,
-    required this.description,
-    required this.image,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildWorkoutItem({
+    required String title,
+    required String type,
+    // required String description,
+    required String image,
+    required VoidCallback onPressed,
+  }) {
     return Container(
       padding: EdgeInsets.all(16.0),
-      child: Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          Expanded(
+            flex: 1,
+            child: Image.asset(image),
+          ),
+          SizedBox(width: 16.0),
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  'Type: $type',//\n$description
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 8.0),
+                ElevatedButton(
+                  child: Text('Start'),
+                  onPressed: onPressed,
+                ),
+              ],
             ),
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            'Type: $type\n$description',
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(height: 8.0),
-          Image.asset(image),
-          SizedBox(height: 16.0),
-          ElevatedButton(
-            child: Text('Start'),
-            onPressed: onPressed,
           ),
         ],
       ),
