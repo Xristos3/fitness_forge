@@ -121,109 +121,43 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
 
   Future<void> checkAndUpdateAchievements() async {
     if (achievements.isNotEmpty) {
-      final firstAchievement = achievements.first;
-      if (firstAchievement.title == 'Complete a Workout') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
+      final userId = await getUserId();
+      final userDoc = await _firestore.collection('users').doc(userId).get();
 
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final count = userData['count'];
+      if (userDoc.exists) {
+        final userData = userDoc.data()!;
+        final count = userData['count'];
+        final challengeCount = userData['challengeCount'];
 
-          if (count >= 1) {
-            firstAchievement.isCompleted = true;
-            firstAchievement.status = 'Completed';
-            await saveAchievements();
+        // Update the isCompleted and status properties for each achievement in the list
+        for (int i = 0; i < achievements.length; i++) {
+          Achievement achievement = achievements[i];
+          if (achievement.title == 'Complete a Workout') {
+            achievement.isCompleted = count >= 1;
+          } else if (achievement.title == 'Complete 3 Workouts') {
+            achievement.isCompleted = count >= 3;
+          } else if (achievement.title == 'Complete 5 Workouts') {
+            achievement.isCompleted = count >= 5;
+          } else if (achievement.title == 'Complete a Challenge') {
+            achievement.isCompleted = challengeCount >= 1;
+          } else if (achievement.title == 'Complete 3 Challenges') {
+            achievement.isCompleted = challengeCount >= 3;
+          } else if (achievement.title == 'Complete 5 Challenges') {
+            achievement.isCompleted = challengeCount >= 5;
           }
+
+          achievement.status =
+          achievement.isCompleted ? 'Completed' : 'Not Started';
         }
+
+        await saveAchievements();
+        setState(() {});
       }
-      final secondAchievement = achievements[1]; // Get the second achievement
-      if (secondAchievement.title == 'Complete 3 Workouts') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final count = userData['count'];
-
-          if (count >= 3) {
-            secondAchievement.isCompleted = true;
-            secondAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final thirdAchievement = achievements[2]; // Get the second achievement
-      if (thirdAchievement.title == 'Complete 5 Workouts') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final count = userData['count'];
-
-          if (count >= 5) {
-            thirdAchievement.isCompleted = true;
-            thirdAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final fourthAchievement = achievements[3]; // Get the second achievement
-      if (fourthAchievement.title == 'Complete a Challenge') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final challengecount = userData['challengeCount'];
-
-          if (challengecount >= 1) {
-            fourthAchievement.isCompleted = true;
-            fourthAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final fifthAchievement = achievements[4]; // Get the second achievement
-      if (fifthAchievement.title == 'Complete 3 Challenges') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final challengecount = userData['challengeCount'];
-
-          if (challengecount >= 3) {
-            fifthAchievement.isCompleted = true;
-            fifthAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final sixthAchievement = achievements[5]; // Get the second achievement
-      if (sixthAchievement.title == 'Complete 5 Challenges') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final challengecount = userData['challengeCount'];
-
-          if (challengecount >= 5) {
-            sixthAchievement.isCompleted = true;
-            sixthAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }// ... (Repeat the same logic for other achievements)
-      setState(() {});
     }
   }
 
   Future<void> updateFirestore() async {
     await saveAchievements();
-    setState(() {});
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Achievements updated in Firestore.')),
     );
@@ -254,15 +188,17 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
             ),
             title: Text(achievement.title),
             subtitle: Text('Status: ${achievement.status}'),
-            trailing: ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                Colors.grey, // Apply a grey color filter when not completed
-                achievement.isCompleted ? BlendMode.dst : BlendMode.saturation,//srcOver
-              ),
-              child: Image.asset(
-                achievement.imagePath,
-                width: 50,
-                height: 50,
+            trailing: ClipOval(
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  Colors.grey, // Apply a grey color filter when not completed
+                  achievement.isCompleted ? BlendMode.dst : BlendMode.saturation,//srcOver
+                ),
+                child: Image.asset(
+                  achievement.imagePath,
+                  width: 50,
+                  height: 50,
+                ),
               ),
             ),
             onTap: null,
