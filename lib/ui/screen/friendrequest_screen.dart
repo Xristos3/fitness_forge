@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_forge/ui/screen/friendslist_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness_forge/ui/screen/friendslist_screen.dart';
 
 class FriendRequestScreen extends StatefulWidget {
   @override
@@ -30,8 +30,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
   }
 
   Future<void> fetchCurrentUser() async {
-    DocumentSnapshot userSnapshot =
-    await users.doc(currentUserId).get();
+    DocumentSnapshot userSnapshot = await users.doc(currentUserId).get();
 
     if (userSnapshot.exists) {
       currentUserUsername = userSnapshot['username'];
@@ -52,8 +51,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     });
   }
 
-  Future<void> sendFriendRequest(
-      String recipientUsername, String message) async {
+  Future<void> sendFriendRequest(String recipientUsername, String message) async {
     String senderId = currentUserId;
     String status = 'pending';
 
@@ -156,11 +154,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     await friendRequests.doc(requestId).update({'status': 'accepted'});
 
     // Add the sender to the friends collection
-    await friends
-        .doc(currentUserId)
-        .collection('userFriends')
-        .doc(senderId)
-        .set({
+    await friends.doc(currentUserId).collection('userFriends').doc(senderId).set({
       'friendId': senderId,
       'friendUsername': senderUsername,
     });
@@ -186,9 +180,9 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Friend Requests'),
-      // ),
+      appBar: AppBar(
+        title: Text('Friend Requests'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -232,26 +226,6 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                         return ListTile(
                           title: Text('From: $senderUsername'),
                           subtitle: Text('Message: $message'),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.check),
-                                color: Colors.green,
-                                onPressed: () {
-                                  acceptRequest(
-                                      requestId, senderId, senderUsername);
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.close),
-                                color: Colors.red,
-                                onPressed: () {
-                                  rejectRequest(requestId);
-                                },
-                              ),
-                            ],
-                          ),
                         );
                       },
                     );
@@ -263,101 +237,6 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton.extended(
-            onPressed: () {
-              showSendFriendRequestDialog(context);
-            },
-            label: Text('Send Friend Request'),
-            icon: Icon(Icons.person_add),
-          ),
-          SizedBox(height: 16),
-          FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FriendsListScreen()),
-              );
-            },
-            label: Text('Friends List'),
-            icon: Icon(Icons.arrow_forward),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> showSendFriendRequestDialog(BuildContext context) async {
-    final TextEditingController _usernameController = TextEditingController();
-    final TextEditingController _messageController = TextEditingController();
-
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Send Friend Request'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: 'Recipient Username',
-                  ),
-                ),
-                TextField(
-                  controller: _messageController,
-                  decoration: InputDecoration(
-                    labelText: 'Message',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                String recipientUsername = _usernameController.text.trim();
-                String message = _messageController.text.trim();
-
-                // Check if the message field is empty
-                if (message.isEmpty) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Error'),
-                        content: Text('Please enter a message for the friend request.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                } else {
-                  sendFriendRequest(recipientUsername, message);
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text('Send Friend Request'),
-            ),
-          ],
-        );
-      },
     );
   }
 }
