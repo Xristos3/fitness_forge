@@ -3,6 +3,38 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_forge/ui/screen/badges_description_screen.dart';
 import 'package:flutter/material.dart';
 
+class Achievement {
+  String title;
+  bool isCompleted;
+  String status;
+  String imagePath;
+
+  Achievement({
+    required this.title,
+    this.isCompleted = false,
+    required this.status,
+    required this.imagePath,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'isCompleted': isCompleted,
+      'status': status,
+      'imagePath': imagePath,
+    };
+  }
+
+  factory Achievement.fromMap(Map<String, dynamic> map) {
+    return Achievement(
+      title: map['title'],
+      isCompleted: map['isCompleted'],
+      status: map['status'],
+      imagePath: map['imagePath'],
+    );
+  }
+}
+
 class BadgesScreen extends StatefulWidget {
   final int totalWorkouts;
   final int challengeCount;
@@ -19,6 +51,38 @@ class BadgesScreen extends StatefulWidget {
 class _BadgesScreenState extends State<BadgesScreen> {
   String username = '';
   int achievementsCompleted = 0;
+  List<Achievement> achievements = [
+    Achievement(
+      title: 'Complete a Workout',
+      status: 'Not Started',
+      imagePath: 'images/badgeb1.png',
+    ),
+    Achievement(
+      title: 'Complete 3 Workouts',
+      status: 'Not Started',
+      imagePath: 'images/badges2.png',
+    ),
+    Achievement(
+      title: 'Complete 5 Workouts',
+      status: 'Not Started',
+      imagePath: 'images/badgeg3.png',
+    ),
+    Achievement(
+      title: 'Complete a Challenge',
+      status: 'Not Started',
+      imagePath: 'images/badgeb1.png',
+    ),
+    Achievement(
+      title: 'Complete 3 Challenges',
+      status: 'Not Started',
+      imagePath: 'images/badges2.png',
+    ),
+    Achievement(
+      title: 'Complete 5 Challenges',
+      status: 'Not Started',
+      imagePath: 'images/badgeg3.png',
+    ),
+  ];
 
   @override
   void initState() {
@@ -60,6 +124,13 @@ class _BadgesScreenState extends State<BadgesScreen> {
             achievement['status'] == 'Completed' &&
                 achievement['isCompleted'] == true)
                 .length;
+
+            // Update the isCompleted property for each achievement in the list
+            for (int i = 0; i < achievements.length; i++) {
+              Achievement achievement = achievements[i];
+              achievement.isCompleted =
+                  achievementsData[i]['isCompleted'] == true;
+            }
           });
         }
       });
@@ -70,6 +141,15 @@ class _BadgesScreenState extends State<BadgesScreen> {
   Widget build(BuildContext context) {
     int totalActivitiesCompleted =
         widget.totalWorkouts + widget.challengeCount; // Sum of totalWorkouts and challengeCount
+
+    // Check if the first, second, and third achievements are completed and isCompleted is true
+    bool isFirstAchievementCompleted = achievements[0].isCompleted;
+    bool isSecondAchievementCompleted = achievements[1].isCompleted;
+    bool isThirdAchievementCompleted = achievements[2].isCompleted;
+    // Check if the fourth, fifth, and sixth achievements are completed and isCompleted is true
+    bool isFourthAchievementCompleted = achievements[3].isCompleted;
+    bool isFifthAchievementCompleted = achievements[4].isCompleted;
+    bool isSixthAchievementCompleted = achievements[5].isCompleted;
 
     return Scaffold(
       appBar: AppBar(
@@ -132,26 +212,32 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         ),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Colors.grey,
+                            isFirstAchievementCompleted
+                                ? Colors.transparent
+                                : Colors.grey,
                             BlendMode.saturation,
                           ),
-                          child: Image.asset('images/badgeb1.png'),
+                          child: Image.asset(achievements[0].imagePath),
                         ),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Colors.grey,
+                            isSecondAchievementCompleted
+                                ? Colors.transparent
+                                : Colors.grey,
                             BlendMode.saturation,
                           ),
-                          child: Image.asset('images/badges2.png'),
+                          child: Image.asset(achievements[1].imagePath),
                         ),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Colors.grey,
+                            isThirdAchievementCompleted
+                                ? Colors.transparent
+                                : Colors.grey,
                             BlendMode.saturation,
                           ),
-                          child: Image.asset('images/badgeg3.png'),
+                          child: Image.asset(achievements[2].imagePath),
                         ),
                         SizedBox(height: 8.0),
                       ],
@@ -167,26 +253,32 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         ),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Colors.grey,
+                            isFourthAchievementCompleted
+                                ? Colors.transparent
+                                : Colors.grey,
                             BlendMode.saturation,
                           ),
-                          child: Image.asset('images/badgeb1.png'),
+                          child: Image.asset(achievements[3].imagePath),
                         ),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Colors.grey,
+                            isFifthAchievementCompleted
+                                ? Colors.transparent
+                                : Colors.grey,
                             BlendMode.saturation,
                           ),
-                          child: Image.asset('images/badges2.png'),
+                          child: Image.asset(achievements[4].imagePath),
                         ),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Colors.grey,
+                            isSixthAchievementCompleted
+                                ? Colors.transparent
+                                : Colors.grey,
                             BlendMode.saturation,
                           ),
-                          child: Image.asset('images/badgeg3.png'),
+                          child: Image.asset(achievements[5].imagePath),
                         ),
                         SizedBox(height: 8.0),
                       ],
