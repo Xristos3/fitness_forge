@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_forge/ui/screen/login_screen2.dart';
 
-
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -30,6 +29,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       darkModeEnabled = darkMode;
     });
+  }
+
+  Future<bool?> showLogoutConfirmation(BuildContext context) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout Confirmation'),
+          content: Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> updateDarkModePreference(bool enabled, ThemeNotifier themeNotifier) async {
@@ -74,11 +99,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginScreen2()),
-              );
+              bool? confirmed = await showLogoutConfirmation(context);
+              if (confirmed == true) {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen2()),
+                );
+              }
             },
             child: Text('Logout'),
           ),
