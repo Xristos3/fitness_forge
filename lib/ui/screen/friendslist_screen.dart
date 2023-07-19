@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_forge/ui/screen/friendbadges2_profile_screen.dart';
 import 'package:fitness_forge/ui/screen/friendrequest_screen.dart';
 import 'package:fitness_forge/ui/screen/friendsbadges_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -263,7 +264,7 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => FriendsBadgesScreen(friendId: friendId),
+                                builder: (context) => FriendsBadgesScreen2(friendId: friendId, totalWorkouts: 0, challengeCount: 0,),
                               ),
                             );
                           },
@@ -308,7 +309,7 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FriendsBadgesScreen(friendId: friendId),
+                          builder: (context) => FriendsBadgesScreen2(friendId: friendId, totalWorkouts: 0, challengeCount: 0,),
                         ),
                       );
                     },
