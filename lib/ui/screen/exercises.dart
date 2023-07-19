@@ -117,7 +117,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HIIT Workout'),
+        title: Text('Exercise'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -874,7 +874,7 @@ class _CountdownTimersState extends State<CountdownTimers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Screen'),
+        title: Text('Exercise'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -1478,7 +1478,7 @@ class _CountdownTimersAdvancedState extends State<CountdownTimersAdvanced> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Screen'),
+        title: Text('Exercise'),
       ),
       body: SingleChildScrollView(
         child: Container(
