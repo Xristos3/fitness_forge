@@ -10,19 +10,19 @@ class BadgesDescriptionScreen extends StatelessWidget {
       body: ListView(
         children: [
           CustomRightAlignedContainer(
-            title: 'Engagement',
-            description: 'They are unlocked by adding users as friends as well as engaging in conversations with them',
-            image: 'images/badge1.PNG',
+            title: 'Bronze Medal',
+            description: 'This medal is unlocked when you complete the first achievement regarding the workouts and/or challenges',
+            image: 'images/badgeb1.png',
           ),
           CustomRightAlignedContainer(
-            title: 'Activity',
-            description: 'They are unlocked by completing a number of activities that are provided by the application',
-            image: 'images/badge2.PNG',
+            title: 'Silver Medal',
+            description: 'This medal is unlocked when you complete the second achievement regarding the workouts and/or challenges',
+            image: 'images/badges2.png',
           ),
           CustomRightAlignedContainer(
-            title: 'Achievements',
-            description: 'They are unlocked by achieving a variety of milestones through this application',
-            image: 'images/badge3.PNG',
+            title: 'Gold Medal',
+            description: 'This medal is unlocked when you complete the third achievement regarding the workouts and/or challenges',
+            image: 'images/badgeg3.png',
           ),
           CustomRightAlignedContainer(
             title: 'Locked',
