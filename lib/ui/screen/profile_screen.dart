@@ -63,16 +63,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void updateProfile() async {
     userId = await getUserId();
 
-    if (height == 0) {
+    // Check if any of the text fields are empty or zero
+    if (weight == 0 || height == 0 || nextFitnessGoal.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Height cannot be zero')),
-      );
-      return;
-    }
-
-    if (weight == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Weight cannot be zero')),
+        SnackBar(content: Text('All fields must be filled')),
       );
       return;
     }
@@ -110,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 16.0),
               Text(
-                'Weight:',
+                'Weight in kg:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               TextFormField(
@@ -137,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 16.0),
               Text(
-                'Height:',
+                'Height in cm:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               TextFormField(
@@ -194,15 +188,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BadgesScreen(
-                        challengeCount: challengeCount,
-                        totalWorkouts: totalWorkouts,
-                      ),
-                    ),
-                  );
+                  // Check if any of the required fields are empty or zero
+                  if (weightController.text.isEmpty ||
+                      heightController.text.isEmpty ||
+                      fitnessGoalController.text.isEmpty ||
+                      weight == 0 ||
+                      height == 0) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('All fields must be filled')),
+                    );
+                  } else {
+                    updateProfile();
+                  }
                 },
                 child: Text('View Badge Profile'),
               ),
@@ -211,7 +208,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: updateProfile,
+        onPressed: () {
+          // Check if any of the required fields are empty or zero
+          if (weightController.text.isEmpty ||
+              heightController.text.isEmpty ||
+              nextFitnessGoal.isEmpty ||
+              weight == 0 ||
+              height == 0) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('All fields must be filled')),
+            );
+          } else {
+            updateProfile();
+          }
+        },
         child: Icon(Icons.save),
       ),
     );
