@@ -48,7 +48,8 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
     // ...
   }
 
-  Future<void> sendFriendRequest(String recipientUsername, String message) async {
+  Future<void> sendFriendRequest(
+      String recipientUsername, String message) async {
     String senderId = currentUserUid;
     String status = 'pending';
 
@@ -167,7 +168,8 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                     builder: (context) {
                       return AlertDialog(
                         title: Text('Error'),
-                        content: Text('Please enter a message for the friend request.'),
+                        content: Text(
+                            'Please enter a message for the friend request.'),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -253,37 +255,54 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
 
                   return ListTile(
                     title: Text(friendUsername),
-                    trailing: IconButton(
-                      icon: Icon(Icons.remove_circle),
-                      color: Colors.red,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text('Remove Friend'),
-                              content: Text(
-                                'Are you sure you want to remove $friendUsername from your friends list?',
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FriendsBadgesScreen(friendId: friendId),
                               ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Cancel'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    removeFriend(friendId);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Remove'),
-                                ),
-                              ],
                             );
                           },
-                        );
-                      },
+                          child: Text('View Profile'),
+                        ),
+                        SizedBox(width: 10),
+                        IconButton(
+                          icon: Icon(Icons.remove_circle),
+                          color: Colors.red,
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Remove Friend'),
+                                  content: Text(
+                                    'Are you sure you want to remove $friendUsername from your friends list?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        removeFriend(friendId);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Remove'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     onTap: () {
                       Navigator.push(

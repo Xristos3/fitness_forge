@@ -5,7 +5,7 @@ class BadgesDescriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Requirements of each type of badge'),
+        title: Text('Badge Requirements'),
       ),
       body: ListView(
         children: [
