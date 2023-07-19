@@ -2,6 +2,7 @@ import 'package:fitness_forge/ui/screen/calendar_screen2.dart';
 import 'package:fitness_forge/ui/screen/claim_screen.dart';
 import 'package:fitness_forge/ui/screen/extra_screen.dart';
 import 'package:fitness_forge/ui/screen/friendrequest_screen.dart';
+import 'package:fitness_forge/ui/screen/friendslist_screen.dart';
 import 'package:fitness_forge/ui/screen/profile_screen.dart';
 import 'package:fitness_forge/ui/screen/settings_screen.dart';
 import 'package:fitness_forge/ui/screen/workouts.dart';
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WorkoutScreen(isStandard: true, isGuest: false, difficulty: 'Standard',),
     ProfileScreen(),
     CalendarScreen2(),
-    FriendRequestScreen(),
+    FriendsListScreen(),
     ExtraScreen(),
   ];
 
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            label: 'Chat',
+            label: 'Friends',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.emoji_events),
