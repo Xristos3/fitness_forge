@@ -18,8 +18,8 @@ class GuestSelectDifficultyScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => WorkoutScreen(
-                  difficulty: 'Standard', isStandard: true, isGuest: true,
-                )),
+                   isGuest: true,
+                )), //difficulty: 'Standard', isStandard: true, isGuest: true
               );
             },
           ),
@@ -31,8 +31,8 @@ class GuestSelectDifficultyScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => WorkoutScreen(
-                  difficulty: 'Advanced', isGuest: true, isStandard: false,
-                )),
+                  isGuest: true,
+                )),//difficulty: 'Advanced',isStandard: false
               );
             },
           ),
@@ -59,8 +59,8 @@ class SelectDifficultyScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => WorkoutScreen(
-                  difficulty: 'Standard', isStandard: true, isGuest: false,
-                )),
+                   isGuest: false,
+                )),//difficulty: 'Standard', isStandard: true,
               );
             },
           ),
@@ -72,8 +72,8 @@ class SelectDifficultyScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => WorkoutScreen(
-                  difficulty: 'Advanced', isStandard: false, isGuest: false,
-                )),
+                   isGuest: false,
+                )),//difficulty: 'Advanced', isStandard: false,
               );
             },
           ),

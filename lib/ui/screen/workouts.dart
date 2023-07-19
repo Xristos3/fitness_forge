@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:fitness_forge/ui/screen/types_of_workouts.dart';
 import 'package:fitness_forge/ui/screen/difficulty.dart';
 
-class WorkoutScreen extends StatelessWidget {
-  final bool? isStandard;
+class WorkoutScreen extends StatefulWidget {
   final bool? isGuest;
 
-  WorkoutScreen({required this.isStandard, required this.isGuest, required String difficulty});
+  WorkoutScreen({required this.isGuest});
+
+  @override
+  _WorkoutScreenState createState() => _WorkoutScreenState();
+}
+
+class _WorkoutScreenState extends State<WorkoutScreen> {
+  bool isStandard = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class WorkoutScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Difficulty: ${isStandard == true ? 'Standard' : 'Advanced'}',
+                  'Difficulty: ${isStandard ? 'Standard' : 'Advanced'}',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -31,10 +37,9 @@ class WorkoutScreen extends StatelessWidget {
                 ElevatedButton(
                   child: Text('Change Difficulty'),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => isGuest == true ? GuestSelectDifficultyScreen() : SelectDifficultyScreen()),
-                    );
+                    setState(() {
+                      isStandard = !isStandard; // Toggle the value of isStandard
+                    });
                   },
                 ),
               ],
@@ -43,18 +48,18 @@ class WorkoutScreen extends StatelessWidget {
           _buildWorkoutItem(
             title: 'HIIT Workout',
             type: 'HIIT',
-            // description: 'Exercises: Expected duration:',
+            description: 'Exercises: Expected duration:',
             image: 'images/hiit.png',
             onPressed: () {
-              if (isGuest == true) {
+              if (widget.isGuest == true) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => isStandard == true ? GuestHiitStandardScreen() : GuestHiitAdvancedScreen()),
+                  MaterialPageRoute(builder: (context) => isStandard ? GuestHiitStandardScreen() : GuestHiitAdvancedScreen()),
                 );
               } else {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => isStandard == true ? HiitStandardScreen() : HiitAdvancedScreen()),
+                  MaterialPageRoute(builder: (context) => isStandard ? HiitStandardScreen() : HiitAdvancedScreen()),
                 );
               }
             },
@@ -62,18 +67,18 @@ class WorkoutScreen extends StatelessWidget {
           _buildWorkoutItem(
             title: 'Upper Body Workout',
             type: 'Upper Body',
-            // description: 'Exercises: Expected duration:',
+            description: 'Exercises: Expected duration:',
             image: 'images/upperbody.jpeg',
             onPressed: () {
-              if (isGuest == true) {
+              if (widget.isGuest == true) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => isStandard == true ? GuestUpperStandardScreen() : GuestUpperAdvancedScreen()),
+                  MaterialPageRoute(builder: (context) => isStandard ? GuestUpperStandardScreen() : GuestUpperAdvancedScreen()),
                 );
               } else {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => isStandard == true ? UpperStandardScreen() : UpperAdvancedScreen()),
+                  MaterialPageRoute(builder: (context) => isStandard ? UpperStandardScreen() : UpperAdvancedScreen()),
                 );
               }
             },
@@ -81,18 +86,18 @@ class WorkoutScreen extends StatelessWidget {
           _buildWorkoutItem(
             title: 'Lower Body Workout',
             type: 'Lower Body',
-            // description: 'Exercises: Expected duration:',
+            description: 'Exercises: Expected duration:',
             image: 'images/lowerbody.jpeg',
             onPressed: () {
-              if (isGuest == true) {
+              if (widget.isGuest == true) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => isStandard == true ? GuestLowerStandardScreen() : GuestLowerAdvancedScreen()),
+                  MaterialPageRoute(builder: (context) => isStandard ? GuestLowerStandardScreen() : GuestLowerAdvancedScreen()),
                 );
               } else {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => isStandard == true ? LowerStandardScreen() : LowerAdvancedScreen()),
+                  MaterialPageRoute(builder: (context) => isStandard ? LowerStandardScreen() : LowerAdvancedScreen()),
                 );
               }
             },
@@ -105,7 +110,7 @@ class WorkoutScreen extends StatelessWidget {
   Widget _buildWorkoutItem({
     required String title,
     required String type,
-    // required String description,
+    required String description,
     required String image,
     required VoidCallback onPressed,
   }) {
@@ -133,7 +138,7 @@ class WorkoutScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  'Type: $type',//\n$description
+                  'Type: $type\n$description',
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 8.0),

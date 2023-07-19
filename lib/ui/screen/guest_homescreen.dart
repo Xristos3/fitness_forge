@@ -13,7 +13,7 @@ class _GuestHomeScreenState extends State<GuestHomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    WorkoutScreen(isGuest: true, isStandard: true, difficulty: 'Standard',), // Set isGuest to true
+    WorkoutScreen(isGuest: true), //     WorkoutScreen(isGuest: true, isStandard: true, difficulty: 'Standard',)
     GuestCalendarScreen2(),
     GuestChallengesScreen(),
   ];

@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    WorkoutScreen(isStandard: true, isGuest: false, difficulty: 'Standard',),
+    WorkoutScreen(isGuest: false,), //    WorkoutScreen(isStandard: true, isGuest: false, difficulty: 'Standard',),
     ProfileScreen(),
     CalendarScreen2(),
     FriendsListScreen(),
