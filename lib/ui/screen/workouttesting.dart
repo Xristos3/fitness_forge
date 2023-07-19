@@ -1,283 +1,227 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+import 'package:fitness_forge/ui/screen/exercises.dart';
 import 'package:flutter/material.dart';
 
-class Achievement {
-  String title;
-  bool isCompleted;
-  String status;
+class ExerciseScreen extends StatelessWidget {
+  final bool isStandard;
+  final bool isGuest;
 
-  Achievement({
+  ExerciseScreen({required this.isStandard, required this.isGuest});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Exercise Screen'),
+      ),
+      body: ListView(
+        children: [
+          Text(
+            'Exercise Screen',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 16),
+          buildExerciseWidget(context, 'HIIT', 'Standard', isGuest),
+          buildExerciseWidget(context, 'HIIT', 'Advanced', isGuest),
+          buildExerciseWidget(context, 'Upper Body', 'Standard', isGuest),
+          buildExerciseWidget(context, 'Upper Body', 'Advanced', isGuest),
+          buildExerciseWidget(context, 'Lower Body', 'Standard', isGuest),
+          buildExerciseWidget(context, 'Lower Body', 'Advanced', isGuest),
+        ],
+      ),
+    );
+  }
+
+  Widget buildExerciseWidget(BuildContext context, String workoutType, String difficulty, bool isGuest) {
+    // Define the exercise classes based on workout type, difficulty, and isGuest
+    Widget exerciseWidget;
+
+    if (workoutType == 'HIIT' && difficulty == 'Standard') {
+      exerciseWidget = isGuest ? GuestJumpingJacksStandardScreen() : JumpingJacksStandardScreen();
+    } else if (workoutType == 'HIIT' && difficulty == 'Advanced') {
+      exerciseWidget = isGuest ? GuestCrossJacksAdvancedScreen() : CrossJacksAdvancedScreen();
+    } else if (workoutType == 'Upper Body' && difficulty == 'Standard') {
+      exerciseWidget = isGuest ? GuestPushUpUpperScreenStandard() : PushUpUpperScreenStandard();
+    } else if (workoutType == 'Upper Body' && difficulty == 'Advanced') {
+      exerciseWidget = isGuest ? GuestExplosivePushUpScreenAdvanced() : ExplosivePushUpScreenAdvanced();
+    } else if (workoutType == 'Lower Body' && difficulty == 'Standard') {
+      exerciseWidget = isGuest ? GuestLowerSquatsScreenStandard() : LowerSquatsScreenStandard();
+    } else if (workoutType == 'Lower Body' && difficulty == 'Advanced') {
+      exerciseWidget = isGuest ? GuestLowerExplosiveSquatsScreenAdvanced() : LowerExplosiveSquatsScreenAdvanced();
+    } else {
+      // Default case if no matching exercise class is found
+      exerciseWidget = Container();
+    }
+
+    return exerciseWidget;
+  }
+}
+
+class CountdownTimer extends StatefulWidget {
+  final String title;
+  final String description;
+  final String imagePath;
+  final Widget nextScreen;
+
+  CountdownTimer({
     required this.title,
-    this.isCompleted = false,
-    required this.status,
+    required this.description,
+    required this.imagePath,
+    required this.nextScreen,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'isCompleted': isCompleted,
-      'status': status,
-    };
-  }
-
-  factory Achievement.fromMap(Map<String, dynamic> map) {
-    return Achievement(
-      title: map['title'],
-      isCompleted: map['isCompleted'],
-      status: map['status'],
-    );
-  }
+  @override
+  _CountdownTimerState createState() => _CountdownTimerState();
 }
 
-class AchievementsScreen extends StatefulWidget {
-  @override
-  _AchievementsScreenState createState() => _AchievementsScreenState();
-}
+class _CountdownTimerState extends State<CountdownTimer> {
+  int countdown = 0;
+  bool isCountdownActive = false;
+  bool showStartButton = true;
+  bool showTakeBreakButton = false;
+  bool showNextButton = false;
 
-class _AchievementsScreenState extends State<AchievementsScreen> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  CollectionReference<Map<String, dynamic>> _achievementsCollection =
-  FirebaseFirestore.instance.collection('achievements');
+  void startCountdown(int duration) {
+    if (!isCountdownActive) {
+      setState(() {
+        countdown = duration;
+        isCountdownActive = true;
+      });
 
-  List<Achievement> achievements = [
-    // Achievement(
-    //   title: 'Complete a Workout',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 3 Workouts',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 5 Workouts',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete a Challenge',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 3 Challenges',
-    //   status: 'Not Started',
-    // ),
-    // Achievement(
-    //   title: 'Complete 5 Challenges',
-    //   status: 'Not Started',
-    // ),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    loadAchievements();
-  }
-
-  Future<String> getUserId() async {
-    final user = await FirebaseAuth.instance.currentUser;
-    return user!.uid;
-  }
-
-  Future<void> loadAchievements() async {
-    final userId = await getUserId();
-    final achievementsSnapshot =
-    await _achievementsCollection.doc(userId).get();
-
-    if (achievementsSnapshot.exists) {
-      final data = achievementsSnapshot.data()!;
-      final List<dynamic> achievementsData = data['achievements'];
-      achievements = achievementsData
-          .map((achievement) => Achievement.fromMap(achievement))
-          .toList();
-    } else {
-      achievements = [
-        Achievement(
-          title: 'Complete a Workout',
-          status: 'Not Started',
-        ),
-        Achievement(
-          title: 'Complete 3 Workouts',
-          status: 'Not Started',
-        ),
-        Achievement(
-          title: 'Complete 5 Workouts',
-          status: 'Not Started',
-        ),
-        Achievement(
-          title: 'Complete a Challenge',
-          status: 'Not Started',
-        ),
-        Achievement(
-          title: 'Complete 3 Challenges',
-          status: 'Not Started',
-        ),
-        Achievement(
-          title: 'Complete 5 Challenges',
-          status: 'Not Started',
-        ),
-      ];
-
-      await saveAchievements();
+      const oneSec = const Duration(seconds: 1);
+      Timer.periodic(oneSec, (Timer timer) {
+        if (countdown == 0) {
+          setState(() {
+            isCountdownActive = false;
+            if (showStartButton) {
+              showStartButton = false;
+              showTakeBreakButton = true;
+              countdown = 15; // Start the countdown for "Take a break from each set"
+            } else if (showTakeBreakButton) {
+              showTakeBreakButton = false;
+              showNextButton = true;
+              timer.cancel(); // Cancel the periodic timer
+            }
+          });
+        } else {
+          setState(() {
+            countdown--;
+          });
+        }
+      });
     }
-
-    setState(() {
-      checkAndUpdateAchievements();
-    });
-  }
-
-  Future<void> saveAchievements() async {
-    final userId = await getUserId();
-    final achievementsData =
-    achievements.map((achievement) => achievement.toMap()).toList();
-
-    await _achievementsCollection.doc(userId).set({
-      'achievements': achievementsData,
-    });
-  }
-
-  Future<void> checkAndUpdateAchievements() async {
-    if (achievements.isNotEmpty) {
-      final firstAchievement = achievements.first;
-      if (firstAchievement.title == 'Complete a Workout') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final count = userData['count'];
-
-          if (count >= 1) {
-            firstAchievement.isCompleted = true;
-            firstAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final secondAchievement = achievements[1]; // Get the second achievement
-      if (secondAchievement.title == 'Complete 3 Workouts') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final count = userData['count'];
-
-          if (count >= 3) {
-            secondAchievement.isCompleted = true;
-            secondAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final thirdAchievement = achievements[2]; // Get the second achievement
-      if (thirdAchievement.title == 'Complete 5 Workouts') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final count = userData['count'];
-
-          if (count >= 5) {
-            thirdAchievement.isCompleted = true;
-            thirdAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final fourthAchievement = achievements[3]; // Get the second achievement
-      if (fourthAchievement.title == 'Complete a Challenge') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final challengecount = userData['challengeCount'];
-
-          if (challengecount >= 1) {
-            fourthAchievement.isCompleted = true;
-            fourthAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final fifthAchievement = achievements[4]; // Get the second achievement
-      if (fifthAchievement.title == 'Complete 3 Challenges') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final challengecount = userData['challengeCount'];
-
-          if (challengecount >= 3) {
-            fifthAchievement.isCompleted = true;
-            fifthAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-      final sixthAchievement = achievements[5]; // Get the second achievement
-      if (sixthAchievement.title == 'Complete 5 Challenges') {
-        final userId = await getUserId();
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-
-        if (userDoc.exists) {
-          final userData = userDoc.data()!;
-          final challengecount = userData['challengeCount'];
-
-          if (challengecount >= 5) {
-            sixthAchievement.isCompleted = true;
-            sixthAchievement.status = 'Completed';
-            await saveAchievements();
-          }
-        }
-      }
-    }
-  }
-
-  Future<void> updateFirestore() async {
-    await saveAchievements();
-    setState(() {});
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Achievements updated in Firestore.')),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Achievements'),
+        title: Text('Exercise'),
       ),
-      body: ListView.builder(
-        itemCount: achievements.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: achievements[index].isCompleted
-                    ? Colors.green
-                    : Colors.transparent,
-                border: Border.all(color: Colors.black),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Countdown: $countdown seconds',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              child: achievements[index].isCompleted
-                  ? Icon(Icons.check, color: Colors.white, size: 16)
-                  : null,
-            ),
-            title: Text(achievements[index].title),
-            subtitle: Text('Status: ${achievements[index].status}'),
-            onTap: null,
-          );
-        },
+              SizedBox(height: 16.0),
+              Text(
+                'Reps: Until the 40-second countdown ends,'
+                    ' then take a 15-second break'
+                    ' and proceed to the next exercise.',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                widget.title,
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                widget.description,
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Show the "Start" button when countdown is not active
+                  if (showStartButton)
+                    ElevatedButton(
+                      child: Text('Start'),
+                      onPressed: () => startCountdown(40),
+                    ),
+
+                  // Show the "Take a break" button when countdown is not active
+                  if (showTakeBreakButton)
+                    ElevatedButton(
+                      child: Text(
+                        'Take a break from each set',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () => startCountdown(15),
+                    ),
+                ],
+              ),
+              SizedBox(height: 16.0),
+              Image.asset(
+                widget.imagePath,
+                width: 200.0,
+                height: 200.0,
+              ),
+              SizedBox(height: 16.0),
+              // Show the "Next" button below the image when countdown is done
+              if (showNextButton)
+                ElevatedButton(
+                  child: Text(
+                    'Next',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => widget.nextScreen,
+                      ),
+                    );
+                  },
+                ),
+            ],
+          ),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: updateFirestore,
-        child: Icon(Icons.update),
-      ),
+    );
+  }
+}
+
+
+class GuestJumpingJacksStandardScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CountdownTimer(
+      title: 'Jumping Jacks',
+      description:
+      'Begin by standing with your legs straight and your arms to your sides. '
+          'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
+          ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.',
+      imagePath: 'images/jjs.jpeg',
+      nextScreen: GuestButtkickStandardScreen(),
     );
   }
 }

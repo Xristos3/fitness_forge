@@ -81,14 +81,11 @@ class CountdownTimer extends StatefulWidget {
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
-  int countdown = 15;
+  int countdown = 0;
   bool isCountdownActive = false;
-
-  @override
-  void initState() {
-    super.initState();
-    //countdown = widget.initialCountdown;
-  }
+  bool showStartButton = true;
+  bool showTakeBreakButton = false;
+  bool showNextButton = false;
 
   void startCountdown(int duration) {
     if (!isCountdownActive) {
@@ -102,8 +99,16 @@ class _CountdownTimerState extends State<CountdownTimer> {
         if (countdown == 0) {
           setState(() {
             isCountdownActive = false;
+            if (showStartButton) {
+              showStartButton = false;
+              showTakeBreakButton = true;
+              countdown = 15; // Start the countdown for "Take a break from each set"
+            } else if (showTakeBreakButton) {
+              showTakeBreakButton = false;
+              showNextButton = true;
+              timer.cancel(); // Cancel the periodic timer
+            }
           });
-          timer.cancel();
         } else {
           setState(() {
             countdown--;
@@ -136,7 +141,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
               Text(
                 'Reps: Until the 40-second countdown ends,'
                     ' then take a 15-second break'
-                    'and proceed to the next exercise.',
+                    ' and proceed to the next exercise.',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -157,19 +162,24 @@ class _CountdownTimerState extends State<CountdownTimer> {
               ),
               SizedBox(height: 16.0),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                    child: Text('Start'),
-                    onPressed: isCountdownActive ? null : () => startCountdown(40),
-                  ),
-                  ElevatedButton(
-                    child: Text(
-                      'Take a break from each set',
-                      style: TextStyle(color: Colors.white),
+                  // Show the "Start" button when countdown is not active
+                  if (showStartButton)
+                    ElevatedButton(
+                      child: Text('Start'),
+                      onPressed: () => startCountdown(40),
                     ),
-                    onPressed: isCountdownActive ? null : () => startCountdown(15),
-                  ),
+
+                  // Show the "Take a break" button when countdown is not active
+                  if (showTakeBreakButton)
+                    ElevatedButton(
+                      child: Text(
+                        'Take a break from each set',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () => startCountdown(15),
+                    ),
                 ],
               ),
               SizedBox(height: 16.0),
@@ -179,21 +189,22 @@ class _CountdownTimerState extends State<CountdownTimer> {
                 height: 200.0,
               ),
               SizedBox(height: 16.0),
-              ElevatedButton(
-                child: Text(
-                  'Next',
-                  style: TextStyle(color: Colors.white),
+              // Show the "Next" button below the image when countdown is done
+              if (showNextButton)
+                ElevatedButton(
+                  child: Text(
+                    'Next',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => widget.nextScreen,
+                      ),
+                    );
+                  },
                 ),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => widget.nextScreen,
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 16.0),
             ],
           ),
         ),
@@ -201,6 +212,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
     );
   }
 }
+
 
 class GuestJumpingJacksStandardScreen extends StatelessWidget {
   @override
