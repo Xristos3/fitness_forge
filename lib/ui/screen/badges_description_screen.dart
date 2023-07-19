@@ -24,10 +24,14 @@ class BadgesDescriptionScreen extends StatelessWidget {
             description: 'This medal is unlocked when you complete the third achievement regarding the workouts and/or challenges',
             image: 'images/badgeg3.png',
           ),
-          CustomRightAlignedContainer(
+          LockedCustomContainer(
             title: 'Locked',
             description: 'They are locked for the time being, they will be unlocked once you meet the appropriate requirements',
-            image: 'images/badge4.PNG',
+            lockedImages: [
+              'images/badgeb1.png',
+              'images/badges2.png',
+              'images/badgeg3.png',
+            ],
           ),
         ],
       ),
@@ -78,6 +82,65 @@ class CustomRightAlignedContainer extends StatelessWidget {
             width: 100,
             height: 100,
             fit: BoxFit.cover,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LockedCustomContainer extends StatelessWidget {
+  final String title;
+  final String description;
+  final List<String> lockedImages;
+
+  const LockedCustomContainer({
+    required this.title,
+    required this.description,
+    required this.lockedImages,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  description,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 16.0),
+          // Wrap the locked images with a Column to display all three images vertically
+          Column(
+            children: [
+              for (String lockedImage in lockedImages)
+                ColorFiltered(
+                  colorFilter: ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                  child: Image.asset(
+                    lockedImage,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+            ],
           ),
         ],
       ),

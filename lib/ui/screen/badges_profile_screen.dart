@@ -18,21 +18,7 @@ class BadgesScreen extends StatefulWidget {
 
 class _BadgesScreenState extends State<BadgesScreen> {
   String username = '';
-  // int totalBadges = 0;
   int achievementsCompleted = 0;
-  // List<String> recentBadges = [];
-  // List<Map<String, dynamic>> activeBadges = [
-  //   // List to store non-greyed out badges and their text
-  //   {
-  //     'image': 'images/badge1.PNG',
-  //     'text': 'Level 1',
-  //   },
-  //   {
-  //     'image': 'images/badge2.PNG',
-  //     'text': 'Level 2',
-  //   },
-  //   // Add more badges and text here as needed
-  // ];
 
   @override
   void initState() {
@@ -112,12 +98,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         ),
                         Text(username),
                         SizedBox(height: 16.0),
-                        // Text(
-                        //   'Total Badges:',
-                        //   style: TextStyle(fontWeight: FontWeight.bold),
-                        // ),
-                        // Text(totalBadges.toString()),
-                        // SizedBox(height: 16.0),
                         Text(
                           'Total Activities Completed:',
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -130,39 +110,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                         ),
                         Text(achievementsCompleted.toString()),
                         SizedBox(height: 16.0),
-                        // Text(
-                        //   'Active Badges:', // Display active badges
-                        //   style: TextStyle(
-                        //     fontWeight: FontWeight.bold,
-                        //     fontSize: 16.0,
-                        //   ),
-                        // ),
-                        // SizedBox(height: 8.0),
-                        // Container(
-                        //   height: 120.0,
-                        //   child: ListView.builder(
-                        //     scrollDirection: Axis.horizontal,
-                        //     itemCount: activeBadges.length,
-                        //     itemBuilder: (BuildContext context, int index) {
-                        //       return Padding(
-                        //         padding: EdgeInsets.only(right: 8.0),
-                        //         child: Column(
-                        //           children: [
-                        //             SizedBox(
-                        //               height: 60.0,
-                        //               width: 60.0,
-                        //               child: Image.asset(
-                        //                 activeBadges[index]['image'],
-                        //                 fit: BoxFit.contain,
-                        //               ),
-                        //             ),
-                        //             Text(activeBadges[index]['text']),
-                        //           ],
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -190,7 +137,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           ),
                           child: Image.asset('images/badgeb1.png'),
                         ),
-                        //Text('Level 1'),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
@@ -199,7 +145,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           ),
                           child: Image.asset('images/badges2.png'),
                         ),
-                        //Text('Level 2'),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
@@ -208,25 +153,7 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           ),
                           child: Image.asset('images/badgeg3.png'),
                         ),
-                        //Text('Level 3'),
                         SizedBox(height: 8.0),
-                        // ColorFiltered(
-                        //   colorFilter: ColorFilter.mode(
-                        //     Colors.grey,
-                        //     BlendMode.saturation,
-                        //   ),
-                        //   child: Image.asset('images/badge1.PNG'),
-                        // ),
-                        // Text('Level 4'),
-                        // SizedBox(height: 8.0),
-                        // ColorFiltered(
-                        //   colorFilter: ColorFilter.mode(
-                        //     Colors.grey,
-                        //     BlendMode.saturation,
-                        //   ),
-                        //   child: Image.asset('images/badge1.PNG'),
-                        // ),
-                        // Text('Level 5'),
                       ],
                     ),
                   ),
@@ -245,7 +172,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           ),
                           child: Image.asset('images/badgeb1.png'),
                         ),
-                        //Text('Level 1'),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
@@ -254,7 +180,6 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           ),
                           child: Image.asset('images/badges2.png'),
                         ),
-                        //Text('Level 2'),
                         SizedBox(height: 8.0),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
@@ -263,83 +188,11 @@ class _BadgesScreenState extends State<BadgesScreen> {
                           ),
                           child: Image.asset('images/badgeg3.png'),
                         ),
-                        //Text('Level 3'),
                         SizedBox(height: 8.0),
-                        // ColorFiltered(
-                        //   colorFilter: ColorFilter.mode(
-                        //     Colors.grey,
-                        //     BlendMode.saturation,
-                        //   ),
-                        //   child: Image.asset('images/badge2.PNG'),
-                        // ),
-                        // Text('Level 4'),
-                        // SizedBox(height: 8.0),
-                        // ColorFiltered(
-                        //   colorFilter: ColorFilter.mode(
-                        //     Colors.grey,
-                        //     BlendMode.saturation,
-                        //   ),
-                        //   child: Image.asset('images/badge2.PNG'),
-                        // ),
-                        // Text('Level 5'),
                       ],
                     ),
                   ),
                   SizedBox(width: 8.0),
-                  // Expanded(
-                  //   child: Column(
-                  //     children: [
-                  //       Text(
-                  //         'Achievements',
-                  //         style: TextStyle(fontWeight: FontWeight.bold),
-                  //       ),
-                  //       ColorFiltered(
-                  //         colorFilter: ColorFilter.mode(
-                  //           Colors.grey,
-                  //           BlendMode.saturation,
-                  //         ),
-                  //         child: Image.asset('images/badge3.PNG'),
-                  //       ),
-                  //       Text('Level 1'),
-                  //       SizedBox(height: 8.0),
-                  //       ColorFiltered(
-                  //         colorFilter: ColorFilter.mode(
-                  //           Colors.grey,
-                  //           BlendMode.saturation,
-                  //         ),
-                  //         child: Image.asset('images/badge3.PNG'),
-                  //       ),
-                  //       Text('Level 2'),
-                  //       SizedBox(height: 8.0),
-                  //       ColorFiltered(
-                  //         colorFilter: ColorFilter.mode(
-                  //           Colors.grey,
-                  //           BlendMode.saturation,
-                  //         ),
-                  //         child: Image.asset('images/badge3.PNG'),
-                  //       ),
-                  //       Text('Level 3'),
-                  //       SizedBox(height: 8.0),
-                  //       ColorFiltered(
-                  //         colorFilter: ColorFilter.mode(
-                  //           Colors.grey,
-                  //           BlendMode.saturation,
-                  //         ),
-                  //         child: Image.asset('images/badge3.PNG'),
-                  //       ),
-                  //       Text('Level 4'),
-                  //       SizedBox(height: 8.0),
-                  //       ColorFiltered(
-                  //         colorFilter: ColorFilter.mode(
-                  //           Colors.grey,
-                  //           BlendMode.saturation,
-                  //         ),
-                  //         child: Image.asset('images/badge3.PNG'),
-                  //       ),
-                  //       Text('Level 5'),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
               SizedBox(height: 16.0),
