@@ -59,8 +59,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
 
   Future<void> loadAchievements() async {
     final userId = await getUserId();
-    final achievementsSnapshot =
-    await _achievementsCollection.doc(userId).get();
+    final achievementsSnapshot = await _achievementsCollection.doc(userId).get();
 
     if (achievementsSnapshot.exists) {
       final data = achievementsSnapshot.data()!;
@@ -217,7 +216,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
             await saveAchievements();
           }
         }
-      }// ... Repeat the same logic for other achievements
+      }// ... (Repeat the same logic for other achievements)
       setState(() {});
     }
   }
@@ -246,9 +245,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
               height: 24,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: achievement.isCompleted
-                    ? Colors.green
-                    : Colors.transparent,
+                color: achievement.isCompleted ? Colors.green : Colors.transparent,
                 border: Border.all(color: Colors.black),
               ),
               child: achievement.isCompleted
@@ -257,11 +254,16 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
             ),
             title: Text(achievement.title),
             subtitle: Text('Status: ${achievement.status}'),
-            trailing: Image.asset(
-              achievement.imagePath,
-              width: 50,
-              height: 50,
-              color: achievement.isCompleted ? null : Colors.grey,
+            trailing: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                Colors.grey, // Apply a grey color filter when not completed
+                achievement.isCompleted ? BlendMode.dst : BlendMode.saturation,//srcOver
+              ),
+              child: Image.asset(
+                achievement.imagePath,
+                width: 50,
+                height: 50,
+              ),
             ),
             onTap: null,
           );
