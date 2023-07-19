@@ -187,18 +187,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Check if any of the required fields are empty or zero
-                  if (weightController.text.isEmpty ||
-                      heightController.text.isEmpty ||
-                      fitnessGoalController.text.isEmpty ||
-                      weight == 0 ||
-                      height == 0) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('All fields must be filled')),
-                    );
-                  } else {
-                    updateProfile();
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BadgesScreen(totalWorkouts: 0, challengeCount: 0,),
+                    ),
+                  );  // Check if any of the required fields are empty or zero
                 },
                 child: Text('View Badge Profile'),
               ),
