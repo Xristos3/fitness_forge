@@ -264,7 +264,7 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => FriendsBadgesScreen2(friendId: friendId, totalWorkouts: 0, challengeCount: 0,),
+                                builder: (context) => FriendsBadgesScreen2(friendId: friendId),
                               ),
                             );
                           },
@@ -309,7 +309,7 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FriendsBadgesScreen2(friendId: friendId, totalWorkouts: 0, challengeCount: 0,),
+                          builder: (context) => FriendsBadgesScreen2(friendId: friendId),
                         ),
                       );
                     },

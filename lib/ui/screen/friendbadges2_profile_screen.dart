@@ -37,13 +37,9 @@ class Achievement {
 
 class FriendsBadgesScreen2 extends StatefulWidget {
   final String friendId; // New parameter to store the friend's ID
-  final int totalWorkouts;
-  final int challengeCount;
 
   FriendsBadgesScreen2({
     required this.friendId,
-    required this.totalWorkouts,
-    required this.challengeCount,
   });
 
   @override
@@ -53,6 +49,8 @@ class FriendsBadgesScreen2 extends StatefulWidget {
 class _FriendsBadgesScreen2State extends State<FriendsBadgesScreen2> {
   String username = '';
   int achievementsCompleted = 0;
+  int totalWorkouts = 0; // New variable to store the friend's total workouts
+  int challengeCount = 0; // New variable to store the friend's challenge count
   List<Achievement> achievements = [
     Achievement(
       title: 'Complete a Workout',
@@ -104,6 +102,8 @@ class _FriendsBadgesScreen2State extends State<FriendsBadgesScreen2> {
     if (friendSnapshot.exists) {
       setState(() {
         username = friendSnapshot.get('username') as String;
+        totalWorkouts = friendSnapshot.get('count') as int; // Fetch the friend's total workouts
+        challengeCount = friendSnapshot.get('challengeCount') as int; // Fetch the friend's challenge count
       });
     }
   }
@@ -140,7 +140,7 @@ class _FriendsBadgesScreen2State extends State<FriendsBadgesScreen2> {
   @override
   Widget build(BuildContext context) {
     int totalActivitiesCompleted =
-        widget.totalWorkouts + widget.challengeCount; // Sum of totalWorkouts and challengeCount
+        totalWorkouts + challengeCount; // Sum of totalWorkouts and challengeCount
 
     // Check if the first, second, and third achievements are completed and isCompleted is true
     bool isFirstAchievementCompleted = achievements[0].isCompleted;
