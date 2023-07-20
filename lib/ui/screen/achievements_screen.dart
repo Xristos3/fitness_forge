@@ -156,12 +156,12 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
     }
   }
 
-  Future<void> updateFirestore() async {
-    await saveAchievements();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Achievements updated in Firestore.')),
-    );
-  }
+  // Future<void> updateFirestore() async {
+  //   await saveAchievements();
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text('Achievements updated in Firestore.')),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -205,10 +205,10 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: updateFirestore,
-        child: Icon(Icons.update),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: updateFirestore,
+      //   child: Icon(Icons.update),
+      // ),
     );
   }
 }

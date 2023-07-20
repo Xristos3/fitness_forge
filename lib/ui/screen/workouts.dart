@@ -26,29 +26,39 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
             padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Text(
-                  'Difficulty: ${isStandard ? 'Standard' : 'Advanced'}',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row( // Row to place the "Change" button and "Difficulty: " text together
+                      children: [
+                        ElevatedButton(
+                          child: Text('Change'),
+                          onPressed: () {
+                            setState(() {
+                              isStandard = !isStandard; // Toggle the value of isStandard
+                            });
+                          },
+                        ),
+                        SizedBox(width: 8.0), // Add spacing between the button and the text
+                        Text(
+                          'Difficulty: ${isStandard ? 'Standard' : 'Advanced'}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(height: 16.0), // Added spacing
-                ElevatedButton(
-                  child: Text('Change Difficulty'),
-                  onPressed: () {
-                    setState(() {
-                      isStandard = !isStandard; // Toggle the value of isStandard
-                    });
-                  },
-                ),
               ],
             ),
           ),
           _buildWorkoutItem(
             title: 'HIIT Workout',
             type: 'HIIT',
-            description: 'Exercises: Expected duration:',
+            //description: 'Exercises: Expected duration:',
             image: 'images/hiit.png',
             onPressed: () {
               if (widget.isGuest == true) {
@@ -67,7 +77,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
           _buildWorkoutItem(
             title: 'Upper Body Workout',
             type: 'Upper Body',
-            description: 'Exercises: Expected duration:',
+            //description: 'Exercises: Expected duration:',
             image: 'images/upperbody.jpeg',
             onPressed: () {
               if (widget.isGuest == true) {
@@ -86,7 +96,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
           _buildWorkoutItem(
             title: 'Lower Body Workout',
             type: 'Lower Body',
-            description: 'Exercises: Expected duration:',
+            //description: 'Exercises: Expected duration:',
             image: 'images/lowerbody.jpeg',
             onPressed: () {
               if (widget.isGuest == true) {
@@ -110,7 +120,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
   Widget _buildWorkoutItem({
     required String title,
     required String type,
-    required String description,
+    //required String description,
     required String image,
     required VoidCallback onPressed,
   }) {
@@ -138,7 +148,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  'Type: $type\n$description',
+                  'Type: $type',//'Type: $type\n$description'
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 8.0),
