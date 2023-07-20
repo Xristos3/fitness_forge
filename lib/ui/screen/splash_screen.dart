@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:fitness_forge/ui/screen/login_screen2.dart';
+import 'package:fitness_forge/ui/screen/newlogin_screen2.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       // After 3 seconds, navigate to the login screen.
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => LoginScreen2()),
+        MaterialPageRoute(builder: (BuildContext context) => NewLoginScreen()),
       );
     });
   }
