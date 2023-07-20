@@ -39,19 +39,17 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
   Future<void> createFriendRequestOnSignUp() async {
     String senderId = currentUserId;
     String recipientId = ''; // Empty initially, to be filled later
-    String message = '';
     String status = 'pending';
 
     await friendRequests.add({
       'senderId': senderId,
       'recipientId': recipientId,
-      'message': message,
       'status': status,
     });
   }
 
   Future<void> sendFriendRequest(
-      String recipientUsername, String message) async {
+      String recipientUsername) async {
     String senderId = currentUserId;
     String status = 'pending';
 
@@ -85,48 +83,10 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     }
 
     // Check if recipient username is the same as the current user's username
-    if (recipientUsername == currentUserUsername) {
-      // Recipient username is the same as the current user, show error dialog
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('You cannot send a friend request to yourself.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-      return; // Stop further execution
-    }
+    QuerySnapshot userSnapshot =
+    await users.where('username', isEqualTo: recipientUsername).get();
 
-    // Get the recipient user document based on the entered username
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('username', isEqualTo: recipientUsername)
-        .get();
-
-    // Check if the recipient username exists
-    if (querySnapshot.docs.isNotEmpty) {
-      String recipientId = querySnapshot.docs.first.id;
-
-      await friendRequests.add({
-        'senderId': senderId,
-        'recipientId': recipientId,
-        'message': message,
-        'status': status,
-      });
-
-      // Perform any other necessary actions after sending the friend request
-      // ...
-    } else {
+    if (userSnapshot.docs.isEmpty) {
       // Recipient username not found
       showDialog(
         context: context,
@@ -145,7 +105,19 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
           );
         },
       );
+      return; // Stop further execution
     }
+
+    String recipientId = userSnapshot.docs.first.id;
+
+    await friendRequests.add({
+      'senderId': senderId,
+      'recipientId': recipientId,
+      'status': status,
+    });
+
+    // Perform any other necessary actions after sending the friend request
+    // ...
   }
 
   Future<void> acceptRequest(
@@ -153,10 +125,24 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     // Update the status of the friend request to accepted
     await friendRequests.doc(requestId).update({'status': 'accepted'});
 
-    // Add the sender to the friends collection
-    await friends.doc(currentUserId).collection('userFriends').doc(senderId).set({
+    // Add the sender to the current user's friends collection
+    await friends
+        .doc(currentUserId)
+        .collection('userFriends')
+        .doc(senderId)
+        .set({
       'friendId': senderId,
       'friendUsername': senderUsername,
+    });
+
+    // Add the current user to the sender's friends collection
+    await friends
+        .doc(senderId)
+        .collection('userFriends')
+        .doc(currentUserId)
+        .set({
+      'friendId': currentUserId,
+      'friendUsername': currentUserUsername,
     });
 
     // Perform any other necessary actions after accepting the friend request
@@ -212,7 +198,6 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                     DocumentSnapshot request = snapshot.data!.docs[index];
                     String requestId = request.id;
                     String senderId = request['senderId'];
-                    String message = request['message'];
 
                     return FutureBuilder<DocumentSnapshot>(
                       future: users.doc(senderId).get(),
@@ -225,7 +210,6 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
 
                         return ListTile(
                           title: Text('From: $senderUsername'),
-                          subtitle: Text('Message: $message'),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [

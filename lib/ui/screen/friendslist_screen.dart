@@ -162,15 +162,15 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                 String recipientUsername = _usernameController.text.trim();
                 String message = _messageController.text.trim();
 
-                // Check if the message field is empty
-                if (message.isEmpty) {
+                // Check if recipient username is the same as the current user's username
+                if (recipientUsername == currentUserUsername) {
+                  // Recipient username is the same as the current user, show error dialog
                   showDialog(
                     context: context,
                     builder: (context) {
                       return AlertDialog(
                         title: Text('Error'),
-                        content: Text(
-                            'Please enter a message for the friend request.'),
+                        content: Text('You cannot send a friend request to yourself.'),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -183,31 +183,9 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                     },
                   );
                 } else {
-                  // Check if recipient username is the same as the current user's username
-                  if (recipientUsername == currentUserUsername) {
-                    // Recipient username is the same as the current user, show error dialog
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Error'),
-                          content: Text('You cannot send a friend request to yourself.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    // Call the sendFriendRequest method from _FriendsListScreenState
-                    sendFriendRequest(recipientUsername, message);
-                    Navigator.of(context).pop();
-                  }
+                  // Call the sendFriendRequest method from _FriendsListScreenState
+                  sendFriendRequest(recipientUsername, message);
+                  Navigator.of(context).pop();
                 }
               },
               child: Text('Send Friend Request'),
