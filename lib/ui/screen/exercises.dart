@@ -401,7 +401,7 @@ class GuestPlankStandardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimer(
-      title: 'Plank Standard',
+      title: 'Plank Standard Hold',
       description:
       'The plank exercise is an isometric core exercise that involves '
           'maintaining a position similar to a push-up for the maximum possible time.',
@@ -556,7 +556,7 @@ class GuestPlankAdvancedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimer(
-      title: 'Plank with extended and stretched arms',
+      title: 'Plank with extended and stretched arms Hold',
       description:
       'Get in a press-up position but with your arms as far in front of your head as you can reach. '
           'Hold yourself there with your arms fully extended.'
@@ -709,7 +709,7 @@ class PlankStandardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimer(
-      title: 'Plank Standard',
+      title: 'Plank Standard Hold',
       description:
       'The plank exercise is an isometric core exercise that involves '
           'maintaining a position similar to a push-up for the maximum possible time.',
@@ -864,7 +864,7 @@ class PlankAdvancedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimer(
-      title: 'Plank with extended and stretched arms',
+      title: 'Plank with extended and stretched arms Hold',
       description:
       'Get in a press-up position but with your arms as far in front of your head as you can reach. '
           'Hold yourself there with your arms fully extended.'
@@ -941,39 +941,16 @@ class _CountdownTimersState extends State<CountdownTimers> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.title,
+                'Countdown: $countdown seconds',
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 16.0),
               Text(
-                widget.description,
-                style: TextStyle(fontSize: 16.0),
-              ),
-              SizedBox(height: 16.0),
-              Image.asset(
-                widget.imagePath,
-                width: 200.0,
-                height: 200.0,
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                child: Text('Next'),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => widget.nextScreen,
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 16.0),
-              Text(
                 'Sets: 4 sets Reps: Until Failure for each set.'
-                    'Or if the exercise does not include reps, Sets: 4 sets Reps: Until Failure for each set.',
+                    'Or if the exercise does not include reps, do 4 sets Reps and hold Until Failure for each set.',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -988,12 +965,35 @@ class _CountdownTimersState extends State<CountdownTimers> {
                 onPressed: isCountdownActive ? null : startCountdown,
               ),
               SizedBox(height: 16.0),
+              Image.asset(
+                widget.imagePath,
+                width: 200.0,
+                height: 200.0,
+              ),
+              SizedBox(height: 16.0),
               Text(
-                'Countdown: $countdown seconds',
+                widget.title,
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                widget.description,
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                child: Text('Next'),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => widget.nextScreen,
+                    ),
+                  );
+                },
               ),
               SizedBox(height: 16.0),
             ],
@@ -1002,6 +1002,7 @@ class _CountdownTimersState extends State<CountdownTimers> {
       ),
     );
   }
+
 }
 
 class GuestLowerSquatsScreenStandard extends StatelessWidget {
@@ -1254,7 +1255,7 @@ class GuestPlankUpperScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimers(
-      title: 'Plank Standard',
+      title: 'Plank Standard Hold',
       description:
       'The plank exercise is an isometric core exercise that involves maintaining a position '
           'similar to a push-up for the maximum possible time.',
@@ -1283,10 +1284,10 @@ class GuestSidePlankScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimers(
-      title: 'Side planks',
+      title: 'Side planks Hold',
       description:
       'Lie on your side with your knees bent, and prop your upper body up on your elbow. '
-          'Raise your hips off the floor.',
+          'Raise your hips off the floor. Then do the same thing for the other side.',
       imagePath: 'images/sideplank.png',
       nextScreen: GuestReverseSnowAngelsScreenStandard(),
     );
@@ -1409,7 +1410,7 @@ class PlankUpperScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimers(
-      title: 'Plank Standard',
+      title: 'Plank Standard Hold',
       description:
       'The plank exercise is an isometric core exercise that involves maintaining a position '
           'similar to a push-up for the maximum possible time.',
@@ -1438,10 +1439,10 @@ class SidePlankScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimers(
-      title: 'Side planks',
+      title: 'Side planks Hold',
       description:
       'Lie on your side with your knees bent, and prop your upper body up on your elbow. '
-          'Raise your hips off the floor.',
+          'Raise your hips off the floor. Then do the same on the other side.',
       imagePath: 'images/sideplank.png',
       nextScreen: ReverseSnowAngelsScreenStandard(),
     );
@@ -1452,7 +1453,7 @@ class ReverseSnowAngelsScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimers(
-      title: 'Reverse snow angels',
+      title: 'Reverse snow angels Hold',
       description:
       'Lie down on the floor on your chest and stomach. '
           'Stretch your hands forward and your legs at the back. '
@@ -1468,7 +1469,7 @@ class NoseAndToesScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimers(
-      title: 'Nose and Toes Against the Wall',
+      title: 'Nose and Toes Against the Wall Hold',
       description:
       'Setup Begin standing with feet about 6 inches away from a wall and your feet close together.'
           ' Lean towards the wall as far as you can '
@@ -1577,7 +1578,7 @@ class _CountdownTimersAdvancedState extends State<CountdownTimersAdvanced> {
               SizedBox(height: 16.0),
               Text(
                 'Sets: 5 sets Reps for each set: 15, 12, 10, 8, 5'
-                    'Or if the exercise does not include reps, Sets: 5 sets Reps: Until Failure for each set.',
+                    'Or if the exercise does not include reps do 5 sets and hold until Failure for each set.',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
