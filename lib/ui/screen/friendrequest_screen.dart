@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fitness_forge/ui/screen/friendslist_screen.dart';
 
 class FriendRequestScreen extends StatefulWidget {
   @override
@@ -51,7 +50,8 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
     });
   }
 
-  Future<void> sendFriendRequest(String recipientUsername, String message) async {
+  Future<void> sendFriendRequest(
+      String recipientUsername, String message) async {
     String senderId = currentUserId;
     String status = 'pending';
 
@@ -226,6 +226,23 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                         return ListTile(
                           title: Text('From: $senderUsername'),
                           subtitle: Text('Message: $message'),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  acceptRequest(requestId, senderId, senderUsername);
+                                },
+                                child: Text('Accept'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  rejectRequest(requestId);
+                                },
+                                child: Text('Reject'),
+                              ),
+                            ],
+                          ),
                         );
                       },
                     );
