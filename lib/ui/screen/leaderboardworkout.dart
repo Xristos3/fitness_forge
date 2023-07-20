@@ -68,6 +68,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               }
 
               final usersData = leaderboardSnapshot.data!.docs;
+              // Sort usersData based on the "count" value in descending order
+              usersData.sort((a, b) => b['count'].compareTo(a['count']));
 
               return ListView.builder(
                 itemCount: usersData.length,
