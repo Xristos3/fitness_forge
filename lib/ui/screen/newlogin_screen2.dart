@@ -1,13 +1,12 @@
-import 'package:fitness_forge/ui/screen/newforgotpassword_screen.dart';
-import 'package:fitness_forge/ui/screen/newsignup_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitness_forge/ui/screen/forgotpassword_screen.dart';
-import 'package:fitness_forge/ui/screen/home_screen.dart';
-import 'package:fitness_forge/ui/screen/signup_screen2.dart';
-import 'package:fitness_forge/ui/screen/guest_homescreen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fitness_forge/ui/screen/home_screen.dart';
+import 'package:fitness_forge/ui/screen/newforgotpassword_screen.dart';
+import 'package:fitness_forge/ui/screen/newsignup_screen2.dart';
+import 'package:fitness_forge/ui/screen/guest_homescreen.dart';
 
 class NewLoginScreen extends StatefulWidget {
   @override
@@ -23,7 +22,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
   bool _passwordVisible = false;
   bool _isLoading = false;
 
-  void _loginWithEmailAndPassword() async {
+  Future<void> _loginWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
@@ -89,7 +88,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
     );
   }
 
-  void _loadRememberMeValue(String email) async {
+  Future<void> _loadRememberMeValue(String email) async {
     DocumentSnapshot userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(email)
@@ -108,7 +107,49 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
     super.initState();
     // Retrieve the current user's email from Firebase Authentication
     String currentUserEmail = FirebaseAuth.instance.currentUser?.email ?? '';
+
+    // Load the remember me value from Firestore
     _loadRememberMeValue(currentUserEmail);
+
+    // Set initial remember me preference state to false
+    _rememberMe = false;
+
+    // Check if Remember Me is enabled and login the user automatically
+    _autoLoginIfRememberMeEnabled(currentUserEmail);
+  }
+
+  Future<void> _autoLoginIfRememberMeEnabled(String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool rememberMe = prefs.getBool('rememberMe') ?? false;
+
+    if (rememberMe) {
+      setState(() {
+        _rememberMe = true;
+      });
+
+      try {
+        String password = prefs.getString('password') ?? '';
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+
+        if (userCredential.user != null) {
+          // Login successful, navigate to a new screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            ),
+          );
+        }
+      } catch (e) {
+        // Login failed, handle the error
+        print('Auto Login failed: $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -173,10 +214,18 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                   children: [
                     Checkbox(
                       value: _rememberMe,
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         setState(() {
                           _rememberMe = value!;
                         });
+
+                        // Save the remember me preference locally using shared preferences
+                        SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                        prefs.setBool('rememberMe', value!);
+                        if (value) {
+                          prefs.setString('password', _passwordController.text);
+                        }
                       },
                     ),
                     Text('Remember Me'),
