@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:fitness_forge/ui/screen/congratulationscreen_standard.dart';
 import 'package:fitness_forge/ui/screen/exercises.dart';
+import 'package:fitness_forge/ui/screen/guest_congratulationsstandard.dart';
 import 'package:flutter/material.dart';
 
 class ExerciseScreen extends StatelessWidget {
@@ -56,7 +58,12 @@ class ExerciseScreen extends StatelessWidget {
       exerciseWidget = Container();
     }
 
-    return exerciseWidget;
+    return CountdownTimer(
+      title: 'Workout Name', // Replace with the actual name of the workout
+      description: 'Workout Description', // Replace with the actual description of the workout
+      imagePath: 'images/workout_image.jpg', // Replace with the actual path to the workout image
+      nextScreen: exerciseWidget,
+    );
   }
 }
 
@@ -97,16 +104,12 @@ class _CountdownTimerState extends State<CountdownTimer> {
         if (countdown == 0) {
           setState(() {
             isCountdownActive = false;
-            if (showStartButton) {
-              showStartButton = false;
-              showTakeBreakButton = true;
-              countdown = 15; // Start the countdown for "Take a break from each set"
-            } else if (showTakeBreakButton) {
-              showTakeBreakButton = false;
-              showNextButton = true;
-              timer.cancel(); // Cancel the periodic timer
-            }
+            showStartButton = false;
+            showTakeBreakButton = true;
+            countdown = 15; // Start the countdown for "Take a break from each set"
           });
+          timer.cancel();
+          startBreakCountdown();
         } else {
           setState(() {
             countdown--;
@@ -114,6 +117,25 @@ class _CountdownTimerState extends State<CountdownTimer> {
         }
       });
     }
+  }
+
+  void startBreakCountdown() {
+    const oneSec = const Duration(seconds: 1);
+    Timer.periodic(oneSec, (Timer timer) {
+      if (countdown == 0) {
+        setState(() {
+          isCountdownActive = false;
+          showStartButton = false;
+          showTakeBreakButton = false;
+          showNextButton = true;
+          timer.cancel();
+        });
+      } else {
+        setState(() {
+          countdown--;
+        });
+      }
+    });
   }
 
   @override
@@ -186,14 +208,14 @@ class _CountdownTimerState extends State<CountdownTimer> {
                         onPressed: () => startCountdown(40),
                       ),
 
-                    // Show the "Take a break" button when countdown is not active
+                    // Show the "Take a break" button when countdown is active
                     if (showTakeBreakButton)
                       ElevatedButton(
                         child: Text(
                           'Take a break from each set',
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () => startCountdown(15),
+                        onPressed: () => startBreakCountdown(),
                       ),
                   ],
                 ),
@@ -257,6 +279,7 @@ Future<bool> showQuitConfirmationDialog(BuildContext context) async {
     },
   ).then((value) => value ?? false);
 }
+
 
 class GuestJumpingJacksStandardScreen extends StatelessWidget {
   @override

@@ -192,7 +192,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
                     if (showTakeBreakButton)
                       ElevatedButton(
                         child: Text(
-                          'Take a break from each set',
+                          'Take a break',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () => startCountdown(15),
