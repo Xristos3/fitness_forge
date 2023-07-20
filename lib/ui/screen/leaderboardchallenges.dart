@@ -51,6 +51,8 @@ class _ChallengeLeaderboardScreenState extends State<ChallengeLeaderboardScreen>
               }
 
               final usersData = leaderboardSnapshot.data!.docs;
+              // Sort usersData based on the "challengeCount" value in descending order
+              usersData.sort((a, b) => b['challengeCount'].compareTo(a['challengeCount']));
 
               return ListView.builder(
                 itemCount: usersData.length,
