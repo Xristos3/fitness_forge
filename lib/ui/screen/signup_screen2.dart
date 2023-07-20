@@ -13,13 +13,18 @@ class _SignupScreenState extends State<SignupScreen2> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
-  bool _isLoading = false; // Add a isLoading variable to track the loading state
+  bool _isLoading = false;
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   String _emailError = '';
   String _usernameError = '';
+  String _passwordError = '';
+
+  RegExp _passwordRegex = RegExp(
+    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+  );
 
   Future<bool> _checkIfUserExists(String field, String value) async {
     final snapshot = await _firestore
@@ -36,7 +41,8 @@ class _SignupScreenState extends State<SignupScreen2> {
       setState(() {
         _emailError = '';
         _usernameError = '';
-        _isLoading = true; // Show the loader when the request starts
+        _passwordError = '';
+        _isLoading = true;
       });
 
       bool emailExists = await _checkIfUserExists('email', _emailController.text.trim());
@@ -45,7 +51,7 @@ class _SignupScreenState extends State<SignupScreen2> {
       if (_emailController.text.isEmpty) {
         setState(() {
           _emailError = 'Email is required';
-          _isLoading = false; // Hide the loader if an error occurs
+          _isLoading = false;
         });
         return;
       }
@@ -53,7 +59,7 @@ class _SignupScreenState extends State<SignupScreen2> {
       if (emailExists) {
         setState(() {
           _emailError = 'Email already exists';
-          _isLoading = false; // Hide the loader if an error occurs
+          _isLoading = false;
         });
         return;
       }
@@ -61,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen2> {
       if (_usernameController.text.isEmpty) {
         setState(() {
           _usernameError = 'Username is required';
-          _isLoading = false; // Hide the loader if an error occurs
+          _isLoading = false;
         });
         return;
       }
@@ -69,22 +75,30 @@ class _SignupScreenState extends State<SignupScreen2> {
       if (usernameExists) {
         setState(() {
           _usernameError = 'Username already exists';
-          _isLoading = false; // Hide the loader if an error occurs
+          _isLoading = false;
         });
         return;
       }
 
-      if (_passwordController.text.isEmpty) {
+      String password = _passwordController.text.trim();
+      if (password.isEmpty) {
         setState(() {
-          _isLoading = false; // Hide the loader if an error occurs
+          _passwordError = 'Password is required';
+          _isLoading = false;
+        });
+        return;
+      } else if (!_passwordRegex.hasMatch(password)) {
+        setState(() {
+          _passwordError =
+          'Password must contain 8 or more characters, at least 1 uppercase letter, 1 number, and 1 symbol';
+          _isLoading = false;
         });
         return;
       }
 
-      final UserCredential userCredential =
-      await _auth.createUserWithEmailAndPassword(
+      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
-        password: _passwordController.text,
+        password: password,
       );
 
       if (userCredential.user != null) {
@@ -92,7 +106,7 @@ class _SignupScreenState extends State<SignupScreen2> {
         await _firestore.collection('users').doc(userCredential.user!.uid).set({
           'username': _usernameController.text.trim(),
           'email': _emailController.text.trim(),
-          'password': _passwordController.text,
+          'password': password,
         });
 
         Navigator.pushReplacement(
@@ -105,7 +119,7 @@ class _SignupScreenState extends State<SignupScreen2> {
       // You can display an error message or perform other actions here
     } finally {
       setState(() {
-        _isLoading = false; // Hide the loader when the request is finished
+        _isLoading = false;
       });
     }
   }
@@ -128,7 +142,6 @@ class _SignupScreenState extends State<SignupScreen2> {
                   labelText: 'Email',
                   errorText: _emailError.isNotEmpty ? _emailError : null,
                 ),
-                // Add required validator
                 onChanged: (value) {
                   setState(() {
                     _emailError = value.isEmpty ? 'Email is required' : '';
@@ -142,7 +155,6 @@ class _SignupScreenState extends State<SignupScreen2> {
                   labelText: 'Username',
                   errorText: _usernameError.isNotEmpty ? _usernameError : null,
                 ),
-                // Add required validator
                 onChanged: (value) {
                   setState(() {
                     _usernameError = value.isEmpty ? 'Username is required' : '';
@@ -156,12 +168,19 @@ class _SignupScreenState extends State<SignupScreen2> {
                   TextField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      labelText: 'Password (must contain 6 or more characters)',
+                      labelText: 'Password (must contain 8 or more characters, at least 1 uppercase letter, 1 number, and 1 symbol)',
+                      errorText: _passwordError.isNotEmpty ? _passwordError : null,
                     ),
                     obscureText: !_passwordVisible,
-                    // Add required validator
                     onChanged: (value) {
-                      setState(() {});
+                      setState(() {
+                        if (!_passwordRegex.hasMatch(value)) {
+                          _passwordError =
+                          'Password must contain 8 or more characters, at least 1 uppercase letter, 1 number, and 1 symbol';
+                        } else {
+                          _passwordError = '';
+                        }
+                      });
                     },
                   ),
                   IconButton(
@@ -176,8 +195,8 @@ class _SignupScreenState extends State<SignupScreen2> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: _isLoading ? null : _signUp, // Disable the button when isLoading is true
-                child: _isLoading ? CircularProgressIndicator() : Text('Sign up'), // Show the loader if isLoading is true
+                onPressed: _isLoading ? null : _signUp,
+                child: _isLoading ? CircularProgressIndicator() : Text('Sign up'),
               ),
             ],
           ),
