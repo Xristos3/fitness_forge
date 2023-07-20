@@ -60,6 +60,8 @@ class ExerciseScreen extends StatelessWidget {
   }
 }
 
+bool isCountdownActive = false;
+
 class CountdownTimer extends StatefulWidget {
   final String title;
   final String description;
@@ -79,7 +81,6 @@ class CountdownTimer extends StatefulWidget {
 
 class _CountdownTimerState extends State<CountdownTimer> {
   int countdown = 0;
-  bool isCountdownActive = false;
   bool showStartButton = true;
   bool showTakeBreakButton = false;
   bool showNextButton = false;
@@ -117,92 +118,110 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Exercise'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Countdown: $countdown seconds',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Reps: Until the 40-second countdown ends,'
-                    ' then take a 15-second break'
-                    ' and proceed to the next exercise.',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                widget.description,
-                style: TextStyle(fontSize: 16.0),
-              ),
-              SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Show the "Start" button when countdown is not active
-                  if (showStartButton)
-                    ElevatedButton(
-                      child: Text('Start'),
-                      onPressed: () => startCountdown(40),
-                    ),
-
-                  // Show the "Take a break" button when countdown is not active
-                  if (showTakeBreakButton)
-                    ElevatedButton(
-                      child: Text(
-                        'Take a break from each set',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () => startCountdown(15),
-                    ),
-                ],
-              ),
-              SizedBox(height: 16.0),
-              Image.asset(
-                widget.imagePath,
-                width: 200.0,
-                height: 200.0,
-              ),
-              SizedBox(height: 16.0),
-              // Show the "Next" button below the image when countdown is done
-              if (showNextButton)
-                ElevatedButton(
-                  child: Text(
-                    'Next',
-                    style: TextStyle(color: Colors.white),
+    return WillPopScope(
+      onWillPop: () async {
+        if (isCountdownActive) {
+          // Show a warning dialog if countdown is active
+          bool quit = await showQuitConfirmationDialog(context);
+          if (quit) {
+            // The user chose to quit, proceed with the back action
+            return true;
+          } else {
+            // The user chose not to quit, resume the countdown
+            return false;
+          }
+        } else {
+          // No countdown active, proceed with the back action
+          return true;
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Exercise'),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Countdown: $countdown seconds',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => widget.nextScreen,
-                      ),
-                    );
-                  },
                 ),
-            ],
+                SizedBox(height: 16.0),
+                Text(
+                  'Reps: Until the 40-second countdown ends,'
+                      ' then take a 15-second break'
+                      ' and proceed to the next exercise.',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  widget.description,
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Show the "Start" button when countdown is not active
+                    if (showStartButton)
+                      ElevatedButton(
+                        child: Text('Start'),
+                        onPressed: () => startCountdown(40),
+                      ),
+
+                    // Show the "Take a break" button when countdown is not active
+                    if (showTakeBreakButton)
+                      ElevatedButton(
+                        child: Text(
+                          'Take a break from each set',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () => startCountdown(15),
+                      ),
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                Image.asset(
+                  widget.imagePath,
+                  width: 200.0,
+                  height: 200.0,
+                ),
+                SizedBox(height: 16.0),
+                // Show the "Next" button below the image when countdown is done
+                if (showNextButton)
+                  ElevatedButton(
+                    child: Text(
+                      'Next',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => widget.nextScreen,
+                        ),
+                      );
+                    },
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -210,14 +229,41 @@ class _CountdownTimerState extends State<CountdownTimer> {
   }
 }
 
+Future<bool> showQuitConfirmationDialog(BuildContext context) async {
+  return showDialog<bool>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Exercise in Progress'),
+        content: Text('Are you sure you want to quit the exercise?'),
+        actions: [
+          TextButton(
+            child: Text('No'),
+            onPressed: () {
+              // Close the dialog and return false to resume the countdown
+              Navigator.of(context).pop(false);
+            },
+          ),
+          TextButton(
+            child: Text('Yes'),
+            onPressed: () {
+              // Close the dialog and return true to proceed with the back action
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      );
+    },
+  ).then((value) => value ?? false);
+}
 
 class GuestJumpingJacksStandardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimer(
       title: 'Jumping Jacks',
-      description:
-      'Begin by standing with your legs straight and your arms to your sides. '
+      description: 'Begin by standing with your legs straight and your arms to your sides. '
           'Jump up and spread your feet beyond hip-width apart while bringing your arms above your head,'
           ' nearly touching. Jump again, lowering your arms and bringing your legs together. Return to your starting position.',
       imagePath: 'images/jjs.jpeg',
