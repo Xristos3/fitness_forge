@@ -40,16 +40,16 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ClaimScreen()),
-              );
-              // Add your notification button logic here
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.notifications),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => ClaimScreen()),
+          //     );
+          //     // Add your notification button logic here
+          //   },
+          // ),
         ],
       ),
       body: _screens[_currentIndex],
