@@ -1,13 +1,13 @@
-import 'package:fitness_forge/ui/screen/challenges_congratulations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fitness_forge/ui/screen/challenges_congratulations.dart';
 
 class Yoga extends StatefulWidget {
   @override
-  _HikingState createState() => _HikingState();
+  _YogaState createState() => _YogaState();
 }
 
-class _HikingState extends State<Yoga> {
+class _YogaState extends State<Yoga> {
   TextEditingController hoursController = TextEditingController();
   TextEditingController minutesController = TextEditingController();
   TextEditingController secondsController = TextEditingController();
@@ -59,14 +59,16 @@ class _HikingState extends State<Yoga> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildTimeInput('Hours', hoursController),
-                  buildTimeInput('Minutes', minutesController),
-                  buildTimeInput('Seconds', secondsController),
+                  buildTimeInput('Hours', hoursController, (value) {
+                    return validateHours(value);
+                  }),
+                  buildTimeInput('Minutes', minutesController, null),
+                  buildTimeInput('Seconds', secondsController, null),
                 ],
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: isCountingDown ? null : startCountdown,
+                onPressed: isCountingDown ? null : canStartCountdown() ? startCountdown : null,
                 child: Text('Start Countdown'),
               ),
               SizedBox(height: 182.0), // Adjust the spacing as needed
@@ -77,7 +79,8 @@ class _HikingState extends State<Yoga> {
     );
   }
 
-  Widget buildTimeInput(String label, TextEditingController controller) {
+  Widget buildTimeInput(
+      String label, TextEditingController controller, FormFieldValidator<String>? validator) {
     return Column(
       children: [
         Text(
@@ -87,9 +90,11 @@ class _HikingState extends State<Yoga> {
         SizedBox(height: 8.0),
         Container(
           width: 100.0,
-          child: TextField(
+          child: TextFormField(
             controller: controller,
             keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            validator: validator,
             onChanged: (value) {
               setState(() {
                 if (label == 'Hours') {
@@ -105,6 +110,23 @@ class _HikingState extends State<Yoga> {
         ),
       ],
     );
+  }
+
+  String? validateHours(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a value';
+    }
+
+    int? parsedValue = int.tryParse(value);
+    if (parsedValue == null || parsedValue < 0) {
+      return 'Please enter a valid non-negative integer';
+    }
+
+    return null;
+  }
+
+  bool canStartCountdown() {
+    return hours > 0 || minutes > 0 || seconds > 0;
   }
 
   void startCountdown() {
@@ -139,4 +161,3 @@ class _HikingState extends State<Yoga> {
     );
   }
 }
-
