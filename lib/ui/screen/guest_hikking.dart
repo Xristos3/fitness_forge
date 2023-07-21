@@ -57,15 +57,19 @@ class _GuestHikingState extends State<GuestHiking> {
                 style: TextStyle(fontSize: 20.0),
               ),
               SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildTimeInput('Hours', hoursController, (value) {
-                    return validateHours(value);
-                  }),
-                  buildTimeInput('Minutes', minutesController, null),
-                  buildTimeInput('Seconds', secondsController, null),
-                ],
+              // Wrap the time input widgets with AbsorbPointer to disable them based on isCountingDown.
+              AbsorbPointer(
+                absorbing: isCountingDown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    buildTimeInput('Hours', hoursController, (value) {
+                      return validateHours(value);
+                    }),
+                    buildTimeInput('Minutes', minutesController, null),
+                    buildTimeInput('Seconds', secondsController, null),
+                  ],
+                ),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(

@@ -38,7 +38,7 @@ class _GuestKiteState extends State<GuestKite> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Fly a kite',
+                'Fly a Kite',
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -57,15 +57,19 @@ class _GuestKiteState extends State<GuestKite> {
                 style: TextStyle(fontSize: 20.0),
               ),
               SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildTimeInput('Hours', hoursController, (value) {
-                    return validateHours(value);
-                  }),
-                  buildTimeInput('Minutes', minutesController, null),
-                  buildTimeInput('Seconds', secondsController, null),
-                ],
+              // Wrap the time input widgets with AbsorbPointer to disable them based on isCountingDown.
+              AbsorbPointer(
+                absorbing: isCountingDown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    buildTimeInput('Hours', hoursController, (value) {
+                      return validateHours(value);
+                    }),
+                    buildTimeInput('Minutes', minutesController, null),
+                    buildTimeInput('Seconds', secondsController, null),
+                  ],
+                ),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
