@@ -1,6 +1,6 @@
+import 'package:fitness_forge/ui/screen/challenges_congratulations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fitness_forge/ui/screen/challenges_congratulations.dart';
 
 class Hiking extends StatefulWidget {
   @override
@@ -26,57 +26,65 @@ class _HikingState extends State<Hiking> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Challenges'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Hiking',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        if (isCountingDown) {
+          return await _showConfirmationDialog();
+        } else {
+          return true;
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Challenges'),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Hiking',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Image.asset(
-                'images/walk.png',
-                width: 200.0,
-                height: 200.0,
-                fit: BoxFit.contain,
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Countdown: ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
-                style: TextStyle(fontSize: 20.0),
-              ),
-              SizedBox(height: 16.0),
-              // Wrap the time input widgets with AbsorbPointer to disable them based on isCountingDown.
-              AbsorbPointer(
-                absorbing: isCountingDown,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildTimeInput('Hours', hoursController, (value) {
-                      return validateHours(value);
-                    }),
-                    buildTimeInput('Minutes', minutesController, null),
-                    buildTimeInput('Seconds', secondsController, null),
-                  ],
+                SizedBox(height: 16.0),
+                Image.asset(
+                  'images/walk.png',
+                  width: 200.0,
+                  height: 200.0,
+                  fit: BoxFit.contain,
                 ),
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: isCountingDown ? null : canStartCountdown() ? startCountdown : null,
-                child: Text('Start Countdown'),
-              ),
-              SizedBox(height: 182.0), // Adjust the spacing as needed
-            ],
+                SizedBox(height: 16.0),
+                Text(
+                  'Countdown: ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                SizedBox(height: 16.0),
+                AbsorbPointer(
+                  absorbing: isCountingDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildTimeInput('Hours', hoursController, (value) {
+                        return validateHours(value);
+                      }),
+                      buildTimeInput('Minutes', minutesController, null),
+                      buildTimeInput('Seconds', secondsController, null),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: isCountingDown ? null : canStartCountdown() ? startCountdown : null,
+                  child: Text('Start Countdown'),
+                ),
+                SizedBox(height: 182.0),
+              ],
+            ),
           ),
         ),
       ),
@@ -163,5 +171,37 @@ class _HikingState extends State<Hiking> {
       context,
       MaterialPageRoute(builder: (context) => ChallengesCongratulationsScreen()),
     );
+  }
+
+  Future<bool> _showConfirmationDialog() async {
+    bool? result = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Countdown Active'),
+          content: Text('Are you sure you want to leave this screen? The countdown is active.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Resume the countdown and pop the dialog.
+              },
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  isCountingDown = false; // Stop the countdown.
+                });
+                Navigator.of(context).pop(true); // Navigate back.
+              },
+              child: Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+
+    // Handle the null case explicitly and return false.
+    return result ?? false;
   }
 }

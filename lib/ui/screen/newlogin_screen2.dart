@@ -176,10 +176,10 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                 TextFormField(
                   controller: _usernameController,
                   decoration:
-                  InputDecoration(labelText: 'Email or Username'),
+                  InputDecoration(labelText: 'Email'),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter your email or username';
+                      return 'Please enter your email';
                     }
                     return null;
                   },
