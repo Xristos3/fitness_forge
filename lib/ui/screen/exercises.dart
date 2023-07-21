@@ -1314,7 +1314,7 @@ class GuestNoseAndToesScreenStandard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimers(
-      title: 'Nose and Toes Against the Wall',
+      title: 'Nose and Toes Against the Wall Hold',
       description:
       'Setup Begin standing with feet about 6 inches away from a wall and your feet close together.'
           ' Lean towards the wall as far as you can '
@@ -1546,39 +1546,16 @@ class _CountdownTimersAdvancedState extends State<CountdownTimersAdvanced> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.title,
+                'Countdown: $countdown seconds',
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 16.0),
               Text(
-                widget.description,
-                style: TextStyle(fontSize: 16.0),
-              ),
-              SizedBox(height: 16.0),
-              Image.asset(
-                widget.imagePath,
-                width: 200.0,
-                height: 200.0,
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                child: Text('Next'),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => widget.nextScreen,
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 16.0),
-              Text(
                 'Sets: 5 sets Reps for each set: 15, 12, 10, 8, 5'
-                    'Or if the exercise does not include reps do 5 sets and hold until Failure for each set.',
+                    ' Or if the exercise does not include reps do 5 sets and hold until Failure for each set.',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -1593,12 +1570,35 @@ class _CountdownTimersAdvancedState extends State<CountdownTimersAdvanced> {
                 onPressed: isCountdownActive ? null : startCountdown,
               ),
               SizedBox(height: 16.0),
+              Image.asset(
+                widget.imagePath,
+                width: 200.0,
+                height: 200.0,
+              ),
+              SizedBox(height: 16.0),
               Text(
-                'Countdown: $countdown seconds',
+                widget.title,
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                widget.description,
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                child: Text('Next'),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => widget.nextScreen,
+                    ),
+                  );
+                },
               ),
               SizedBox(height: 16.0),
             ],
@@ -1865,7 +1865,7 @@ class GuestSideLegRaisesScreenAdvanced extends StatelessWidget {
       'Side leg raises is a core and leg exercise that involves you lying on the floor on your side, '
           'and abducting your leg (pushing them) away from the midline. '
           'You can also perform this whilst standing up. This exercise is great to develop strength'
-          ' and endurance in the core, thighs, and hip abductors.',
+          ' and endurance in the core, thighs, and hip abductors. Then do the same for the other side.',
       imagePath: 'images/sideleg.png',
       nextScreen: GuestDolphinKicksScreenAdvanced(),
     );
@@ -1891,7 +1891,7 @@ class GuestSupermanScreenAdvanced extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimersAdvanced(
-      title: 'Superman',
+      title: 'Superman Hold',
       description:
       'Lie on the floor in a prone (facedown) position, with your legs straight '
           'and your arms extended in front of you. Keeping your head in a neutral position (avoid looking up),'
@@ -1922,7 +1922,7 @@ class GuestNoseAndtoesScreenAdvanced extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimersAdvanced(
-      title: 'Nose and Toes Against the Wall',
+      title: 'Nose and Toes Against the Wall Hold',
       description:
       'Setup Begin standing with feet about 6 inches away from a wall and your feet close together. '
           'Lean towards the wall as far as you can keeping your body in a straight line '
@@ -2023,7 +2023,7 @@ class SideLegRaisesScreenAdvanced extends StatelessWidget {
       'Side leg raises is a core and leg exercise that involves you lying on the floor on your side, '
           'and abducting your leg (pushing them) away from the midline. '
           'You can also perform this whilst standing up. This exercise is great to develop strength'
-          ' and endurance in the core, thighs, and hip abductors.',
+          ' and endurance in the core, thighs, and hip abductors. Then do the same for the other side.',
       imagePath: 'images/sideleg.png',
       nextScreen: DolphinKicksScreenAdvanced(),
     );
@@ -2049,7 +2049,7 @@ class SupermanScreenAdvanced extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimersAdvanced(
-      title: 'Superman',
+      title: 'Superman Hold',
       description:
       'Lie on the floor in a prone (facedown) position, with your legs straight '
           'and your arms extended in front of you. Keeping your head in a neutral position (avoid looking up),'
@@ -2080,7 +2080,7 @@ class NoseAndtoesScreenAdvanced extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CountdownTimersAdvanced(
-      title: 'Nose and Toes Against the Wall',
+      title: 'Nose and Toes Against the Wall Hold',
       description:
       'Setup Begin standing with feet about 6 inches away from a wall and your feet close together. '
           'Lean towards the wall as far as you can keeping your body in a straight line '
