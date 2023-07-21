@@ -48,8 +48,7 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
     // ...
   }
 
-  Future<void> sendFriendRequest(
-      String recipientUsername, String message) async {
+  Future<void> sendFriendRequest(String recipientUsername) async {
     String senderId = currentUserUid;
     String status = 'pending';
 
@@ -113,7 +112,6 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
     await friendRequests.add({
       'senderId': senderId,
       'recipientId': recipientId,
-      'message': message,
       'status': status,
     });
 
@@ -123,7 +121,6 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
 
   Future<void> showSendFriendRequestDialog(BuildContext context) async {
     final TextEditingController _usernameController = TextEditingController();
-    final TextEditingController _messageController = TextEditingController();
 
     return showDialog(
       context: context,
@@ -140,12 +137,6 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                     labelText: 'Recipient Username',
                   ),
                 ),
-                TextField(
-                  controller: _messageController,
-                  decoration: InputDecoration(
-                    labelText: 'Message',
-                  ),
-                ),
               ],
             ),
           ),
@@ -159,7 +150,6 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
             ElevatedButton(
               onPressed: () async {
                 String recipientUsername = _usernameController.text.trim();
-                String message = _messageController.text.trim();
 
                 // Check if recipient username is the same as the current user's username
                 if (recipientUsername == currentUserUsername) {
@@ -183,7 +173,7 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                   );
                 } else {
                   // Call the sendFriendRequest method from _FriendsListScreenState
-                  sendFriendRequest(recipientUsername, message);
+                  sendFriendRequest(recipientUsername);
                   Navigator.of(context).pop();
                 }
               },
