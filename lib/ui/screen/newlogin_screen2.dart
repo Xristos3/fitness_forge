@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fitness_forge/ui/screen/home_screen.dart';
 import 'package:fitness_forge/ui/screen/newforgotpassword_screen.dart';
 import 'package:fitness_forge/ui/screen/newsignup_screen2.dart';
@@ -17,7 +16,6 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _rememberMe = false;
   String _errorMessage = '';
   bool _passwordVisible = false;
   bool _isLoading = false;
@@ -36,12 +34,6 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
             .signInWithEmailAndPassword(email: email, password: password);
 
         if (userCredential.user != null) {
-          // Update rememberMe field in Firestore if remember me is checked
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userCredential.user!.uid)
-              .update({'rememberMe': _rememberMe});
-
           // Login successful, navigate to a new screen
           Navigator.pushReplacement(
             context,
@@ -88,70 +80,6 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
     );
   }
 
-  Future<void> _loadRememberMeValue(String email) async {
-    DocumentSnapshot userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(email)
-        .get();
-
-    if (userData.exists) {
-      bool rememberMe = userData['rememberMe'] ?? false;
-      setState(() {
-        _rememberMe = rememberMe;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Retrieve the current user's email from Firebase Authentication
-    String currentUserEmail = FirebaseAuth.instance.currentUser?.email ?? '';
-
-    // Load the remember me value from Firestore
-    _loadRememberMeValue(currentUserEmail);
-
-    // Set initial remember me preference state to false
-    _rememberMe = false;
-
-    // Check if Remember Me is enabled and login the user automatically
-    _autoLoginIfRememberMeEnabled(currentUserEmail);
-  }
-
-  Future<void> _autoLoginIfRememberMeEnabled(String email) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool rememberMe = prefs.getBool('rememberMe') ?? false;
-
-    if (rememberMe) {
-      setState(() {
-        _rememberMe = true;
-      });
-
-      try {
-        String password = prefs.getString('password') ?? '';
-        UserCredential userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email, password: password);
-
-        if (userCredential.user != null) {
-          // Login successful, navigate to a new screen
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomeScreen(),
-            ),
-          );
-        }
-      } catch (e) {
-        // Login failed, handle the error
-        print('Auto Login failed: $e');
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,8 +103,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
               children: [
                 TextFormField(
                   controller: _usernameController,
-                  decoration:
-                  InputDecoration(labelText: 'Email'),
+                  decoration: InputDecoration(labelText: 'Email'),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your email';
@@ -210,27 +137,6 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                   },
                 ),
                 SizedBox(height: 16.0),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _rememberMe,
-                      onChanged: (value) async {
-                        setState(() {
-                          _rememberMe = value!;
-                        });
-
-                        // Save the remember me preference locally using shared preferences
-                        SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                        prefs.setBool('rememberMe', value!);
-                        if (value) {
-                          prefs.setString('password', _passwordController.text);
-                        }
-                      },
-                    ),
-                    Text('Remember Me'),
-                  ],
-                ),
                 Text(
                   _errorMessage,
                   style: TextStyle(color: Colors.red),
