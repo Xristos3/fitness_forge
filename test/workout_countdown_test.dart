@@ -10,7 +10,7 @@ void main() {
         home: CountdownTimer(
           title: 'Test Exercise',
           description: 'This is a test exercise description.',
-          imagePath: 'path/to/image.png',
+          imagePath: 'images/jjs.jpeg',
           nextScreen: Scaffold(), // You can use any widget here for testing purposes
         ),
       ),
