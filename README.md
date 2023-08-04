@@ -17,3 +17,10 @@ If using the command-line tool, run flutter run in the project directory.
 Observe the App:
 
 The app should launch on the emulator/device, and you can interact with it just like any other app.
+
+!!!
+Make sure to input your height, weight and fitness goal before proceeding with another action in the application 
+in order for them to be registered
+
+
+
