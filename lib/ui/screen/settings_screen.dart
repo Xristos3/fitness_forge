@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_forge/ui/screen/about.dart';
-import 'package:fitness_forge/ui/screen/login_screen2.dart';
 import 'package:fitness_forge/ui/screen/newlogin_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
